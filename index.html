@@ -3,116 +3,85 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Watch Ads & Earn</title>
-<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<title>Watch & Earn Pro</title>
 <script src="https://sad.adsgram.ai/js/sad.min.js"></script>
-<script src="//libtl.com/sdk.js" data-zone="9697000" data-sdk="show_9697000"></script>
+<script src="//libtl.com/sdk.js" data-zone="11955115" data-sdk="show_11955115"></script>
 <style>
-body{font-family:Arial;background:#0f172a;color:white;text-align:center;padding:15px}
-.card{background:#1e293b;padding:20px;border-radius:15px;margin-top:15px}
-button{width:100%;padding:15px;background:#38bdf8;color:black;font-weight:bold;border:none;border-radius:10px;font-size:16px;margin-top:10px}
-button:disabled{background:#334155;color:#94a3b8}
-.shop{background:#1e293b;padding:15px;border-radius:15px;margin-top:15px;text-align:left}
-.shop a{display:block;background:#fff;color:#000;padding:12px;border-radius:8px;margin:8px 0;text-decoration:none;font-weight:bold;text-align:center}
-#timer{color:#fbbf24;font-size:14px;margin:8px}
+body{font-family:Arial;text-align:center;background:#f0f0f0;padding:15px}
+.card{background:white;padding:20px;border-radius:15px;margin-bottom:15px}
+button{padding:15px;width:100%;border:none;border-radius:10px;background:#00a8ff;color:white;font-size:18px;margin-top:10px}
+.shop{display:flex;gap:10px}
+.shop a{flex:1;padding:12px;background:#ff9900;color:white;text-decoration:none;border-radius:8px}
+.shop a.flip{background:#2874f0}
+.timer{color:red;font-weight:bold}
 </style>
 </head>
 <body>
-<h2>💰 Watch & Earn - 10 Hr Job</h2>
 <div class="card">
+<h2>💰 Watch & Earn</h2>
 <h1 id="balance">$0.000</h1>
-<p id="count">Today: 0 Ads</p>
-<p id="hourCount">Is ghante: 0 / 30 Ads</p>
-<p id="timer"></p>
-<button onclick="watchAds()" id="btn">Watch Ads & Earn</button>
+<p>Today: <span id="todayAds">0</span>/165 Ads | Hours: <span id="hours">0</span>/10</p>
+<p>This Hour: <span id="hourAds">0</span>/<span id="hourLimit">30</span> Ads</p>
+<p class="timer" id="timer"></p>
+<button id="adBtn" onclick="watchAds()">▶️ Watch Ad & Earn</button>
 </div>
-
-<div class="shop">
+<div class="card">
 <h3>🛒 Shop & Earn Extra</h3>
-<p style="font-size:12px;color:#94a3b8">Yahan se shopping karo, hume commission milega</p>
-<a href="https://www.amazon.in/b/?_encoding=UTF8&tag=APNA_AMAZON_TAG_YAHAN" target="_blank">🛍️ Amazon Se Shopping Karo</a>
-<a href="https://dl.flipkart.com/dl/?affid=APNA_FLIPKART_ID_YAHAN" target="_blank">🛒 Flipkart Se Shopping Karo</a>
-<p style="font-size:11px;color:#64748b">Apne Amazon/Flipkart ke Affiliate Link se _YAHAN_ wali jagah replace karna</p>
+<div class="shop">
+<a href="https://www.amazon.in" target="_blank">Amazon</a>
+<a class="flip" href="https://www.flipkart.com" target="_blank">Flipkart</a>
 </div>
-
+</div>
 <script>
-let tg = window.Telegram.WebApp; tg.expand();
+let data = JSON.parse(localStorage.getItem('earnData') || '{}');
 let today = new Date().toDateString();
-let now = Date.now();
-
-// Storage keys
-let watchedToday = parseInt(localStorage.getItem("watchedToday_"+today) || "0");
-let hourStart = parseInt(localStorage.getItem("hourStart") || "0");
-let watchedHour = parseInt(localStorage.getItem("watchedHour") || "0");
-let isFirstHourToday = localStorage.getItem("isFirstHour_"+today);
-
-if(!isFirstHourToday){ // Naya din shuru
-  localStorage.setItem("isFirstHour_"+today, "1");
-  watchedHour = 0;
-  hourStart = 0;
-  isFirstHourToday = "1";
+if(data.date !== today){
+  data = {date:today, balance: data.balance||0, totalHours:0, hourStart:Date.now(), hourAds:0, todayAds:0, isFirstHour:true};
 }
-
-let balance = parseFloat(localStorage.getItem("balance") || "0");
-let isWatching = false;
-let hourLimit = (watchedToday < 30 && hourStart==0) ? 30 : 15; // Pehle ghante 30, baad me 15
-
+let balance = data.balance || 0;
+let clickNumber = 0;
+function save(){ localStorage.setItem('earnData', JSON.stringify(data)); }
 function updateUI(){
-  document.getElementById("balance").innerText = "$" + balance.toFixed(3);
-  document.getElementById("count").innerText = `Today: ${watchedToday} / 150 Ads (10 Hr)`;
-  document.getElementById("hourCount").innerText = `Is ghante: ${watchedHour} / ${hourLimit} Ads`;
-  let remaining = 0;
-  if(hourStart>0){
-    remaining = 3600000 - (now - hourStart); // 1 ghanta = 3600000 ms
-    if(remaining <=0){
-      watchedHour = 0; hourLimit = 15; hourStart=0;
-      localStorage.setItem("watchedHour", "0");
-      localStorage.setItem("hourStart", "0");
-      document.getElementById("timer").innerText = "✅ Naya ghanta shuru! Ab 15 Ads dekh sakte ho";
-      document.getElementById("btn").disabled = false;
-      document.getElementById("btn").innerText = "Watch 2 Ads & Earn $0.001";
-      return;
-    }
-    let mins = Math.floor(remaining/60000);
-    let secs = Math.floor((remaining%60000)/1000);
-    document.getElementById("timer").innerText = `⏳ Agle ghante ke liye: ${mins}m ${secs}s baaki`;
-    if(watchedHour >= hourLimit){
-      document.getElementById("btn").disabled = true;
-      document.getElementById("btn").innerText = `Limit Over - ${mins}m baad aana`;
-    }
+  let hourLimit = data.isFirstHour ? 30 : 15;
+  document.getElementById('balance').innerText = "$"+balance.toFixed(3);
+  document.getElementById('todayAds').innerText = data.todayAds;
+  document.getElementById('hours').innerText = data.totalHours;
+  document.getElementById('hourAds').innerText = data.hourAds;
+  document.getElementById('hourLimit').innerText = hourLimit;
+  let timeLeft = 3600000 - (Date.now() - data.hourStart);
+  if(data.todayAds >= 165 || data.totalHours >=10){
+    document.getElementById('timer').innerText = "✅ Today's limit over. Come tomorrow!";
+    document.getElementById('adBtn').disabled=true;
+  } else if(data.hourAds >= hourLimit){
+    document.getElementById('adBtn').disabled=true;
+    let m = Math.floor(timeLeft/60000); let s = Math.floor((timeLeft%60000)/1000);
+    document.getElementById('timer').innerText = `Next hour in: ${m}m ${s}s - After that 15 ads`;
+    setTimeout(updateUI,1000);
   } else {
-    document.getElementById("timer").innerText = `🔥 Pehla ghanta: ${hourLimit} Ads ka bonus`;
+    document.getElementById('timer').innerText = `You can watch ${hourLimit - data.hourAds} more ads this hour`;
+    document.getElementById('adBtn').disabled=false;
   }
 }
-updateUI();
-setInterval(()=>{ now=Date.now(); updateUI(); }, 1000);
-
-const AdController = window.Adsgram.init({ blockId: "51933" });
-
-async function watchAds(){
- if(isWatching) return;
- if(watchedToday >= 150){ alert("Aaj ka 10 ghante ka kaam (150 Ads) pura ho gaya! Kal aana"); return; }
- if(watchedHour >= hourLimit){ alert("Is ghante ka quota pura! Agle ghante aana"); return; }
- if(hourStart==0){ hourStart = Date.now(); localStorage.setItem("hourStart", hourStart.toString()); }
-
- isWatching = true;
- document.getElementById("btn").disabled = true;
- document.getElementById("btn").innerText = "Loading Ad 1/2...";
- try{
-   await AdController.show();
-   document.getElementById("btn").innerText = "Loading Ad 2/2...";
-   await show_9697000();
-   
-   watchedHour++; watchedToday++; balance += 0.001;
-   localStorage.setItem("watchedHour", watchedHour.toString());
-   localStorage.setItem("watchedToday_"+today, watchedToday.toString());
-   localStorage.setItem("balance", balance.toString());
-   if(watchedHour >= hourLimit && hourStart==0) { /* first hour done */ }
-
-   alert("+$0.001 Added!");
- }catch(e){ alert("Ad pura dekho!"); }
- finally{ isWatching = false; updateUI(); if(watchedHour < hourLimit) { document.getElementById("btn").disabled=false; document.getElementById("btn").innerText="Watch 2 Ads & Earn $0.001"; } }
+setInterval(()=>{
+  if(Date.now() - data.hourStart >= 3600000 && data.hourAds>0){
+    data.totalHours++; data.hourAds=0; data.hourStart=Date.now(); data.isFirstHour=false;
+    save(); updateUI();
+  }
+},1000);
+function giveReward(){
+  balance+=0.001; data.balance=balance; data.hourAds++; data.todayAds++; save(); updateUI(); alert('✅ $0.001 Added!');
 }
+function watchAds(){
+  let hourLimit = data.isFirstHour ? 30 : 15;
+  if(data.hourAds >= hourLimit || data.todayAds>=165) return;
+  clickNumber++;
+  if(clickNumber%2==1){
+    const AdController = window.Adsgram.init({ blockId: "51933" });
+    AdController.show().then(r=>{ if(r.done) giveReward(); }).catch(()=>{ showMonetag(); });
+  } else { showMonetag(); }
+}
+function showMonetag(){ show_11955115().then(()=>{ giveReward(); }).catch(()=>{ alert('No ad, try again'); }); }
+updateUI();
 </script>
 </body>
 </html>
