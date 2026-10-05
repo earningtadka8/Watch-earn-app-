@@ -14,74 +14,76 @@ button{padding:15px;width:100%;border:none;border-radius:10px;background:#00a8ff
 .shop a{flex:1;padding:12px;background:#ff9900;color:white;text-decoration:none;border-radius:8px}
 .shop a.flip{background:#2874f0}
 .timer{color:red;font-weight:bold}
+.wallet{background:#111;color:white;}
+.wallet b{color:#00ff88}
+#upiBox{display:none; margin-top:15px; background:#222; padding:15px; border-radius:10px}
+#upiBox input{width:90%; padding:12px; border-radius:8px; border:none; margin-top:10px}
 </style>
 </head>
 <body>
 <div class="card">
 <h2>💰 Watch & Earn</h2>
-<h1 id="balance">$0.000</h1>
+<h1 id="balance">₹0.00</h1>
 <p>Today: <span id="todayAds">0</span>/165 Ads | Hours: <span id="hours">0</span>/10</p>
 <p>This Hour: <span id="hourAds">0</span>/<span id="hourLimit">30</span> Ads</p>
 <p class="timer" id="timer"></p>
-<button id="adBtn" onclick="watchAds()">▶️ Watch Ad & Earn</button>
+<button id="adBtn" onclick="watchAds()">▶️ Watch Ad & Earn ₹0.30</button>
 </div>
+
 <div class="card">
 <h3>🛒 Shop & Earn Extra</h3>
+<p style="font-size:13px;color:#555">Amazon se kuch bhi kharido, commission tumhe milega!</p>
 <div class="shop">
-<a href="https://www.amazon.in" target="_blank">Amazon</a>
+<a id="amazonBtn" href="https://www.amazon.in/?tag=earningtadka8-21" target="_blank">Amazon</a>
 <a class="flip" href="https://www.flipkart.com" target="_blank">Flipkart</a>
 </div>
 </div>
+
+<div class="card wallet">
+<h3>💳 My Wallet - Subtotal</h3>
+<p>📺 Ads Earning: <b id="adTotal">₹0.00</b></p>
+<p>🛒 Amazon Cashback: <b id="amazonTotal">₹0.00</b></p>
+<hr style="border-color:#333">
+<p>Total Balance: <b id="subtotal" style="font-size:26px">₹0.00</b></p>
+<p style="font-size:11px; color:#aaa">Withdraw par ₹5 Platform Charge</p>
+<p id="withdrawMsg" style="font-size:12px; color:orange">Min ₹200 par withdraw</p>
+<button id="withdrawBtn" onclick="openWithdraw()" style="background:grey" disabled>Withdraw via UPI</button>
+<div id="upiBox">
+<input type="text" id="upiId" placeholder="Apna UPI ID dalo - ex: name@paytm">
+<button onclick="requestWithdraw()" style="background:#00ff88; color:black">Request Withdraw</button>
+</div>
+</div>
+
 <script>
+const MY_TAG = "earningtadka8-21";
 let data = JSON.parse(localStorage.getItem('earnData') || '{}');
 let today = new Date().toDateString();
 if(data.date !== today){
-  data = {date:today, balance: data.balance||0, totalHours:0, hourStart:Date.now(), hourAds:0, todayAds:0, isFirstHour:true};
+  data = {date:today, balance: data.balance||0, amazonCash: data.amazonCash||0, totalHours:0, hourStart:Date.now(), hourAds:0, todayAds:0, isFirstHour:true};
 }
 let balance = data.balance || 0;
 let clickNumber = 0;
 function save(){ localStorage.setItem('earnData', JSON.stringify(data)); }
+
+function addMyTag(url){
+  try{
+    let u = new URL(url);
+    if(u.hostname.includes("amazon.")){
+      u.searchParams.set("tag", MY_TAG);
+      return u.toString();
+    }
+    return url;
+  }catch(e){ return url; }
+}
+
 function updateUI(){
   let hourLimit = data.isFirstHour ? 30 : 15;
-  document.getElementById('balance').innerText = "$"+balance.toFixed(3);
+  let total = balance + (data.amazonCash||0);
+  document.getElementById('balance').innerText = "₹"+balance.toFixed(2);
   document.getElementById('todayAds').innerText = data.todayAds;
   document.getElementById('hours').innerText = data.totalHours;
   document.getElementById('hourAds').innerText = data.hourAds;
   document.getElementById('hourLimit').innerText = hourLimit;
-  let timeLeft = 3600000 - (Date.now() - data.hourStart);
-  if(data.todayAds >= 165 || data.totalHours >=10){
-    document.getElementById('timer').innerText = "✅ Today's limit over. Come tomorrow!";
-    document.getElementById('adBtn').disabled=true;
-  } else if(data.hourAds >= hourLimit){
-    document.getElementById('adBtn').disabled=true;
-    let m = Math.floor(timeLeft/60000); let s = Math.floor((timeLeft%60000)/1000);
-    document.getElementById('timer').innerText = `Next hour in: ${m}m ${s}s - After that 15 ads`;
-    setTimeout(updateUI,1000);
-  } else {
-    document.getElementById('timer').innerText = `You can watch ${hourLimit - data.hourAds} more ads this hour`;
-    document.getElementById('adBtn').disabled=false;
-  }
-}
-setInterval(()=>{
-  if(Date.now() - data.hourStart >= 3600000 && data.hourAds>0){
-    data.totalHours++; data.hourAds=0; data.hourStart=Date.now(); data.isFirstHour=false;
-    save(); updateUI();
-  }
-},1000);
-function giveReward(){
-  balance+=0.001; data.balance=balance; data.hourAds++; data.todayAds++; save(); updateUI(); alert('✅ $0.001 Added!');
-}
-function watchAds(){
-  let hourLimit = data.isFirstHour ? 30 : 15;
-  if(data.hourAds >= hourLimit || data.todayAds>=165) return;
-  clickNumber++;
-  if(clickNumber%2==1){
-    const AdController = window.Adsgram.init({ blockId: "51933" });
-    AdController.show().then(r=>{ if(r.done) giveReward(); }).catch(()=>{ showMonetag(); });
-  } else { showMonetag(); }
-}
-function showMonetag(){ show_11955115().then(()=>{ giveReward(); }).catch(()=>{ alert('No ad, try again'); }); }
-updateUI();
-</script>
-</body>
-</html>
+  document.getElementById('adTotal').innerText = "₹" + balance.toFixed(2);
+  document.getElementById('amazonTotal').innerText = "₹" + (data.amazonCash||0).toFixed(2);
+  document.get
