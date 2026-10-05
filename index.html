@@ -93,7 +93,7 @@ function watchAds(){
   if(data.hourAds >= hourLimit || data.todayAds>=165) return;
   clickNumber++;
   if(clickNumber%2==1){ 
-    const AdController = window.Adsgram.init({ blockId: "int-52107" }); 
+    const AdController = window.Adsgram.init({ blockId: "task-52107" });
     AdController.show().then(r=>{ if(r.done) giveReward(); }).catch(()=>{ showMonetag(); }); 
   }else{ 
     showMonetag(); 
