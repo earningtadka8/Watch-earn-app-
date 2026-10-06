@@ -99,10 +99,10 @@ function updateUI(){
   
   // BONUS LOGIC TEXT
   let nextBonus = "";
-  if(data.todayAds < 20) nextBonus = `🔥 20 Ads dekho = ₹0.20 Bonus! Abhi ${data.todayAds}/20`;
-  else if(data.todayAds < 50) nextBonus = `🔥 50 Ads dekho = ₹0.50 Bonus! Abhi ${data.todayAds}/50`;
-  else if(data.todayAds < 100) nextBonus = `🔥 100 Ads dekho = ₹1.00 Bonus! Abhi ${data.todayAds}/100`;
-  else if(data.todayAds < 165) nextBonus = `👑 165 Ads dekho = ₹2.00 Mega Bonus! Abhi ${data.todayAds}/165`;
+  if(data.todayAds < 20) nextBonus = `🔥 20 Ads dekho = ₹0.0 Bonus! Abhi ${data.todayAds}/20`;
+  else if(data.todayAds < 50) nextBonus = `🔥 50 Ads dekho = ₹0.00 Bonus! Abhi ${data.todayAds}/50`;
+  else if(data.todayAds < 100) nextBonus = `🔥 100 Ads dekho = ₹0.00 Bonus! Abhi ${data.todayAds}/100`;
+  else if(data.todayAds < 165) nextBonus = `👑 165 Ads dekho = ₹1.00 Mega Bonus! Abhi ${data.todayAds}/165`;
   else nextBonus = `🎉 Aaj ka sara bonus mil gaya!`;
   document.getElementById('bonusInfo').innerText = nextBonus;
 
