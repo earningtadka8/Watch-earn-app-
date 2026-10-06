@@ -4,10 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Best Deals & Shopping - Cashback</title>
-<!-- Telegram Mini App -->
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 <script src="https://sad.adsgram.ai/js/sad.min.js"></script>
+
+<!-- Monetag 3 Zones - Mini App -->
+<script src='//libtl.com/sdk.js' data-zone='11968928' data-sdk='show_11968928'></script>
 <script src='//libtl.com/sdk.js' data-zone='11968926' data-sdk='show_11968926'></script>
+<script src='//libtl.com/sdk.js' data-zone='11968927' data-sdk='show_11968927'></script>
+
 <script>var cuelinks_pub_id = "11955115";</script>
 <script src="https://api.cuelinks.com/js/cuelinks.min.js"></script>
 <style>
@@ -53,7 +57,7 @@ body{font-family:Arial;background:#f2f2f2;padding:10px;margin:0}
 
 <div class="extraBox">
 <div style="display:flex;justify-content:space-between"><h4 style="margin:0;font-size:13px">🎁 Extra Cashback Zone</h4><span style="font-size:11px;background:#00ff88;color:black;padding:2px 8px;border-radius:20px" id="extraCount">0/60</span></div>
-<p style="font-size:10px;color:#aaa;margin:4px 0">Left 30 Adsgram + Right 30 Monetag = ₹3 Extra</p>
+<p style="font-size:10px;color:#aaa;margin:4px 0">Left 30 Adsgram + Right 30 Monetag Popup = ₹3 Extra</p>
 <div class="extraGrid">
 <div class="side"><div style="font-size:11px;text-align:center;margin-bottom:4px">📺 Left: Adsgram (30)</div><div class="dots" id="leftDots"></div><div class="progress"><div class="progressBar" id="leftBar"></div></div><p style="font-size:10px;text-align:center;margin:3px 0" id="leftText">0/30</p></div>
 <div class="side"><div style="font-size:11px;text-align:center;margin-bottom:4px">💰 Right: Monetag (30)</div><div class="dots" id="rightDots"></div><div class="progress"><div class="progressBar" id="rightBar" style="background:#ff9900"></div></div><p style="font-size:10px;text-align:center;margin:3px 0" id="rightText">0/30</p></div>
@@ -67,26 +71,19 @@ body{font-family:Arial;background:#f2f2f2;padding:10px;margin:0}
 <button onclick="shuffleProducts()" style="width:100%;margin-top:10px;padding:10px;border:1.5px dashed #111;background:white;border-radius:10px;font-weight:bold">🔄 Change Collection</button>
 </div>
 
-<p style="font-size:9px;text-align:center;color:#666;padding:12px;line-height:13px">As an Amazon Associate we earn from qualifying purchases. Best Deals & Shopping is not affiliated with Amazon. Cashback shown is for Flipkart via Cuelinks & Ads task only.</p>
-
 <script>
-// --- Telegram Init ---
 if(window.Telegram && Telegram.WebApp){ Telegram.WebApp.ready(); Telegram.WebApp.expand(); }
 
 const AMAZON_TAG = "earningtadka8-21";
 const ALL_CLOTHES = [
   {name:"Men Printed T-Shirt Combo Pack of 3", img:"https://m.media-amazon.com/images/I/71maWXZscfL._SX679_.jpg", kw:"men t-shirt combo", cb:10},
   {name:"Oversized T-Shirt Men Stylish", img:"https://m.media-amazon.com/images/I/61hLb3v2R5L._SY879_.jpg", kw:"oversized tshirt men", cb:11},
-  {name:"Polo T-Shirt Men Cotton", img:"https://m.media-amazon.com/images/I/71U1T1o2yjL._SY879_.jpg", kw:"polo tshirt men", cb:12},
   {name:"Women Crop Top Stylish", img:"https://m.media-amazon.com/images/I/61nHUVB2XJL._SY879_.jpg", kw:"women crop top", cb:8},
   {name:"Women Kurti Cotton Daily Wear", img:"https://m.media-amazon.com/images/I/81P2R6N4gJL._SY879_.jpg", kw:"women kurti cotton", cb:15},
   {name:"Men Casual Shirt", img:"https://m.media-amazon.com/images/I/61T1U2y2R5L._SY879_.jpg", kw:"men casual shirt", cb:17},
-  {name:"Men Formal Shirt Slim Fit", img:"https://m.media-amazon.com/images/I/71cF95y2R5L._SY879_.jpg", kw:"men formal shirt", cb:20},
-  {name:"Women Saree Silk Party Wear", img:"https://m.media-amazon.com/images/I/81U2R6N4gJL._SY879_.jpg", kw:"women saree silk", cb:22},
   {name:"Jeans For Men Slim Fit", img:"https://m.media-amazon.com/images/I/61T1U2y2R5L._SY879_.jpg", kw:"men jeans slim", cb:18},
-  {name:"Jeans For Women High Waist", img:"https://m.media-amazon.com/images/I/71nHUVB2XJL._SY879_.jpg", kw:"women jeans", cb:17},
-  {name:"Hoodie For Men Winter Warm", img:"https://m.media-amazon.com/images/I/71U1T1o2yjL._SY879_.jpg", kw:"hoodie men winter", cb:16},
-  {name:"Jacket For Men Winter", img:"https://m.media-amazon.com/images/I/61hLb3v2R5L._SY879_.jpg", kw:"jacket men winter", cb:25},
+  {name:"Women Saree Silk Party Wear", img:"https://m.media-amazon.com/images/I/81U2R6N4gJL._SY879_.jpg", kw:"women saree silk", cb:22},
+  {name:"Hoodie Men Winter", img:"https://m.media-amazon.com/images/I/61hLb3v2R5L._SY879_.jpg", kw:"hoodie men", cb:14},
 ];
 
 let wallet = JSON.parse(localStorage.getItem('cashbackWallet')||'{"total":0}');
@@ -94,87 +91,8 @@ let leftDone = parseInt(localStorage.getItem('leftDone')||'0');
 let rightDone = parseInt(localStorage.getItem('rightDone')||'0');
 
 function save(){ localStorage.setItem('cashbackWallet', JSON.stringify(wallet)); localStorage.setItem('leftDone', leftDone); localStorage.setItem('rightDone', rightDone); updateUI(); }
-
 function updateUI(){
   document.getElementById('walletBal').innerText="₹"+wallet.total.toFixed(2);
   document.getElementById('extraCount').innerText=(leftDone+rightDone)+"/60";
   document.getElementById('leftText').innerText=leftDone+"/30"; document.getElementById('rightText').innerText=rightDone+"/30";
-  document.getElementById('leftBar').style.width=(leftDone/30*100)+"%"; document.getElementById('rightBar').style.width=(rightDone/30*100)+"%";
-  let l="", r=""; for(let i=0;i<30;i++){ l+=`<div class="dot ${i<leftDone?'done':''}">${i<leftDone?'✓':i+1}</div>`; r+=`<div class="dot ${i<rightDone?'done':''}" style="${i<rightDone?'background:#ff9900;color:white':''}">${i<rightDone?'✓':i+1}</div>`; }
-  document.getElementById('leftDots').innerHTML=l; document.getElementById('rightDots').innerHTML=r;
-  let btn=document.getElementById('extraBtn');
-  if(leftDone>=30&&rightDone>=30){ btn.innerText="✅ 60 Done - ₹3 Added!"; btn.disabled=true; } else { btn.innerText=`▶️ Continue Extra Cashback (${leftDone+rightDone}/60)`; }
-  document.getElementById('timeInfo').innerText=new Date().toLocaleTimeString();
-  let wdBtn=document.getElementById('wdBtn'); 
-  if(wallet.total>=200){ wdBtn.style.background="#00ff88"; wdBtn.style.color="black"; document.getElementById('wdInfo').innerText="✅ Withdraw Ready"; } 
-  else { wdBtn.style.background="grey"; wdBtn.style.color="white"; document.getElementById('wdInfo').innerText=`Min ₹200 - Abhi ₹${wallet.total.toFixed(2)} hai`; }
-}
-
-function getRandomProducts(){ let shuffled=[...ALL_CLOTHES].sort(()=>0.5-Math.random()); return shuffled.slice(0,8); }
-
-function render(){
-  let products=getRandomProducts();
-  let html="";
-  products.forEach((p,i)=>{
-    if(i==2) html+=`<div style="grid-column:span 2;background:#fffbe6;border:1.5px dashed #ff9900;border-radius:10px;padding:8px;text-align:center"><b>📢 Sponsored Offer</b><button onclick="showAdOnly()" style="width:100%;margin-top:5px;padding:8px;background:#111;color:white;border:none;border-radius:8px">View Offer & Earn ₹0.10</button></div>`;
-    let store = Math.random()>0.5?"amazon":"flipkart";
-    let cbText = store=='amazon' ? '🔥 Best Deal' : `₹${p.cb} Cashback`;
-    let safeImg = p.img;
-    html+=`<div class="product">${i<2?'<span class="newBadge">NEW</span>':''}<img src="${safeImg}" onerror="this.src='https://via.placeholder.com/150?text=Deal'"><p>${p.name}</p><div style="font-size:12px;font-weight:bold">Best Price <span class="cashback">${cbText}</span></div><a class="${store}" onclick="buyProduct('${p.kw}','${store}',${p.cb})">View on ${store=='amazon'?'Amazon':'Flipkart'}</a></div>`;
-  });
-  document.getElementById('grid').innerHTML=html;
-  document.getElementById('collectionInfo').innerText=`🔥 Today: ${new Date().toLocaleDateString()} - ${products.length} New Deals`;
-}
-
-function openLink(url){
-  if(window.Telegram && Telegram.WebApp){ Telegram.WebApp.openLink(url); } 
-  else { window.open(url,'_blank'); }
-}
-
-function buyProduct(kw, store, cb){
-  let link = store=="amazon" ? `https://www.amazon.in/s?k=${encodeURIComponent(kw)}&tag=${AMAZON_TAG}` : `https://www.flipkart.com/search?q=${encodeURIComponent(kw)}`;
-  if(typeof show_11955115 === 'function'){
-    show_11955115().then(()=>{
-      try{
-        const AdController = window.Adsgram.init({ blockId: "int-52274" });
-        AdController.show().then(()=>{ 
-          openLink(link); 
-          if(store !== 'amazon'){ wallet.total+=cb; save(); alert(`✅ Cashback Tracked! ₹${cb} added.`); }
-        }).catch(()=>{ 
-          openLink(link); 
-          if(store !== 'amazon'){ wallet.total+=cb; save(); }
-        });
-      }catch(e){ openLink(link); if(store !== 'amazon'){ wallet.total+=cb; save(); } }
-    }).catch(()=>{ openLink(link); if(store !== 'amazon'){ wallet.total+=cb; save(); } });
-  } else {
-    openLink(link);
-    if(store !== 'amazon'){ wallet.total+=cb; save(); }
-  }
-}
-
-function showAdOnly(){
-  if(typeof show_11955115 === 'function'){
-    show_11955115().then(()=>{ alert("Thanks! Ad watched"); wallet.total+=0.10; save(); }).catch(()=>{ alert("Ad not available"); });
-  }
-}
-
-function startExtra(){
-  if(leftDone<30){
-    try{
-      const AdController = window.Adsgram.init({ blockId: "int-52274" });
-      AdController.show().then(()=>{ leftDone++; wallet.total+=0.05; save(); if(leftDone+rightDone>=60){ wallet.total+=3; save(); } }).catch(()=>{});
-    }catch(e){}
-  } else if(rightDone<30){
-    if(typeof show_11955115 === 'function'){
-      show_11955115().then(()=>{ rightDone++; wallet.total+=0.05; save(); if(leftDone+rightDone>=60){ wallet.total+=3; save(); } });
-    }
-  }
-}
-
-function shuffleProducts(){ render(); }
-function withdraw(){ if(wallet.total>=200){ let upi=prompt("UPI ID daalo:"); if(upi) alert("Request sent for "+upi); } else alert("Min ₹200 needed"); }
-
-updateUI(); render();
-</script>
-</body>
-                                                                                                                                                                          </html>
+  document.getElementById('leftBar').style.width=(leftDone/30*100)+"%"; document.getElementById('rightBar').style.width=(rightDone/30
