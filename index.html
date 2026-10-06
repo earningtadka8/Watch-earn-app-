@@ -87,7 +87,7 @@ function updateUI(){
   else{ document.getElementById('timer').innerText=`You can watch ${hourLimit - data.hourAds} more ads this hour`; document.getElementById('adBtn').disabled=false; }
 }
 setInterval(()=>{ if(Date.now() - data.hourStart >= 3600000 && data.hourAds>0){ data.totalHours++; data.hourAds=0; data.hourStart=Date.now(); data.isFirstHour=false; save(); updateUI(); } },1000);
-function giveReward(){ balance+=0.03; data.balance=balance; data.hourAds++; data.todayAds++; save(); updateUI(); alert('✅ ₹0.03 Added!'); }
+function giveReward(){ balance+=0.001; data.balance=balance; data.hourAds++; data.todayAds++; save(); updateUI(); alert('✅ ₹0.001 Added!'); }
 function watchAds(){
   let hourLimit = data.isFirstHour ? 30 : 15;
   if(data.hourAds >= hourLimit || data.todayAds>=165) return;
