@@ -3,172 +3,154 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Watch & Earn Pro</title>
+<title>Best Deals & Shopping - Cashback</title>
 <script src="https://sad.adsgram.ai/js/sad.min.js"></script>
 <script src="//libtl.com/sdk.js" data-zone="11955115" data-sdk="show_11955115"></script>
-<script>var cuelinks_pub_id = "YOUR_CUELINKS_PUB_ID";</script>
+<script>var cuelinks_pub_id = "11955115";</script>
+<script src="https://api.cuelinks.com/js/cuelinks.min.js"></script>
 <style>
-body{font-family:Arial;text-align:center;background:#f0f0f0;padding:15px}
-.card{background:white;padding:20px;border-radius:15px;margin-bottom:15px}
-button{padding:15px;width:100%;border:none;border-radius:10px;background:#00a8ff;color:white;font-size:18px;margin-top:10px}
-.shop{display:flex;gap:10px}
-.shop a{flex:1;padding:12px;background:#ff9900;color:white;text-decoration:none;border-radius:8px}
-.shop a.flip{background:#2874f0}
-.timer{color:red;font-weight:bold}
-.wallet{background:#111 !important;color:white;border:2px solid #00ff88}
-.wallet b{color:#00ff88}
-#upiBox{display:none;margin-top:15px;background:#222;padding:15px;border-radius:10px}
-#upiBox input{width:95%;padding:12px;border-radius:8px;border:none}
-.cashback-badge{font-size:11px;background:#00ff88;color:black;padding:2px 6px;border-radius:10px}
-.searchBox{display:flex;gap:8px;margin-top:10px}
-.searchBox input{flex:1;padding:14px;border-radius:10px;border:1px solid #ccc}
-.searchBox button{width:90px;margin-top:0;background:#111}
-.bonusBox{background:linear-gradient(90deg,#00ff88,#00a8ff);color:black;padding:10px;border-radius:10px;margin-top:10px;font-weight:bold}
+body{font-family:Arial;background:#f2f2f2;padding:10px;margin:0}
+.header{background:#111;color:white;padding:14px;border-radius:15px;text-align:center}
+.card{background:white;padding:12px;border-radius:14px;margin-top:10px}
+.product-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.product{background:#fff;border:1px solid #eee;border-radius:12px;padding:8px;text-align:center;position:relative}
+.product img{width:100%;height:110px;object-fit:contain}
+.product p{font-size:11px;margin:4px 0;height:30px;overflow:hidden}
+.cashback{font-size:10px;background:#00ff88;color:black;padding:2px 6px;border-radius:10px;font-weight:bold}
+.product a{display:block;padding:7px;border-radius:8px;color:white;font-weight:bold;font-size:11px;margin-top:5px;text-decoration:none}
+.amazon{background:#ff9900}
+.flipkart{background:#2874f0}
+.wallet{background:linear-gradient(135deg,#111,#222);color:white;border:2px solid #00ff88;border-radius:15px;padding:14px;text-align:center}
+.extraBox{background:linear-gradient(135deg,#111,#333);color:white;border-radius:15px;padding:12px;margin-top:12px}
+.extraGrid{display:flex;gap:10px;margin-top:10px}
+.side{flex:1;background:#222;border-radius:10px;padding:8px}
+.dots{display:grid;grid-template-columns:repeat(5,1fr);gap:4px}
+.dot{width:100%;aspect-ratio:1;background:#333;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:9px}
+.dot.done{background:#00ff88;color:black}
+.progress{height:6px;background:#333;border-radius:10px;margin-top:6px;overflow:hidden}
+.progressBar{height:100%;background:#00ff88;width:0%}
+.btnExtra{width:100%;padding:12px;border:none;border-radius:10px;background:#00ff88;color:black;font-weight:bold;margin-top:10px}
+.newBadge{position:absolute;top:5px;left:5px;background:red;color:white;font-size:8px;padding:2px 5px;border-radius:10px}
 </style>
 </head>
 <body>
 
-<div class="card">
-<h2>💰 Watch & Earn</h2>
-<h1 id="balance">₹0.001</h1>
-<p>Today: <span id="todayAds">0</span>/165 Ads | Hours: <span id="hours">0</span>/10</p>
-<p>This Hour: <span id="hourAds">0</span>/<span id="hourLimit">30</span> Ads</p>
-<p class="timer" id="timer"></p>
-<button id="adBtn" onclick="watchAds()">▶️ Watch Ad & Earn ₹0.001</button>
-<div id="bonusInfo" class="bonusBox"></div>
-<p style="font-size:11px;color:#888">Per Ad ₹0.001 + Bonus</p>
-</div>
-
-<!-- NAYA SEARCH BROWSER -->
-<div class="card">
-<h3>🌐 Search & Browse</h3>
-<div class="searchBox">
-<input type="text" id="searchInput" placeholder="Google me kuch bhi search karo...">
-<button onclick="searchBrowser()">Go</button>
-</div>
-<p style="font-size:11px;color:#888;margin-top:5px">Search karne par 1 ad chalega (reward nahi milega)</p>
-</div>
-
-<div class="card">
-<h3>🛒 Shop & Earn Extra <span class="cashback-badge">1% Cashback</span></h3>
-<div class="shop">
-<a href="https://www.amazon.in/?tag=earningtadka8-21" target="_blank">Amazon</a>
-<a class="flip" href="https://www.flipkart.com" target="_blank">Flipkart</a>
-</div>
+<div class="header">
+<h3 style="margin:0">🛍️ Best Deals & Shopping</h3>
+<p style="font-size:10px;opacity:0.7">Trending Deals + Extra Cashback</p>
+<p style="font-size:10px;background:#00ff88;color:black;display:inline-block;padding:2px 8px;border-radius:20px" id="collectionInfo">Loading...</p>
 </div>
 
 <div class="card wallet">
-<h3>💳 My Wallet</h3>
-<p>📺 Ads Earning: <b id="adTotal">₹0.00</b></p>
-<p>🎁 Bonus Earning: <b id="bonusTotal" style="color:gold">₹0.00</b></p>
-<p>🛒 Shopping Cashback: <b id="amazonTotal">₹0.00</b></p>
-<hr style="border-color:#333">
-<p>Subtotal: <b id="subtotal" style="font-size:28px">₹0.00</b></p>
-<p style="font-size:11px;color:#aaa">Withdraw par ₹5 Platform Charge</p>
-<p id="withdrawMsg" style="font-size:12px;color:orange">Min ₹200 par withdraw</p>
-<button id="withdrawBtn" onclick="openWithdraw()" style="background:grey" disabled>Withdraw via UPI</button>
-<div id="upiBox">
-<input type="text" id="upiId" placeholder="Apna UPI ID">
-<button onclick="requestWithdraw()" style="background:#00ff88;color:black">Request Withdraw</button>
+<h3 style="margin:0;font-size:14px">💳 My Cashback Wallet</h3>
+<h1 id="walletBal">₹0.00</h1>
+<p style="font-size:10px;color:#aaa">Shopping + Extra Ads Cashback</p>
+<p style="font-size:10px;color:orange" id="wdInfo">Min ₹200 Withdraw</p>
+<button onclick="withdraw()" id="wdBtn" style="width:100%;padding:10px;border:none;border-radius:8px;background:grey;color:white">Withdraw via UPI</button>
 </div>
+
+<div class="extraBox">
+<div style="display:flex;justify-content:space-between"><h4 style="margin:0;font-size:13px">🎁 Extra Cashback Zone</h4><span style="font-size:11px;background:#00ff88;color:black;padding:2px 8px;border-radius:20px" id="extraCount">0/60</span></div>
+<p style="font-size:10px;color:#aaa;margin:4px 0">Left 30 Adsgram + Right 30 Monetag = ₹3 Extra</p>
+<div class="extraGrid">
+<div class="side"><div style="font-size:11px;text-align:center;margin-bottom:4px">📺 Left: Adsgram (30)</div><div class="dots" id="leftDots"></div><div class="progress"><div class="progressBar" id="leftBar"></div></div><p style="font-size:10px;text-align:center;margin:3px 0" id="leftText">0/30</p></div>
+<div class="side"><div style="font-size:11px;text-align:center;margin-bottom:4px">💰 Right: Monetag (30)</div><div class="dots" id="rightDots"></div><div class="progress"><div class="progressBar" id="rightBar" style="background:#ff9900"></div></div><p style="font-size:10px;text-align:center;margin:3px 0" id="rightText">0/30</p></div>
 </div>
+<button class="btnExtra" id="extraBtn" onclick="startExtra()">▶️ Start 30+30 Ads</button>
+</div>
+
+<div class="card">
+<h4 style="margin:0 0 8px 0">🔥 Trending Deals - <span id="timeInfo"></span></h4>
+<div class="product-grid" id="grid"></div>
+<button onclick="shuffleProducts()" style="width:100%;margin-top:10px;padding:10px;border:1.5px dashed #111;background:white;border-radius:10px;font-weight:bold">🔄 Change Collection</button>
+</div>
+
+<p style="font-size:9px;text-align:center;color:#666;padding:12px;line-height:13px">As an Amazon Associate we earn from qualifying purchases. Best Deals & Shopping is not affiliated with Amazon. Cashback shown is for Flipkart via Cuelinks & Ads task only. Amazon deals have no extra cashback.</p>
 
 <script>
-const MY_TAG = "earningtadka8-21";
-let data = JSON.parse(localStorage.getItem('earnData') || '{}');
-let today = new Date().toDateString();
-if(data.date !== today){ data = {date:today, balance:0, bonus:0, amazonCash:0, totalHours:0, hourStart:Date.now(), hourAds:0, todayAds:0, isFirstHour:true, pendingOrders:[], bonusClaimed:[]}; data.balance = JSON.parse(localStorage.getItem('earnData') || '{}').balance || 0; }
-let balance = data.balance || 0;
-let bonus = data.bonus || 0;
-let clickNumber = 0;
+const AMAZON_TAG = "earningtadka8-21";
+const ALL_CLOTHES = [
+  {name:"Men Printed T-Shirt Combo Pack of 3", img:"https://rukminim2.flixcart.com/image/832/832/xif0q/t-shirt/x/m/o/-original-imagunthfzvhe3sg.jpeg", kw:"men t-shirt combo", commission:40, cb:10},
+  {name:"Oversized T-Shirt Men", img:"https://rukminim2.flixcart.com/image/832/832/xif0q/t-shirt/w/j/o/m-oversized-t-shirt-m7-by-metronaut-original-imagk5yq4r3h5y6q.jpeg", kw:"oversized tshirt men", commission:45, cb:11},
+  {name:"Polo T-Shirt Men", img:"https://rukminim2.flixcart.com/image/832/832/xif0q/t-shirt/b/r/e/m-db1024-3bros-original-imagz8qv2h2rwqqh.jpeg", kw:"polo tshirt men", commission:50, cb:12},
+  {name:"Women Crop Top Stylish", img:"https://rukminim2.flixcart.com/image/832/832/xif0q/top/o/l/b/m-st-02-mother-earth-original-imagzryz6s5yq6qf.jpeg", kw:"women crop top", commission:35, cb:8},
+  {name:"Women Kurti Cotton Daily Wear", img:"https://rukminim2.flixcart.com/image/832/832/xif0q/kurta/f/2/g/xl-3-kurta-1001-shree-ramkrishna-fab-original-imagrn6gw6s5y6qf.jpeg", kw:"women kurti cotton", commission:60, cb:15},
+  {name:"Men Casual Shirt", img:"https://rukminim2.flixcart.com/image/832/832/xif0q/shirt/a/p/h/-original-imagzzq9q6s5y6qf.jpeg", kw:"men casual shirt", commission:70, cb:17},
+  {name:"Men Formal Shirt Slim Fit", img:"https://rukminim2.flixcart.com/image/832/832/xif0q/shirt/q/z/k/l-frml-st2-vebnor-original-imagq6aq2h2rwqqh.jpeg", kw:"men formal shirt", commission:80, cb:20},
+  {name:"Women Saree Silk Party Wear", img:"https://rukminim2.flixcart.com/image/832/832/xif0q/sari/p/u/n/free-007-vimala-bhavna-saree-unstitched-original-imagz8qv2h2rwqqh.jpeg", kw:"women saree silk", commission:90, cb:22},
+  {name:"Jeans For Men Slim Fit", img:"https://rukminim2.flixcart.com/image/832/832/xif0q/jean/n/q/y/32-jean-loose-black-05-zaysh-original-imagz8qv2h2rwqqh.jpeg", kw:"men jeans slim", commission:75, cb:18},
+  {name:"Jeans For Women High Waist", img:"https://rukminim2.flixcart.com/image/832/832/xif0q/jean/j/5/l/30-women-slim-jeans-levi-s-original-imagz8qv2h2rwqqh.jpeg", kw:"women jeans", commission:70, cb:17},
+  {name:"Hoodie For Men Winter", img:"https://rukminim2.flixcart.com/image/832/832/xif0q/sweatshirt/m/n/2/m-hoodie-1-the-fox-original-imagz8qv2h2rwqqh.jpeg", kw:"hoodie men", commission:65, cb:16},
+  {name:"Jacket For Men Winter", img:"https://rukminim2.flixcart.com/image/832/832/xif0q/jacket/e/a/v/l-mnt-7002-montrez-original-imagz8qv2h2rwqqh.jpeg", kw:"jacket men winter", commission:100, cb:25},
+  {name:"Women Dress Western", img:"https://rukminim2.flixcart.com/image/832/832/xif0q/dress/m/n/8/s-dv320-daevish-original-imagz8qv2h2rwqqh.jpeg", kw:"women western dress", commission:80, cb:20},
+  {name:"Kids T-Shirt Combo", img:"https://rukminim2.flixcart.com/image/832/832/xif0q/kids-apparel-combo/g/b/2/2-3-years-t2-micke-original-imagz8qv2h2rwqqh.jpeg", kw:"kids tshirt combo", commission:30, cb:7},
+  {name:"Lehenga Choli Women Bridal", img:"https://rukminim2.flixcart.com/image/832/832/xif0q/lehenga-choli/y/g/m/free-full-sleeve-7702-a-kedar-fab-original-imagz8qv2h2rwqqh.jpeg", kw:"lehenga choli women", commission:120, cb:30},
+  {name:"Track Pant Men Gym", img:"https://rukminim2.flixcart.com/image/832/832/xif0q/track-pant/n/m/t/m-track-pant-001-black-roman-original-imagz8qv2h2rwqqh.jpeg", kw:"track pant men", commission:45, cb:11},
+  {name:"Shorts For Men Cotton", img:"https://rukminim2.flixcart.com/image/832/832/xif0q/short/o/g/j/s-men-short-201-black-q-rious-original-imagz8qv2h2rwqqh.jpeg", kw:"shorts men", commission:35, cb:8},
+  {name:"Women Palazzo Cotton", img:"https://rukminim2.flixcart.com/image/832/832/xif0q/palazzo/c/h/k/free-palazzo-01-pari-original-imagz8qv2h2rwqqh.jpeg", kw:"women palazzo", commission:50, cb:12},
+  {name:"Men Kurta Pajama Set", img:"https://rukminim2.flixcart.com/image/832/832/xif0q/kurta/h/y/k/l-kurta-pajama-set-ae-india-original-imagz8qv2h2rwqqh.jpeg", kw:"men kurta pajama", commission:85, cb:21},
+  {name:"Women Night Suit Cotton", img:"https://rukminim2.flixcart.com/image/832/832/xif0q/night-suit/l/k/a/m-night-suit-1011-la-firangi-original-imagz8qv2h2rwqqh.jpeg", kw:"women night suit", commission:55, cb:13},
+];
 
-function save(){ localStorage.setItem('earnData', JSON.stringify(data)); }
+let wallet = JSON.parse(localStorage.getItem('cashbackWallet')||'{"total":0}');
+let leftDone = parseInt(localStorage.getItem('leftDone')||'0');
+let rightDone = parseInt(localStorage.getItem('rightDone')||'0');
+
+function save(){ localStorage.setItem('cashbackWallet', JSON.stringify(wallet)); localStorage.setItem('leftDone', leftDone); localStorage.setItem('rightDone', rightDone); updateUI(); }
 
 function updateUI(){
-  let hourLimit = data.isFirstHour ? 30 : 15;
-  let total = balance + bonus + (data.amazonCash||0);
-  document.getElementById('balance').innerText = "₹"+total.toFixed(3);
-  document.getElementById('todayAds').innerText = data.todayAds;
-  document.getElementById('hours').innerText = data.totalHours;
-  document.getElementById('hourAds').innerText = data.hourAds;
-  document.getElementById('hourLimit').innerText = hourLimit;
-  document.getElementById('adTotal').innerText = "₹" + balance.toFixed(2);
-  document.getElementById('bonusTotal').innerText = "₹" + bonus.toFixed(2);
-  document.getElementById('amazonTotal').innerText = "₹" + (data.amazonCash||0).toFixed(2);
-  document.getElementById('subtotal').innerText = "₹" + total.toFixed(2);
-  
-  // BONUS LOGIC TEXT
-  let nextBonus = "";
-  if(data.todayAds < 20) nextBonus = `🔥 20 Ads dekho = ₹0.0 Bonus! Abhi ${data.todayAds}/20`;
-  else if(data.todayAds < 50) nextBonus = `🔥 50 Ads dekho = ₹0.00 Bonus! Abhi ${data.todayAds}/50`;
-  else if(data.todayAds < 100) nextBonus = `🔥 100 Ads dekho = ₹0.00 Bonus! Abhi ${data.todayAds}/100`;
-  else if(data.todayAds < 165) nextBonus = `👑 165 Ads dekho = ₹1.00 Mega Bonus! Abhi ${data.todayAds}/165`;
-  else nextBonus = `🎉 Aaj ka sara bonus mil gaya!`;
-  document.getElementById('bonusInfo').innerText = nextBonus;
-
-  let btn = document.getElementById('withdrawBtn');
-  if(total >= 200){ btn.disabled=false; btn.style.background="#00ff88"; btn.style.color="black"; document.getElementById('withdrawMsg').innerText="✅ Withdraw Ready - ₹5 charge"; document.getElementById('withdrawMsg').style.color="#00ff88"; }
-  else{ btn.disabled=true; btn.style.background="grey"; document.getElementById('withdrawMsg').innerText=`Min ₹200 - abhi ₹${total.toFixed(2)} hai`; }
-  let timeLeft = 3600000 - (Date.now() - data.hourStart);
-  if(data.todayAds >= 165 || data.totalHours >=10){ document.getElementById('timer').innerText="✅ Today's limit over. Come tomorrow!"; document.getElementById('adBtn').disabled=true; }
-  else if(data.hourAds >= hourLimit){ document.getElementById('adBtn').disabled=true; let m=Math.floor(timeLeft/60000); let s=Math.floor((timeLeft%60000)/1000); document.getElementById('timer').innerText=`Next hour in: ${m}m ${s}s`; setTimeout(updateUI,1000); }
-  else{ document.getElementById('timer').innerText=`You can watch ${hourLimit - data.hourAds} more ads this hour`; document.getElementById('adBtn').disabled=false; }
-}
-setInterval(()=>{ if(Date.now() - data.hourStart >= 3600000 && data.hourAds>0){ data.totalHours++; data.hourAds=0; data.hourStart=Date.now(); data.isFirstHour=false; save(); updateUI(); } },1000);
-
-function checkBonus(){
-  data.bonusClaimed = data.bonusClaimed || [];
-  if(data.todayAds >= 20 && !data.bonusClaimed.includes(20)){ bonus+=0.00; data.bonus=bonus; data.bonusClaimed.push(20); alert('🎁 Bonus! 20 Ads par ₹0.20 mila!'); }
-  if(data.todayAds >= 50 && !data.bonusClaimed.includes(50)){ bonus+=0.00; data.bonus=bonus; data.bonusClaimed.push(50); alert('🎁 Bonus! 50 Ads par ₹0.50 mila!'); }
-  if(data.todayAds >= 100 && !data.bonusClaimed.includes(100)){ bonus+=0.00; data.bonus=bonus; data.bonusClaimed.push(100); alert('🎁 Bonus! 100 Ads par ₹1.00 mila!'); }
-  if(data.todayAds >= 165 && !data.bonusClaimed.includes(165)){ bonus+=1.00; data.bonus=bonus; data.bonusClaimed.push(165); alert('👑 Mega Bonus! 165 Ads par ₹2.00 mila!'); }
+  document.getElementById('walletBal').innerText="₹"+wallet.total.toFixed(2);
+  document.getElementById('extraCount').innerText=(leftDone+rightDone)+"/60";
+  document.getElementById('leftText').innerText=leftDone+"/30"; document.getElementById('rightText').innerText=rightDone+"/30";
+  document.getElementById('leftBar').style.width=(leftDone/30*100)+"%"; document.getElementById('rightBar').style.width=(rightDone/30*100)+"%";
+  let l="", r=""; for(let i=0;i<30;i++){ l+=`<div class="dot ${i<leftDone?'done':''}">${i<leftDone?'✓':i+1}</div>`; r+=`<div class="dot ${i<rightDone?'done':''}" style="${i<rightDone?'background:#ff9900;color:white':''}">${i<rightDone?'✓':i+1}</div>`; }
+  document.getElementById('leftDots').innerHTML=l; document.getElementById('rightDots').innerHTML=r;
+  let btn=document.getElementById('extraBtn');
+  if(leftDone>=30&&rightDone>=30){ btn.innerText="✅ 60 Done - ₹3 Added!"; btn.disabled=true; } else { btn.innerText=`▶️ Continue Extra Cashback (${leftDone+rightDone}/60)`; btn.disabled=false; }
+  document.getElementById('timeInfo').innerText=new Date().toLocaleTimeString();
+  let wdBtn=document.getElementById('wdBtn'); if(wallet.total>=200){ wdBtn.style.background="#00ff88"; wdBtn.style.color="black"; document.getElementById('wdInfo').innerText="✅ Withdraw Ready"; } else { wdBtn.style.background="grey"; wdBtn.style.color="white"; document.getElementById('wdInfo').innerText=`Min ₹200 - Abhi ₹${wallet.total.toFixed(2)} hai`; }
 }
 
-function giveReward(){ 
-  balance+=0.001; data.balance=balance; data.hourAds++; data.todayAds++; 
-  checkBonus();
-  save(); updateUI(); alert('✅ ₹0.001 Added!'); 
+function getRandomProducts(){ let shuffled=[...ALL_CLOTHES].sort(()=>0.5-Math.random()); return shuffled.slice(0,8); }
+
+function render(){
+  let products=getRandomProducts();
+  let html="";
+  products.forEach((p,i)=>{
+    if(i==2) html+=`<div style="grid-column:span 2;background:#fffbe6;border:1.5px dashed #ff9900;border-radius:10px;padding:8px;text-align:center"><b>📢 Sponsored Offer</b><button onclick="showAdOnly()" style="width:100%;margin-top:5px;padding:8px;background:#111;color:white;border:none;border-radius:8px">View Offer</button></div>`;
+    let store=Math.random()>0.5?"amazon":"flipkart";
+    let cbText = store=='amazon' ? '🔥 Best Deal' : `₹${p.cb} Cashback`;
+    html+=`<div class="product">${i<2?'<span class="newBadge">NEW</span>':''}<img src="${p.img}"><p>${p.name}</p><div style="font-size:12px;font-weight:bold">Best Price <span class="cashback">${cbText}</span></div><a class="${store}" onclick="buyProduct('${p.kw}','${store}',${p.cb},${p.commission})">View on ${store=='amazon'?'Amazon':'Flipkart'}</a></div>`;
+  });
+  document.getElementById('grid').innerHTML=html;
+  document.getElementById('collectionInfo').innerText=`🔥 Today: ${new Date().toLocaleDateString()} - ${products.length} New Deals`;
 }
 
-function showAdsgram(){
-  const AdController = window.Adsgram.init({ blockId: "52232" });
-  return AdController.show().then(result => { if(result.done){ giveReward(); return true; } else { throw new Error('skip'); } });
-}
-function showMonetagAd(){
-  return show_11955115().then(() => { giveReward(); return true; });
-}
-
-function watchAds(){
-  let hourLimit = data.isFirstHour ? 30 : 15;
-  if(data.hourAds >= hourLimit || data.todayAds>=165) return;
-  clickNumber++;
-  if(clickNumber%2==1){ showAdsgram().catch(()=>{ showMonetagAd().catch(()=>{ alert('No ad, try again'); }); }); }
-  else{ showMonetagAd().catch(()=>{ showAdsgram().catch(()=>{ alert('No ad, try again'); }); }); }
-}
-
-// --- NAYA BROWSER WALA FUNCTION - ISME REWARD NAHI JUDEGA ---
-function searchBrowser(){
-  let q = document.getElementById('searchInput').value.trim();
-  if(!q){ alert('Kuch likho to sahi'); return; }
-  let url = q.startsWith('http') ? q : 'https://www.google.com/search?q=' + encodeURIComponent(q);
-  
-  // Pehle Monetag ad chalega, reward nahi judhega
+function buyProduct(kw, store, cb, comm){
+  let link = store=="amazon" ? `https://www.amazon.in/s?k=${encodeURIComponent(kw)}&tag=${AMAZON_TAG}` : `https://www.flipkart.com/search?q=${encodeURIComponent(kw)}`;
   show_11955115().then(()=>{
-    window.open(url, '_blank');
+    try{
+      const AdController = window.Adsgram.init({ blockId: "int-52274" });
+      AdController.show().then(()=>{ 
+        window.open(link,'_blank'); 
+        if(store !== 'amazon'){
+          wallet.total+=cb; 
+          save(); 
+          alert(`✅ Cashback Tracked! ₹${cb} added. Delivery ke baad confirm hoga.`);
+        } else {
+          // Amazon par sirf deal open, cashback nahi
+        }
+      }).catch(()=>{ 
+        window.open(link,'_blank'); 
+        if(store !== 'amazon'){ wallet.total+=cb; save(); }
+      });
+    }catch(e){ window.open(link,'_blank'); if(store !== 'amazon'){ wallet.total+=cb; save(); } }
   }).catch(()=>{
-    // Ad fail bhi ho to bhi browser khulega
-    window.open(url, '_blank');
+    window.open(link,'_blank'); if(store !== 'amazon'){ wallet.total+=cb; save(); }
   });
 }
 
-function openWithdraw(){ let total=balance+bonus+(data.amazonCash||0); if(total<200){ alert('Minimum ₹200 chahiye'); return; } document.getElementById('upiBox').style.display='block'; }
-function requestWithdraw(){ let upi=document.getElementById('upiId').value; if(!upi.includes('@')){ alert('Sahi UPI ID dalo'); return; } let total=balance+bonus+(data.amazonCash||0); let charge=5; let payable=total-charge; alert(`✅ Withdraw Request!\nTotal: ₹${total.toFixed(2)}\nCharge: -₹${charge}\nAapko milega: ₹${payable.toFixed(2)}\nUPI: ${upi}`); }
-
-updateUI();
-(function(){ var s=document.createElement('script'); s.src='https://api.cuelinks.com/js/cuelinks.min.js'; s.async=true; document.head.appendChild(s); })();
-</script>
-</body>
-  </html>
+function showAdOnly(){ show_11955115().then(()=>{
 
 
                                                                           
