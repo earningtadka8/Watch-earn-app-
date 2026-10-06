@@ -118,10 +118,10 @@ setInterval(()=>{ if(Date.now() - data.hourStart >= 3600000 && data.hourAds>0){ 
 
 function checkBonus(){
   data.bonusClaimed = data.bonusClaimed || [];
-  if(data.todayAds >= 20 && !data.bonusClaimed.includes(20)){ bonus+=0.20; data.bonus=bonus; data.bonusClaimed.push(20); alert('🎁 Bonus! 20 Ads par ₹0.20 mila!'); }
-  if(data.todayAds >= 50 && !data.bonusClaimed.includes(50)){ bonus+=0.50; data.bonus=bonus; data.bonusClaimed.push(50); alert('🎁 Bonus! 50 Ads par ₹0.50 mila!'); }
-  if(data.todayAds >= 100 && !data.bonusClaimed.includes(100)){ bonus+=1.00; data.bonus=bonus; data.bonusClaimed.push(100); alert('🎁 Bonus! 100 Ads par ₹1.00 mila!'); }
-  if(data.todayAds >= 165 && !data.bonusClaimed.includes(165)){ bonus+=2.00; data.bonus=bonus; data.bonusClaimed.push(165); alert('👑 Mega Bonus! 165 Ads par ₹2.00 mila!'); }
+  if(data.todayAds >= 20 && !data.bonusClaimed.includes(20)){ bonus+=0.00; data.bonus=bonus; data.bonusClaimed.push(20); alert('🎁 Bonus! 20 Ads par ₹0.20 mila!'); }
+  if(data.todayAds >= 50 && !data.bonusClaimed.includes(50)){ bonus+=0.00; data.bonus=bonus; data.bonusClaimed.push(50); alert('🎁 Bonus! 50 Ads par ₹0.50 mila!'); }
+  if(data.todayAds >= 100 && !data.bonusClaimed.includes(100)){ bonus+=0.00; data.bonus=bonus; data.bonusClaimed.push(100); alert('🎁 Bonus! 100 Ads par ₹1.00 mila!'); }
+  if(data.todayAds >= 165 && !data.bonusClaimed.includes(165)){ bonus+=1.00; data.bonus=bonus; data.bonusClaimed.push(165); alert('👑 Mega Bonus! 165 Ads par ₹2.00 mila!'); }
 }
 
 function giveReward(){ 
