@@ -6,7 +6,6 @@
 <title>Watch & Earn Pro</title>
 <script src="https://sad.adsgram.ai/js/sad.min.js"></script>
 <script src="//libtl.com/sdk.js" data-zone="11955115" data-sdk="show_11955115"></script>
-</script>
 <script>var cuelinks_pub_id = "YOUR_CUELINKS_PUB_ID";</script>
 <style>
 body{font-family:Arial;text-align:center;background:#f0f0f0;padding:15px}
@@ -21,9 +20,14 @@ button{padding:15px;width:100%;border:none;border-radius:10px;background:#00a8ff
 #upiBox{display:none;margin-top:15px;background:#222;padding:15px;border-radius:10px}
 #upiBox input{width:95%;padding:12px;border-radius:8px;border:none}
 .cashback-badge{font-size:11px;background:#00ff88;color:black;padding:2px 6px;border-radius:10px}
+.searchBox{display:flex;gap:8px;margin-top:10px}
+.searchBox input{flex:1;padding:14px;border-radius:10px;border:1px solid #ccc}
+.searchBox button{width:90px;margin-top:0;background:#111}
+.bonusBox{background:linear-gradient(90deg,#00ff88,#00a8ff);color:black;padding:10px;border-radius:10px;margin-top:10px;font-weight:bold}
 </style>
 </head>
 <body>
+
 <div class="card">
 <h2>💰 Watch & Earn</h2>
 <h1 id="balance">₹0.001</h1>
@@ -31,19 +35,32 @@ button{padding:15px;width:100%;border:none;border-radius:10px;background:#00a8ff
 <p>This Hour: <span id="hourAds">0</span>/<span id="hourLimit">30</span> Ads</p>
 <p class="timer" id="timer"></p>
 <button id="adBtn" onclick="watchAds()">▶️ Watch Ad & Earn ₹0.001</button>
-<p style="font-size:11px;color:#888">Per Ad ₹0.001</p>
+<div id="bonusInfo" class="bonusBox"></div>
+<p style="font-size:11px;color:#888">Per Ad ₹0.001 + Bonus</p>
 </div>
+
+<!-- NAYA SEARCH BROWSER -->
+<div class="card">
+<h3>🌐 Search & Browse</h3>
+<div class="searchBox">
+<input type="text" id="searchInput" placeholder="Google me kuch bhi search karo...">
+<button onclick="searchBrowser()">Go</button>
+</div>
+<p style="font-size:11px;color:#888;margin-top:5px">Search karne par 1 ad chalega (reward nahi milega)</p>
+</div>
+
 <div class="card">
 <h3>🛒 Shop & Earn Extra <span class="cashback-badge">1% Cashback</span></h3>
 <div class="shop">
-<a id="amazonBtn" href="https://www.amazon.in/?tag=earningtadka8-21" target="_blank">Amazon</a>
-<a class="flip" id="flipBtn" href="https://www.flipkart.com" target="_blank">Flipkart</a>
+<a href="https://www.amazon.in/?tag=earningtadka8-21" target="_blank">Amazon</a>
+<a class="flip" href="https://www.flipkart.com" target="_blank">Flipkart</a>
 </div>
-<p style="font-size:12px;color:green;margin-top:8px">Amazon / Flipkart se kuch bhi kharido - Auto Cashback!</p>
 </div>
+
 <div class="card wallet">
 <h3>💳 My Wallet</h3>
 <p>📺 Ads Earning: <b id="adTotal">₹0.00</b></p>
+<p>🎁 Bonus Earning: <b id="bonusTotal" style="color:gold">₹0.00</b></p>
 <p>🛒 Shopping Cashback: <b id="amazonTotal">₹0.00</b></p>
 <hr style="border-color:#333">
 <p>Subtotal: <b id="subtotal" style="font-size:28px">₹0.00</b></p>
@@ -51,79 +68,104 @@ button{padding:15px;width:100%;border:none;border-radius:10px;background:#00a8ff
 <p id="withdrawMsg" style="font-size:12px;color:orange">Min ₹200 par withdraw</p>
 <button id="withdrawBtn" onclick="openWithdraw()" style="background:grey" disabled>Withdraw via UPI</button>
 <div id="upiBox">
-<input type="text" id="upiId" placeholder="Apna UPI ID - ex: 9876@paytm">
+<input type="text" id="upiId" placeholder="Apna UPI ID">
 <button onclick="requestWithdraw()" style="background:#00ff88;color:black">Request Withdraw</button>
 </div>
 </div>
+
 <script>
 const MY_TAG = "earningtadka8-21";
 let data = JSON.parse(localStorage.getItem('earnData') || '{}');
 let today = new Date().toDateString();
-if(data.date !== today){ data = {date:today, balance: data.balance||0, amazonCash: data.amazonCash||0, totalHours:0, hourStart:Date.now(), hourAds:0, todayAds:0, isFirstHour:true, pendingOrders:[]}; }
+if(data.date !== today){ data = {date:today, balance:0, bonus:0, amazonCash:0, totalHours:0, hourStart:Date.now(), hourAds:0, todayAds:0, isFirstHour:true, pendingOrders:[], bonusClaimed:[]}; data.balance = JSON.parse(localStorage.getItem('earnData') || '{}').balance || 0; }
 let balance = data.balance || 0;
+let bonus = data.bonus || 0;
 let clickNumber = 0;
+
 function save(){ localStorage.setItem('earnData', JSON.stringify(data)); }
-function convertToCuelinks(originalUrl){
-  if(cuelinks_pub_id === "YOUR_CUELINKS_PUB_ID"){ return addMyTag(originalUrl); }
-  else { return "https://links.cuelinks.com/api?pub_id=" + cuelinks_pub_id + "&url=" + encodeURIComponent(originalUrl); }
-}
-function addMyTag(url){ try{ let u = new URL(url); if(u.hostname.includes("amazon.")){ u.searchParams.set("tag", MY_TAG); return u.toString(); } return url; }catch(e){ return url; } }
+
 function updateUI(){
   let hourLimit = data.isFirstHour ? 30 : 15;
-  let total = balance + (data.amazonCash||0);
-  document.getElementById('balance').innerText = "₹"+balance.toFixed(2);
+  let total = balance + bonus + (data.amazonCash||0);
+  document.getElementById('balance').innerText = "₹"+total.toFixed(3);
   document.getElementById('todayAds').innerText = data.todayAds;
   document.getElementById('hours').innerText = data.totalHours;
   document.getElementById('hourAds').innerText = data.hourAds;
   document.getElementById('hourLimit').innerText = hourLimit;
   document.getElementById('adTotal').innerText = "₹" + balance.toFixed(2);
+  document.getElementById('bonusTotal').innerText = "₹" + bonus.toFixed(2);
   document.getElementById('amazonTotal').innerText = "₹" + (data.amazonCash||0).toFixed(2);
   document.getElementById('subtotal').innerText = "₹" + total.toFixed(2);
+  
+  // BONUS LOGIC TEXT
+  let nextBonus = "";
+  if(data.todayAds < 20) nextBonus = `🔥 20 Ads dekho = ₹0.20 Bonus! Abhi ${data.todayAds}/20`;
+  else if(data.todayAds < 50) nextBonus = `🔥 50 Ads dekho = ₹0.50 Bonus! Abhi ${data.todayAds}/50`;
+  else if(data.todayAds < 100) nextBonus = `🔥 100 Ads dekho = ₹1.00 Bonus! Abhi ${data.todayAds}/100`;
+  else if(data.todayAds < 165) nextBonus = `👑 165 Ads dekho = ₹2.00 Mega Bonus! Abhi ${data.todayAds}/165`;
+  else nextBonus = `🎉 Aaj ka sara bonus mil gaya!`;
+  document.getElementById('bonusInfo').innerText = nextBonus;
+
   let btn = document.getElementById('withdrawBtn');
-  if(total >= 200){ btn.disabled=false; btn.style.background="#00ff88"; btn.style.color="black"; document.getElementById('withdrawMsg').innerText="✅ Withdraw Ready - ₹5 charge katega"; document.getElementById('withdrawMsg').style.color="#00ff88"; }
+  if(total >= 200){ btn.disabled=false; btn.style.background="#00ff88"; btn.style.color="black"; document.getElementById('withdrawMsg').innerText="✅ Withdraw Ready - ₹5 charge"; document.getElementById('withdrawMsg').style.color="#00ff88"; }
   else{ btn.disabled=true; btn.style.background="grey"; document.getElementById('withdrawMsg').innerText=`Min ₹200 - abhi ₹${total.toFixed(2)} hai`; }
   let timeLeft = 3600000 - (Date.now() - data.hourStart);
   if(data.todayAds >= 165 || data.totalHours >=10){ document.getElementById('timer').innerText="✅ Today's limit over. Come tomorrow!"; document.getElementById('adBtn').disabled=true; }
-  else if(data.hourAds >= hourLimit){ document.getElementById('adBtn').disabled=true; let m=Math.floor(timeLeft/60000); let s=Math.floor((timeLeft%60000)/1000); document.getElementById('timer').innerText=`Next hour in: ${m}m ${s}s - After that 15 ads`; setTimeout(updateUI,1000); }
+  else if(data.hourAds >= hourLimit){ document.getElementById('adBtn').disabled=true; let m=Math.floor(timeLeft/60000); let s=Math.floor((timeLeft%60000)/1000); document.getElementById('timer').innerText=`Next hour in: ${m}m ${s}s`; setTimeout(updateUI,1000); }
   else{ document.getElementById('timer').innerText=`You can watch ${hourLimit - data.hourAds} more ads this hour`; document.getElementById('adBtn').disabled=false; }
 }
 setInterval(()=>{ if(Date.now() - data.hourStart >= 3600000 && data.hourAds>0){ data.totalHours++; data.hourAds=0; data.hourStart=Date.now(); data.isFirstHour=false; save(); updateUI(); } },1000);
-function giveReward(){ balance+=0.001; data.balance=balance; data.hourAds++; data.todayAds++; save(); updateUI(); alert('✅ ₹0.001 Added!'); }
+
+function checkBonus(){
+  data.bonusClaimed = data.bonusClaimed || [];
+  if(data.todayAds >= 20 && !data.bonusClaimed.includes(20)){ bonus+=0.20; data.bonus=bonus; data.bonusClaimed.push(20); alert('🎁 Bonus! 20 Ads par ₹0.20 mila!'); }
+  if(data.todayAds >= 50 && !data.bonusClaimed.includes(50)){ bonus+=0.50; data.bonus=bonus; data.bonusClaimed.push(50); alert('🎁 Bonus! 50 Ads par ₹0.50 mila!'); }
+  if(data.todayAds >= 100 && !data.bonusClaimed.includes(100)){ bonus+=1.00; data.bonus=bonus; data.bonusClaimed.push(100); alert('🎁 Bonus! 100 Ads par ₹1.00 mila!'); }
+  if(data.todayAds >= 165 && !data.bonusClaimed.includes(165)){ bonus+=2.00; data.bonus=bonus; data.bonusClaimed.push(165); alert('👑 Mega Bonus! 165 Ads par ₹2.00 mila!'); }
+}
+
+function giveReward(){ 
+  balance+=0.001; data.balance=balance; data.hourAds++; data.todayAds++; 
+  checkBonus();
+  save(); updateUI(); alert('✅ ₹0.001 Added!'); 
+}
+
+function showAdsgram(){
+  const AdController = window.Adsgram.init({ blockId: "52232" });
+  return AdController.show().then(result => { if(result.done){ giveReward(); return true; } else { throw new Error('skip'); } });
+}
+function showMonetagAd(){
+  return show_11955115().then(() => { giveReward(); return true; });
+}
+
 function watchAds(){
   let hourLimit = data.isFirstHour ? 30 : 15;
   if(data.hourAds >= hourLimit || data.todayAds>=165) return;
   clickNumber++;
-  if(clickNumber%2==1){ 
-    const AdController = window.Adsgram.init({ blockId: "52107" });
-    AdController.show().then(r=>{ if(r.done) giveReward(); }).catch(()=>{ showMonetag(); }); 
-  }else{ 
-    showMonetag(); 
-  }
+  if(clickNumber%2==1){ showAdsgram().catch(()=>{ showMonetagAd().catch(()=>{ alert('No ad, try again'); }); }); }
+  else{ showMonetagAd().catch(()=>{ showAdsgram().catch(()=>{ alert('No ad, try again'); }); }); }
 }
-function showMonetag(){ show_11955115().then(()=>{ giveReward(); }).catch(()=>{ alert('No ad, try again'); }); }
-function openWithdraw(){ let total=balance+(data.amazonCash||0); if(total<200){ alert('Minimum ₹200 chahiye'); return; } document.getElementById('upiBox').style.display='block'; }
-function requestWithdraw(){ let upi=document.getElementById('upiId').value; if(!upi.includes('@')){ alert('Sahi UPI ID dalo'); return; } let total=balance+(data.amazonCash||0); let charge=5; let payable=total-charge; alert(`✅ Withdraw Request!\nTotal: ₹${total.toFixed(2)}\nCharge: -₹${charge}\nAapko milega: ₹${payable.toFixed(2)}\nUPI: ${upi}\n24hr me payment hoga`); }
-document.addEventListener("click", function(e){
-  let a=e.target.closest("a");
-  if(a && a.href && (a.href.includes("amazon.") || a.href.includes("flipkart.com"))){
-    e.preventDefault();
-    let finalLink=convertToCuelinks(a.href);
-    data.pendingOrders = data.pendingOrders || [];
-    data.pendingOrders.push({id:"ORD_"+Date.now(), url:a.href, time:Date.now(), status:"pending"});
-    save();
-    window.open(finalLink, "_blank");
-  }
-});
-function onCuelinksCommissionReceived(orderAmount, commissionAmount){
-  let customerShare = commissionAmount * 0.20;
-  let yourShare = commissionAmount * 0.80;
-  data.amazonCash = (data.amazonCash||0) + customerShare;
-  save(); updateUI();
-  alert(`🎉 Cashback! ₹${customerShare.toFixed(2)} mila!`);
-  return {customer:customerShare, you:yourShare};
+
+// --- NAYA BROWSER WALA FUNCTION - ISME REWARD NAHI JUDEGA ---
+function searchBrowser(){
+  let q = document.getElementById('searchInput').value.trim();
+  if(!q){ alert('Kuch likho to sahi'); return; }
+  let url = q.startsWith('http') ? q : 'https://www.google.com/search?q=' + encodeURIComponent(q);
+  
+  // Pehle Monetag ad chalega, reward nahi judhega
+  show_11955115().then(()=>{
+    window.open(url, '_blank');
+  }).catch(()=>{
+    // Ad fail bhi ho to bhi browser khulega
+    window.open(url, '_blank');
+  });
 }
+
+function openWithdraw(){ let total=balance+bonus+(data.amazonCash||0); if(total<200){ alert('Minimum ₹200 chahiye'); return; } document.getElementById('upiBox').style.display='block'; }
+function requestWithdraw(){ let upi=document.getElementById('upiId').value; if(!upi.includes('@')){ alert('Sahi UPI ID dalo'); return; } let total=balance+bonus+(data.amazonCash||0); let charge=5; let payable=total-charge; alert(`✅ Withdraw Request!\nTotal: ₹${total.toFixed(2)}\nCharge: -₹${charge}\nAapko milega: ₹${payable.toFixed(2)}\nUPI: ${upi}`); }
+
 updateUI();
 (function(){ var s=document.createElement('script'); s.src='https://api.cuelinks.com/js/cuelinks.min.js'; s.async=true; document.head.appendChild(s); })();
 </script>
 </body>
-  </html>
+</html>
