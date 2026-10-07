@@ -3,98 +3,118 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Best Deals V24 Wallet</title>
-<script src="https://telegram.org/js/telegram-web-app.js"></script>
-<script src="//libtl.com/sdk.js" data-zone="11968926" data-sdk="show_11968926"></script>
-<script src="https://sad.adsgram.ai/js/sad.min.js"></script>
+<title>Admin Panel V32 - Auto Domain</title>
 <style>
-body{font-family:Arial;background:#f2f2f2;padding:10px;margin:0;padding-bottom:80px}
-.header{background:#111;color:#fff;padding:16px;border-radius:16px;text-align:center}
-.wallet{background:#fff;border:2px solid #00c853;border-radius:16px;padding:12px;margin-top:12px;display:flex;justify-content:space-between;align-items:center}
-.wallet-bal{font-size:22px;font-weight:bold;color:#00c853}
-.withdraw-btn{background:#00c853;color:#fff;border:none;padding:10px 16px;border-radius:10px;font-weight:bold}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
-.product{background:#fff;border-radius:14px;padding:10px;text-align:center}
-.product img{width:100%;height:140px;object-fit:cover;border-radius:10px;background:#eee}
-.cashback{background:#e8f5e9;color:#1b5e20;border:1px dashed #2e7d32;padding:4px 6px;border-radius:6px;font-size:11px;font-weight:bold;margin-top:6px;display:inline-block}
-.btn{padding:10px;border-radius:10px;color:#fff;font-weight:bold;font-size:12px;width:100%;border:none;margin-top:8px}
-.amazon{background:#ff9900}.flipkart{background:#2874f0}
-#adOverlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.97);z-index:99999;display:none;align-items:center;justify-content:center;flex-direction:column;color:#fff;text-align:center;padding:20px}
-#timer{font-size:70px;color:#00ff88;font-weight:bold}
+body{font-family:Arial;padding:15px;background:#111;color:#fff;margin:0}
+.card{background:#222;padding:16px;border-radius:12px;margin-top:12px}
+input,button{padding:12px;width:100%;margin:8px 0;border-radius:10px;border:none;box-sizing:border-box}
+button{background:#00c853;color:#fff;font-weight:bold;font-size:15px}
+small{color:#aaa;font-size:11px}
+#botInfo{color:#00ff88;font-size:12px}
 </style>
 </head>
 <body>
-<div class="header"><h3>🛍️ Best Deals & Shopping</h3><p style="font-size:11px;background:#00ff88;color:#000;padding:4px 12px;border-radius:20px;display:inline-block;margin:6px 0 0;font-weight:bold">V24 - Cashback Wallet</p></div>
+<h2>🔐 Admin Panel V32 - Final</h2>
+<p id="botInfo">Bot Loading...</p>
+<p style="font-size:12px;color:#aaa">Domain Auto Detect: <span id="domainShow" style="color:#fff"></span></p>
 
-<div class="wallet">
-<div><div style="font-size:12px;color:#666">My Cashback Wallet</div><div class="wallet-bal" id="walletBal">₹0</div><div style="font-size:10px;color:#888">Min Withdraw ₹50</div></div>
-<button class="withdraw-btn" onclick="withdrawCash()">Withdraw</button>
+<div class="card">
+<h3>💰 1% Calculator + Approve</h3>
+<input id="price" type="number" placeholder="Product Price (Ex: 26900)" oninput="calc()">
+<input id="comm" type="number" placeholder="Amazon Commission % (Ex: 5)" oninput="calc()">
+<p id="calc" style="color:#00ff88;font-size:13px"></p>
+<hr>
+<input id="userId" placeholder="User ka Telegram ID (jaise 8594115193)">
+<input id="amount" type="number" placeholder="Customer ko dena hai (auto)" step="0.01">
+<button onclick="approve()">✅ APPROVE & SEND TO USER</button>
+<p id="res" style="font-size:12px"></p>
 </div>
 
-<div class="grid" id="grid"></div>
-
-<div id="adOverlay"><h2 id="adTitle">Ad chal raha hai...</h2><div id="timer">15</div><p id="adDesc" style="font-size:13px;color:#aaa">15 sec baad product khulega</p></div>
+<div class="card">
+<h3>🔗 Approval Link</h3>
+<small>User ko ye link bhejo, kholte hi uska Pending -> Confirmed ho jayega. Domain auto hai.</small>
+<p id="link" style="word-break:break-all;font-size:12px;background:#111;padding:10px;border-radius:8px;margin-top:8px"></p>
+<button onclick="copyLink()">Copy Link</button>
+</div>
 
 <script>
-const TAG="earningtadka8-21";
-const PRODUCTS=[
-{name:"Safari Backpack",img:"https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400",kw:"safari backpack",cash:15,store:"flipkart"},
-{name:"Men T-Shirt Combo",img:"https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400",kw:"men tshirt combo",cash:10,store:"amazon"},
-{name:"Oversized T-Shirt",img:"https://images.unsplash.com/photo-1576566588028-4147f3842f27?w=400",kw:"oversized tshirt men",cash:8,store:"flipkart"},
-{name:"Men Casual Shirt",img:"https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=400",kw:"men casual shirt",cash:12,store:"flipkart"},
-{name:"Slim Fit Jeans",img:"https://images.unsplash.com/photo-1542272604-787c3835535d?w=400",kw:"men jeans",cash:20,store:"flipkart"},
-{name:"Running Shoes",img:"https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400",kw:"running shoes men",cash:25,store:"flipkart"}
-];
+const BOT_TOKEN="8960995263:AAFY3_4zGVsPMQHGlb9wDZt0OkJD_iIkXlc";
+const ADMIN_CHAT_ID="8594115193";
+let BOT_USERNAME="";
 
-let wallet = parseInt(localStorage.getItem('walletBal') || '0');
-function updateWallet(){document.getElementById('walletBal').innerText='₹'+wallet;localStorage.setItem('walletBal',wallet);}
+// Auto Domain Detect
+let CURRENT_DOMAIN = window.location.origin;
+let CURRENT_PATH = window.location.pathname;
+let BASE_URL = CURRENT_DOMAIN + CURRENT_PATH.replace('admin.html','').replace('admin','');
+if(BASE_URL.endsWith('/')) BASE_URL = BASE_URL.slice(0,-1);
+if(BASE_URL === "") BASE_URL = CURRENT_DOMAIN;
+document.getElementById('domainShow').innerText = BASE_URL || CURRENT_DOMAIN;
 
-function render(){let h="";PRODUCTS.forEach(p=>{let url=p.store==='amazon'?`https://www.amazon.in/s?k=${encodeURIComponent(p.kw)}&tag=${TAG}`:`https://www.flipkart.com/search?q=${encodeURIComponent(p.kw)}`;h+=`<div class="product"><img src="${p.img}"><p style="font-size:13px;margin:8px 0 2px;font-weight:bold;height:28px">${p.name}</p><div class="cashback">💰 ₹${p.cash} Cashback</div><button class="btn ${p.store==='amazon'?'amazon':'flipkart'}" onclick="startAd('${url}',${p.cash})">View on ${p.store}</button></div>`;});document.getElementById('grid').innerHTML=h;updateWallet();}
+// Auto Bot Username Detect
+fetch(`https://api.telegram.org/bot${BOT_TOKEN}/getMe`)
+.then(r=>r.json())
+.then(d=>{
+  if(d.ok){
+    BOT_USERNAME = d.result.username;
+    document.getElementById('botInfo').innerText = `✅ Bot Connected: @${BOT_USERNAME} | Admin ID: ${ADMIN_CHAT_ID}`;
+  }else{
+    document.getElementById('botInfo').innerText = `❌ Bot Token Error`;
+  }
+});
 
-let pending=null,iv=null, isWithdraw=false;
-function runBothAds(){
-  try{if(typeof show_11968926==='function')show_11968926();}catch(e){}
-  try{const A=window.Adsgram.init({blockId:"int-52447"});A.show().catch(()=>{});}catch(e){}
+function calc(){
+  let p=parseFloat(document.getElementById('price').value)||0;
+  let c=parseFloat(document.getElementById('comm').value)||0;
+  let yourComm=p*c/100;
+  let cust=yourComm*0.01;
+  let profit=yourComm-cust;
+  document.getElementById('calc').innerHTML=`Your Commission: <b>₹${yourComm.toFixed(2)}</b><br>Customer 1%: <b>₹${cust.toFixed(2)}</b><br>Your Profit: <b style="color:#00ff88">₹${profit.toFixed(2)}</b>`;
+  document.getElementById('amount').value=cust.toFixed(2);
+  genLink();
 }
-
-function startAd(url, cash){
-  isWithdraw=false; pending=url;
-  document.getElementById('adTitle').innerText="Ad chal raha hai...";
-  document.getElementById('adDesc').innerText=`₹${cash} cashback aapke wallet me add hoga!`;
-  document.getElementById('adOverlay').style.display='flex';
-  let t=15;document.getElementById('timer').innerText=t;
-  runBothAds();
-  iv=setInterval(()=>{
-    t--;document.getElementById('timer').innerText=t;
-    if(t<=0){
-      clearInterval(iv);
-      document.getElementById('adOverlay').style.display='none';
-      wallet+=cash; updateWallet();
-      Telegram.WebApp.openLink(pending);
+function genLink(){
+  let amt=document.getElementById('amount').value||"1.00";
+  let link = `${BASE_URL}/index.html?confirm=${amt}`;
+  // Agar index.html nahi hai to root pe
+  if(BASE_URL.includes('index.html')) link = `${BASE_URL.split('index.html')[0]}?confirm=${amt}`;
+  else link = `${BASE_URL}/?confirm=${amt}`;
+  // Double slash fix
+  link = link.replace('//?','/?').replace('///','//');
+  // Final clean link - agar aapki file ka naam index.html hai to ye sahi hai
+  let finalLink = window.location.origin + "/?confirm=" + amt;
+  // Agar aap GitHub Pages pe ho to /repo-name/ bhi include hoga
+  let pathParts = window.location.pathname.split('/');
+  if(pathParts.length > 2){
+    // jaise /EarningTadka/index.html
+    finalLink = window.location.origin + "/" + pathParts[1] + "/?confirm=" + amt;
+    if(window.location.pathname.includes('admin.html')){
+      finalLink = window.location.origin + window.location.pathname.replace('admin.html','') + "?confirm=" + amt;
     }
-  },1000);
+  }
+  document.getElementById('link').innerText = finalLink;
+  return finalLink;
 }
-
-function withdrawCash(){
-  if(wallet < 50){alert("Minimum ₹50 hona chahiye withdraw ke liye. Aur shopping karo!"); return;}
-  isWithdraw=true;
-  document.getElementById('adTitle').innerText="Withdraw ke liye Ad...";
-  document.getElementById('adDesc').innerText="Withdraw process ho raha hai";
-  document.getElementById('adOverlay').style.display='flex';
-  let t=15;document.getElementById('timer').innerText=t;
-  runBothAds();
-  iv=setInterval(()=>{
-    t--;document.getElementById('timer').innerText=t;
-    if(t<=0){
-      clearInterval(iv);
-      document.getElementById('adOverlay').style.display='none';
-      let upi = prompt(`Aapke wallet me ₹${wallet} hai. UPI ID daalo withdraw ke liye:`);
-      if(upi){alert(`✅ Withdraw Request Received!\n₹${wallet} - ${upi} pe 24hr me ayega.`); wallet=0; updateWallet();}
+function approve(){
+  let uid=document.getElementById('userId').value.trim();
+  let amt=document.getElementById('amount').value.trim();
+  if(!uid||!amt){alert("User ID aur Amount dalo");return;}
+  let link = genLink();
+  let text = `🎉 *Cashback Confirmed!* (1% Model)\n\n💰 Amount: ₹${amt}\n✅ Order Confirm ho gaya, return nahi hua\n\n👉 Niche link pe click karo, wallet me paisa add ho jayega:\n${link}\n\nApp kholo aur Withdraw kar lo!`;
+  fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${uid}&text=${encodeURIComponent(text)}`)
+ .then(r=>r.json()).then(d=>{
+    if(d.ok){
+      document.getElementById('res').innerHTML=`✅ <b>₹${amt}</b> ka approval @${uid} ko bhej diya!<br>Link: ${link}`;
+    }else{
+      document.getElementById('res').innerHTML=`❌ Telegram Error: ${d.description}<br><br>👉 User ne aapka Bot @${BOT_USERNAME} start nahi kiya hai. Isliye usko ye link manually bhejo:<br><b>${link}</b>`;
     }
-  },1000);
+  });
 }
-
-Telegram.WebApp.ready();render();
+function copyLink(){
+  let t=document.getElementById('link').innerText;
+  navigator.clipboard.writeText(t).then(()=>{alert("Link Copied: "+t);});
+}
+// Initial link
+setTimeout(genLink,500);
 </script>
 </body>
-</html>
+  </html>
