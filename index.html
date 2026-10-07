@@ -26,13 +26,13 @@ body{font-family:Arial;background:#f2f2f2;padding:10px;margin:0}
 <div id="adOverlay"><h2>Ad chal raha hai...</h2><div id="timer">15</div><p style="font-size:13px;color:#aaa">15 sec baad product khulega</p></div>
 <script>
 const TAG="earningtadka8-21";
-const PRODUCTS=[
-{name:"T-Shirt Combo",img:"https://m.media-amazon.com/images/I/71maWXZscfL._SX679_.jpg",kw:"men tshirt combo",store:"amazon"},
-{name:"Oversized T-Shirt",img:"https://m.media-amazon.com/images/I/61hLb3v2R5L._SY879_.jpg",kw:"oversized tshirt",store:"amazon"},
-{name:"Polo T-Shirt",img:"https://m.media-amazon.com/images/I/71U1T1o2yjL._SY879_.jpg",kw:"polo tshirt men",store:"amazon"},
-{name:"Casual Shirt",img:"https://rukminim2.flixcart.com/image/832/832/xif0q/shirt/o/d/a/l-st2-vebnor-original-imah8pdnxdwzazgz.jpeg",kw:"men casual shirt",store:"flipkart"},
-{name:"Jeans",img:"https://rukminim2.flixcart.com/image/832/832/xif0q/jean/n/a/y/32-12213862-roadster-original-imah8f4yqzqz3g3a.jpeg",kw:"men jeans",store:"flipkart"},
-{name:"Shoes",img:"https://rukminim2.flixcart.com/image/832/832/xif0q/shoe/g/i/g/8-rng-854-grey-8-bruton-grey-original-imah8f4yqzqz3g3a.jpeg",kw:"running shoes men",store:"flipkart"}
+  const PRODUCTS=[
+{name:"Safari Backpack",img:"https://rukminim2.flixcart.com/image/832/832/xif0q/bag/0/m/t/14-ltrs-casual-backpack-daypack-for-boys-and-girls-14-ltrs-casual-original-imah6c5yhxj9y5yq.jpeg",kw:"safari backpack",store:"flipkart"},
+{name:"Men T-Shirt Combo",img:"https://rukminim2.flixcart.com/image/832/832/xif0q/t-shirt/l/d/q/s-ts-22-m-jugular-original-imah8pdnxdwzazgz.jpeg",kw:"men tshirt combo",store:"amazon"},
+{name:"Oversized T-Shirt",img:"https://rukminim2.flixcart.com/image/832/832/xif0q/t-shirt/t/e/0/l-oversized-t-shirt-1-8-urbano-fashion-original-imah8pdnxdwzazgz.jpeg",kw:"oversized tshirt men",store:"flipkart"},
+{name:"Men Casual Shirt",img:"https://rukminim2.flixcart.com/image/832/832/xif0q/shirt/o/d/a/l-st2-vebnor-original-imah8pdnxdwzazgz.jpeg",kw:"men casual shirt",store:"flipkart"},
+{name:"Slim Fit Jeans",img:"https://rukminim2.flixcart.com/image/832/832/xif0q/jean/n/a/y/32-12213862-roadster-original-imah8f4yqzqz3g3a.jpeg",kw:"men jeans",store:"flipkart"},
+{name:"Running Shoes",img:"https://rukminim2.flixcart.com/image/832/832/xif0q/shoe/g/i/g/8-rng-854-grey-8-bruton-grey-original-imah8f4yqzqz3g3a.jpeg",kw:"running shoes men",store:"flipkart"}
 ];
 function render(){let h="";PRODUCTS.forEach(p=>{let url=p.store==='amazon'?`https://www.amazon.in/s?k=${encodeURIComponent(p.kw)}&tag=${TAG}`:`https://www.flipkart.com/search?q=${encodeURIComponent(p.kw)}`;h+=`<div class="product"><img src="${p.img}"><p style="font-size:12px;height:32px;overflow:hidden">${p.name}</p><button class="btn ${p.store==='amazon'?'amazon':'flipkart'}" onclick="startAd('${url}')">View on ${p.store}</button></div>`;});document.getElementById('grid').innerHTML=h;}
 let pending=null,iv=null;
