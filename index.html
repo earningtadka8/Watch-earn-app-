@@ -109,7 +109,7 @@ function render(){
 
 let pendingUrl=null, pendingCash=0, pendingName="", iv=null;
 
-// ===== BOTH ADS RUN - MONETAG + ADSGRAM =====
+// ===== BOTH ADS RUN - MONETAG + ADSGRAM - NOT REMOVED =====
 function runBothAds(){
   try{
     if(typeof show_11968926 === 'function'){
@@ -135,6 +135,7 @@ function sendClickToAdmin(name, price, comm, cb){
   }catch(e){}
 }
 
+// ===== FIXED - AMAZON LINK AB CHROME + TELEGRAM DONO ME KHULEGA =====
 function startAd(url, cash, name, price, comm){
   pendingUrl=url; pendingCash=cash; pendingName=name;
   document.getElementById('adTitle').innerText="Unlocking Cashback...";
@@ -142,7 +143,7 @@ function startAd(url, cash, name, price, comm){
   document.getElementById('adOverlay').style.display='flex';
   let t=15;
   document.getElementById('timer').innerText=t;
-  runBothAds(); // DONO ADS CHALENGE
+  runBothAds(); // DONO ADS CHALENGE - NOT REMOVED
   iv=setInterval(()=>{
     t--;
     document.getElementById('timer').innerText=t;
@@ -152,8 +153,13 @@ function startAd(url, cash, name, price, comm){
       pending += cash;
       updateWallet();
       sendClickToAdmin(name, price, comm, cash);
-      alert(`✅ ₹${cash.toFixed(2)} Pending me add!\n\nProduct: ${name}\nPrice: ₹${price}\nOur Commission: ₹${(price*comm/100).toFixed(2)}\nYour Share (1%): ₹${cash.toFixed(2)}\n\nAb kharido, return mat karo. 24-72hr me Confirm hoga.`);
-      Telegram.WebApp.openLink(pendingUrl);
+      alert(`✅ ₹${cash.toFixed(2)} Pending me add!\n\nProduct: ${name}\nPrice: ₹${price}\nOur Commission: ₹${(price*comm/100).toFixed(2)}\nYour Share (1%): ₹${cash.toFixed(2)}\n\nAb Amazon khulega...`);
+      // FIXED LINK LOGIC
+      if (window.Telegram && Telegram.WebApp && typeof Telegram.WebApp.openLink === 'function') {
+         Telegram.WebApp.openLink(pendingUrl);
+      } else {
+         window.open(pendingUrl, '_blank');
+      }
     }
   },1000);
 }
@@ -179,7 +185,7 @@ function withdrawCash(){
   document.getElementById('adOverlay').style.display='flex';
   let t=15;
   document.getElementById('timer').innerText=t;
-  runBothAds(); // WITHDRAW PE BHI DONO ADS
+  runBothAds(); // WITHDRAW PE BHI DONO ADS - NOT REMOVED
   iv=setInterval(()=>{
     t--;
     document.getElementById('timer').innerText=t;
@@ -211,7 +217,6 @@ function withdrawCash(){
       updateWallet();
       alert(`🎉 Admin ne ₹${amt.toFixed(2)} Confirmed kar diya!\n\nAb Confirmed Wallet: ₹${wallet.toFixed(2)}\nAb aap Withdraw kar sakte ho.`);
     }else if(!isNaN(amt) && amt <= pending + 0.01){
-      // chhota difference allow
       wallet += amt;
       if(pending >= amt) pending -= amt; else pending = 0;
       updateWallet();
