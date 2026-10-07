@@ -3,11 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Best Deals V32 - Final</title>
+<title>Best Deals V41 - 25 Days Lock</title>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
-<!-- MONETAG ADS - NOT REMOVED -->
 <script src="//libtl.com/sdk.js" data-zone="11968926" data-sdk="show_11968926"></script>
-<!-- ADSGRAM ADS - NOT REMOVED -->
 <script src="https://sad.adsgram.ai/js/sad.min.js"></script>
 <style>
 body{font-family:Arial;background:#f2f2f2;padding:10px;margin:0;padding-bottom:90px}
@@ -17,50 +15,63 @@ body{font-family:Arial;background:#f2f2f2;padding:10px;margin:0;padding-bottom:9
 .wallet-bal{font-size:20px;font-weight:bold;color:#00c853}
 .pending-bal{font-size:16px;font-weight:bold;color:#ff9800}
 .withdraw-btn{background:#00c853;color:#fff;border:none;padding:10px 18px;border-radius:10px;font-weight:bold}
+.withdraw-btn.locked{background:#ccc;color:#666}
+.reward-btn{background:linear-gradient(90deg,#ff6a00,#ee0979);color:#fff;border:none;padding:12px;width:100%;border-radius:12px;font-weight:bold;font-size:14px;margin-top:12px}
+.reward-done{background:linear-gradient(90deg,#00c853,#00e676)!important}
+.progress-bar{background:#eee;height:10px;border-radius:10px;margin-top:8px;overflow:hidden}
+.progress-fill{background:linear-gradient(90deg,#ff6a00,#ee0979);height:100%;transition:width 0.5s}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
 .product{background:#fff;border-radius:14px;padding:10px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,0.06)}
 .product img{width:100%;height:140px;object-fit:cover;border-radius:10px;background:#eee}
 .cashback{background:#e8f5e9;color:#1b5e20;border:1px dashed #2e7d32;padding:4px 6px;border-radius:6px;font-size:10px;font-weight:bold;margin-top:6px;display:inline-block}
 .btn{padding:10px;border-radius:10px;color:#fff;font-weight:bold;font-size:12px;width:100%;border:none;margin-top:8px;background:#ff9900}
-#adOverlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.97);z-index:99999;display:none;align-items:center;justify-content:center;flex-direction:column;color:#fff;text-align:center;padding:20px}
-#timer{font-size:70px;color:#00ff88;font-weight:bold}
-.note{font-size:10px;color:#555;background:#fff8e1;padding:8px;border-radius:8px;margin-top:10px;line-height:13px}
+#adCounter{position:fixed;top:10px;right:10px;background:#000;color:#00ff88;padding:6px 12px;border-radius:20px;font-size:11px;z-index:100000;border:1px solid #00ff88}
+#rewardOverlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.95);z-index:99999;display:none;align-items:center;justify-content:center;flex-direction:column;color:#fff;text-align:center;padding:20px}
+#rewardProgress{font-size:50px;color:#ff6a00;font-weight:bold}
+.lock-msg{font-size:11px;background:#ffebee;color:#c62828;padding:8px;border-radius:8px;margin-top:8px;text-align:center;border:1px solid #ffcdd2}
+.month-box{background:#fff3e0;border:1px solid #ff9800;border-radius:10px;padding:8px;margin-top:8px;font-size:11px;text-align:center}
 </style>
 </head>
 <body>
+<div id="adCounter">Next Ads: 30s</div>
 <div class="header">
 <h3>🛍️ Amazon Best Deals</h3>
-<p style="font-size:11px;background:#00ff88;color:#000;padding:4px 12px;border-radius:20px;display:inline-block;margin:6px 0 0;font-weight:bold">V32 FINAL - 1% Model + Both Ads</p>
+<p style="font-size:11px;background:#00ff88;color:#000;padding:4px 12px;border-radius:20px;display:inline-block;margin:6px 0 0;font-weight:bold">V41 - 25 Days Monthly Must</p>
 </div>
 
 <div class="wallet">
-  <div class="wallet-row"><span>✅ Confirmed Wallet</span><span class="wallet-bal" id="walletBal">₹0.00</span></div>
-  <div class="wallet-row"><span>⏳ Pending Cashback</span><span class="pending-bal" id="pendingBal">₹0.00</span></div>
-  <div style="display:flex;justify-content:space-between;align-items:center;margin-top:10px">
-    <span style="font-size:10px;color:#888">Min Withdraw ₹50 (Confirmed)</span>
-    <button class="withdraw-btn" onclick="withdrawCash()">Withdraw</button>
+  <div class="wallet-row"><span>✅ Confirmed</span><span class="wallet-bal" id="walletBal">₹0.00</span></div>
+  <div class="wallet-row"><span>⏳ Pending</span><span class="pending-bal" id="pendingBal">₹0.00</span></div>
+
+  <div class="month-box">
+    <div style="font-weight:bold">📅 Monthly Task: <span id="monthCount">0</span>/25 Days Completed</div>
+    <div class="progress-bar"><div id="progressFill" class="progress-fill" style="width:0%"></div></div>
+    <div style="font-size:9px;color:#666;margin-top:4px">Har mahine 25 din 5 Reward Ads dekhna jaruri hai withdraw ke liye</div>
   </div>
-  <div class="note">
-    ℹ️ <b>Cashback Rule:</b> Product kharidne + Return na karne + Amazon/Flipkart se commission milne ke baad hi Pending se Confirmed hoga (24-72hr).<br>
-    💰 <b>1% Model:</b> Hume jo commission milega uska 1% hi aapko milega. Ex: Hume ₹100 mila to aapko ₹1.<br>
-    📺 <b>Ads:</b> Har click pe Monetag + Adsgram dono ads chalenge.
+
+  <button id="rewardBtn" class="reward-btn" onclick="claimRewards()">🎁 Today's Task: Watch 5 Ads (0/5)</button>
+  <div id="lockMsg" class="lock-msg"></div>
+
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px">
+    <span style="font-size:10px;color:#888">Min ₹50</span>
+    <button id="withdrawBtn" class="withdraw-btn locked" onclick="withdrawCash()">🔒 Withdraw Locked</button>
   </div>
 </div>
 
 <div class="grid" id="grid"></div>
 
-<div id="adOverlay">
-<h2 id="adTitle">Reward Unlocking...</h2>
-<div id="timer">15</div>
-<p id="adDesc">Monetag + Adsgram Ads Running... Please Wait</p>
+<div id="rewardOverlay">
+<h2>🎁 Daily Reward Task</h2>
+<div id="rewardProgress">0/5</div>
+<p id="rewardDesc">Monetag Reward Ad 1/5...</p>
+<p style="font-size:11px;color:#aaa;margin-top:10px">Cashback nahi milega, sirf monthly count badhega</p>
 </div>
 
 <script>
-// ===== CONFIG - AAPKA TOKEN & ID =====
+const AMAZON_TAG="earningtadka8-21";
+const FLIPKART_AFFID="earningtadka";
 const BOT_TOKEN = "8960995263:AAFY3_4zGVsPMQHGlb9wDZt0OkJD_iIkXlc";
 const ADMIN_CHAT_ID = "8594115193";
-const TAG="earningtadka8-21";
-// =====================================
 
 const PRODUCTS=[
 {name:"Apple AirPods Pro",img:"https://images.unsplash.com/photo-1600294037683-c80b4cb5b434?w=400",kw:"apple airpods pro",price:26900,comm:5,store:"amazon"},
@@ -80,153 +91,180 @@ const PRODUCTS=[
 let wallet = parseFloat(localStorage.getItem('walletBal') || '0');
 let pending = parseFloat(localStorage.getItem('pendingBal') || '0');
 
-function getCashback(price, comm){
-  let yourComm = price * comm / 100;
-  let custShare = yourComm * 1 / 100; // 1%
-  return custShare;
+function getToday(){ return new Date().toISOString().split('T')[0]; }
+function getMonthKey(){ return new Date().toISOString().slice(0,7); } // 2026-05
+
+function getDailyData(){
+  return JSON.parse(localStorage.getItem('dailyRewards') || '{}');
 }
+function getMonthlyData(){
+  return JSON.parse(localStorage.getItem('monthlyRewards') || '{}');
+}
+
+function getTodayCount(){
+  let data = getDailyData();
+  return data[getToday()] || 0;
+}
+function setTodayCount(c){
+  let data = getDailyData();
+  data[getToday()] = c;
+  localStorage.setItem('dailyRewards', JSON.stringify(data));
+  // If today completed 5, add to monthly distinct days
+  if(c >= 5){
+    let mData = getMonthlyData();
+    let monthKey = getMonthKey();
+    if(!mData[monthKey]) mData[monthKey] = [];
+    if(!mData[monthKey].includes(getToday())){
+      mData[monthKey].push(getToday());
+      localStorage.setItem('monthlyRewards', JSON.stringify(mData));
+    }
+  }
+  updateRewardUI();
+}
+
+function getMonthlyCount(){
+  let mData = getMonthlyData();
+  let monthKey = getMonthKey();
+  return (mData[monthKey] || []).length;
+}
+
+function updateRewardUI(){
+  let todayCount = getTodayCount();
+  let monthCount = getMonthlyCount();
+  let btn = document.getElementById('rewardBtn');
+  let wBtn = document.getElementById('withdrawBtn');
+  let lockMsg = document.getElementById('lockMsg');
+  let monthSpan = document.getElementById('monthCount');
+  let progress = document.getElementById('progressFill');
+
+  monthSpan.innerText = monthCount;
+  progress.style.width = (monthCount/25*100) + "%";
+
+  if(todayCount >= 5){
+    btn.innerText = "✅ Today's Task Completed (5/5)";
+    btn.classList.add('reward-done');
+  } else {
+    btn.innerText = `🎁 Today's Task: Watch 5 Ads (${todayCount}/5)`;
+    btn.classList.remove('reward-done');
+  }
+
+  if(monthCount >= 25){
+    wBtn.innerText = "Withdraw";
+    wBtn.classList.remove('locked');
+    wBtn.style.background = "#00c853";
+    lockMsg.innerHTML = `✅ Monthly Task Complete! ${monthCount}/25 days done. Withdraw unlocked!`;
+    lockMsg.style.background = "#e8f5e9";
+    lockMsg.style.color = "#1b5e20";
+    lockMsg.style.borderColor = "#a5d6a7";
+  } else {
+    wBtn.innerText = `🔒 Locked (${monthCount}/25)`;
+    wBtn.classList.add('locked');
+    let left = 25 - monthCount;
+    lockMsg.innerHTML = `⚠️ Withdraw ke liye is mahine ${monthCount}/25 din task complete hai. Abhi ${left} din aur roz 5 Reward Ads dekhna hai! Aaj ka: ${todayCount}/5`;
+    lockMsg.style.background = "#ffebee";
+    lockMsg.style.color = "#c62828";
+  }
+}
+
+function getCashback(price, comm){ return (price * comm / 100) * 1 / 100; }
 function updateWallet(){
   document.getElementById('walletBal').innerText = '₹' + wallet.toFixed(2);
   document.getElementById('pendingBal').innerText = '₹' + pending.toFixed(2);
   localStorage.setItem('walletBal', wallet);
   localStorage.setItem('pendingBal', pending);
 }
+function getAffiliateUrl(p){
+  if(p.store==='amazon') return `https://www.amazon.in/s?k=${encodeURIComponent(p.kw)}&tag=${AMAZON_TAG}`;
+  else return `https://www.flipkart.com/search?q=${encodeURIComponent(p.kw)}&affid=${FLIPKART_AFFID}`;
+}
 function render(){
   let h="";
   PRODUCTS.forEach(p=>{
     let cb = getCashback(p.price, p.comm);
-    let url = p.store==='amazon' ? `https://www.amazon.in/s?k=${encodeURIComponent(p.kw)}&tag=${TAG}` : `https://www.flipkart.com/search?q=${encodeURIComponent(p.kw)}`;
     h+=`<div class="product">
       <img src="${p.img}">
       <p style="font-size:12px;font-weight:bold;margin:8px 0 2px;height:32px">${p.name}<br><span style="font-size:10px;color:#666">₹${p.price}</span></p>
-      <div class="cashback">₹${cb.toFixed(2)} Cashback (1% of our Comm)</div>
-      <button class="btn" onclick="startAd('${url}',${cb},'${p.name}',${p.price},${p.comm})">Buy on ${p.store}</button>
+      <div class="cashback">₹${cb.toFixed(2)} Cashback</div>
+      <button class="btn" onclick="startAd('${p.name}',${p.price},${p.comm},${cb},'${p.store}','${p.kw}')">Buy on ${p.store}</button>
     </div>`;
   });
   document.getElementById('grid').innerHTML=h;
   updateWallet();
+  updateRewardUI();
 }
 
-let pendingUrl=null, pendingCash=0, pendingName="", iv=null;
+// AUTO ADS 30 SEC
+let adCountdown = 30;
+function showMonetagOne(){ try{ if(typeof show_11968926 === 'function'){ show_11968926(); } }catch(e){} }
+function showAdsgramOne(){ try{ const AdController = window.Adsgram.init({ blockId: "int-52447" }); AdController.show().catch(()=>{}); }catch(e){} }
+function runAutoAds(){ showMonetagOne(); setTimeout(()=>{ showAdsgramOne(); }, 4000); }
+setInterval(()=>{
+  adCountdown--;
+  document.getElementById('adCounter').innerText = `Next Ads: ${adCountdown}s`;
+  if(adCountdown <= 0){ runAutoAds(); adCountdown=30; }
+}, 1000);
+setTimeout(()=>{ runAutoAds(); }, 3000);
 
-// ===== BOTH ADS RUN - MONETAG + ADSGRAM - NOT REMOVED =====
-function runBothAds(){
-  try{
-    if(typeof show_11968926 === 'function'){
-      show_11968926();
-      console.log("Monetag Ad Started");
-    }
-  }catch(e){ console.log("Monetag Error", e); }
-  try{
-    const AdController = window.Adsgram.init({ blockId: "int-52447" });
-    AdController.show().then(()=>{ console.log("Adsgram Done"); }).catch((e)=>{ console.log("Adsgram Error", e); });
-  }catch(e){ console.log("Adsgram Init Error", e); }
+// REWARDS - NO CASHBACK - MONTHLY COUNT
+function showMonetagReward(){
+  return new Promise((resolve)=>{
+    try{
+      if(typeof show_11968926 === 'function'){
+        show_11968926().then(()=>{ resolve(); }).catch(()=>{ resolve(); });
+      } else { resolve(); }
+    }catch(e){ resolve(); }
+  });
+}
+async function claimRewards(){
+  let count = getTodayCount();
+  if(count >= 5){ alert(`✅ Aaj ka task ho gaya!\nMonthly: ${getMonthlyCount()}/25 days`); return; }
+
+  document.getElementById('rewardOverlay').style.display='flex';
+  for(let i=count+1; i<=5; i++){
+    document.getElementById('rewardProgress').innerText = `${i}/5`;
+    document.getElementById('rewardDesc').innerText = `Monetag Reward Ad ${i}/5 Running...`;
+    await showMonetagReward();
+    setTodayCount(i);
+    await new Promise(r=>setTimeout(r, 800));
+  }
+  document.getElementById('rewardOverlay').style.display='none';
+  let mCount = getMonthlyCount();
+  if(mCount >= 25){
+    alert(`🎉 Congratulations! Monthly Task Complete! ${mCount}/25 days!\nAb withdraw unlock ho gaya!`);
+  } else {
+    alert(`✅ Aaj ka task complete! Monthly: ${mCount}/25 days\nAbhi ${25-mCount} din aur karna hai withdraw ke liye.\nNo cashback, only unlock.`);
+  }
 }
 
-function sendClickToAdmin(name, price, comm, cb){
-  try{
-    let user = Telegram.WebApp.initDataUnsafe?.user;
-    let username = user ? `@${user.username || user.first_name}` : "Unknown User";
-    let userId = user ? user.id : "No ID";
-    let yourComm = price * comm / 100;
-    let text = `🛒 NEW CLICK - V32 FINAL (1% MODEL)\n\n📦 Product: ${name}\n💵 Price: ₹${price}\n📈 Our Comm: ${comm}% = ₹${yourComm.toFixed(2)}\n💰 Customer 1%: ₹${cb.toFixed(2)}\n👤 User: ${username}\n🆔 TG ID: ${userId}\n\n⚠️ Check Amazon Affiliate Dashboard after 24hr. If commission shows & no return, approve from admin.html`;
-    let apiUrl = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${ADMIN_CHAT_ID}&text=${encodeURIComponent(text)}`;
-    fetch(apiUrl);
-  }catch(e){}
-}
-
-// ===== FIXED - AMAZON LINK AB CHROME + TELEGRAM DONO ME KHULEGA =====
-function startAd(url, cash, name, price, comm){
-  pendingUrl=url; pendingCash=cash; pendingName=name;
-  document.getElementById('adTitle').innerText="Unlocking Cashback...";
-  document.getElementById('adDesc').innerText=`Monetag + Adsgram Ads Running - ₹${cash.toFixed(2)} Pending`;
-  document.getElementById('adOverlay').style.display='flex';
-  let t=15;
-  document.getElementById('timer').innerText=t;
-  runBothAds(); // DONO ADS CHALENGE - NOT REMOVED
-  iv=setInterval(()=>{
-    t--;
-    document.getElementById('timer').innerText=t;
-    if(t<=0){
-      clearInterval(iv);
-      document.getElementById('adOverlay').style.display='none';
-      pending += cash;
-      updateWallet();
-      sendClickToAdmin(name, price, comm, cash);
-      alert(`✅ ₹${cash.toFixed(2)} Pending me add!\n\nProduct: ${name}\nPrice: ₹${price}\nOur Commission: ₹${(price*comm/100).toFixed(2)}\nYour Share (1%): ₹${cash.toFixed(2)}\n\nAb Amazon khulega...`);
-      // FIXED LINK LOGIC
-      if (window.Telegram && Telegram.WebApp && typeof Telegram.WebApp.openLink === 'function') {
-         Telegram.WebApp.openLink(pendingUrl);
-      } else {
-         window.open(pendingUrl, '_blank');
-      }
-    }
-  },1000);
-}
-
-function sendWithdrawToAdmin(amount, upi){
-  try{
-    let user = Telegram.WebApp.initDataUnsafe?.user;
-    let username = user ? `@${user.username || user.first_name}` : "Unknown";
-    let userId = user ? user.id : "No ID";
-    let text = `💸 WITHDRAW REQUEST - V32 FINAL\n\n💰 Amount: ₹${amount}\n🏦 UPI: ${upi}\n👤 User: ${username}\n🆔 TG ID: ${userId}\n⏰ Time: ${new Date().toLocaleString()}`;
-    let apiUrl = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${ADMIN_CHAT_ID}&text=${encodeURIComponent(text)}`;
-    fetch(apiUrl);
-  }catch(e){}
+function startAd(name, price, comm, cb, store, kw){
+  let finalUrl = getAffiliateUrl({name:name, kw:kw, store:store});
+  pending += cb;
+  updateWallet();
+  if (window.Telegram && Telegram.WebApp && typeof Telegram.WebApp.openLink === 'function') {
+     Telegram.WebApp.openLink(finalUrl);
+  } else {
+     window.open(finalUrl, '_blank');
+  }
 }
 
 function withdrawCash(){
-  if(wallet < 50){
-    alert(`Confirmed Wallet me ₹${wallet.toFixed(2)} hai.\nMinimum ₹50 Confirmed chahiye.\n\nPending: ₹${pending.toFixed(2)} abhi approval me hai.\nJab Amazon se commission milega tab Confirm hoga.`);
+  let mCount = getMonthlyCount();
+  if(mCount < 25){
+    alert(`❌ Withdraw Locked!\n\nAapne is mahine sirf ${mCount}/25 din task kiya hai.\n\nWithdraw ke liye har mahine 25 din roz 5 Reward Ads dekhna compulsory hai.\nAbhi ${25-mCount} din baki hain.\n\nAaj ka task: ${getTodayCount()}/5`);
+    claimRewards();
     return;
   }
-  document.getElementById('adTitle').innerText="Withdraw Verification...";
-  document.getElementById('adDesc').innerText="Monetag + Adsgram Ads - Final Check";
-  document.getElementById('adOverlay').style.display='flex';
-  let t=15;
-  document.getElementById('timer').innerText=t;
-  runBothAds(); // WITHDRAW PE BHI DONO ADS - NOT REMOVED
-  iv=setInterval(()=>{
-    t--;
-    document.getElementById('timer').innerText=t;
-    if(t<=0){
-      clearInterval(iv);
-      document.getElementById('adOverlay').style.display='none';
-      let upi = prompt(`Confirmed Wallet: ₹${wallet.toFixed(2)}\nUPI ID daalo (jaise yourname@paytm):`);
-      if(upi && upi.includes('@')){
-        sendWithdrawToAdmin(wallet.toFixed(2), upi);
-        alert(`✅ Withdraw Request Sent!\n\nAmount: ₹${wallet.toFixed(2)}\nUPI: ${upi}\n\n24hr me payment ayega. Admin ko message chala gaya hai.`);
-        wallet = 0;
-        updateWallet();
-      }else if(upi){
-        alert("Sahi UPI ID daalo, @ hona chahiye");
-      }
-    }
-  },1000);
-}
-
-// AUTO CONFIRM LOGIC - Admin jab ?confirm=2.50 bhejega to auto confirm
-(function(){
-  let params = new URLSearchParams(window.location.search);
-  let confirmAmt = params.get('confirm');
-  if(confirmAmt){
-    let amt = parseFloat(confirmAmt);
-    if(!isNaN(amt) && pending >= amt){
-      pending -= amt;
-      wallet += amt;
-      updateWallet();
-      alert(`🎉 Admin ne ₹${amt.toFixed(2)} Confirmed kar diya!\n\nAb Confirmed Wallet: ₹${wallet.toFixed(2)}\nAb aap Withdraw kar sakte ho.`);
-    }else if(!isNaN(amt) && amt <= pending + 0.01){
-      wallet += amt;
-      if(pending >= amt) pending -= amt; else pending = 0;
-      updateWallet();
-      alert(`🎉 Admin ne ₹${amt.toFixed(2)} Confirmed kar diya!`);
-    }
+  if(wallet < 50){ alert(`Min ₹50 chahiye. Confirmed: ₹${wallet.toFixed(2)}`); return; }
+  let upi = prompt(`✅ Monthly Task Complete ${mCount}/25!\nConfirmed: ₹${wallet.toFixed(2)}\nUPI daalo:`);
+  if(upi && upi.includes('@')){
+    let amt = wallet;
+    wallet=0; updateWallet();
+    fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${ADMIN_CHAT_ID}&text=${encodeURIComponent(`💸 WITHDRAW V41 25DAYS\n\nAmount: ₹${amt}\nUPI: ${upi}\nMonthly: ${mCount}/25`)}`);
+    alert(`✅ Request Sent!`);
   }
-})();
-
+}
 Telegram.WebApp.ready();
 render();
 </script>
 </body>
-</html>
+</html> 
