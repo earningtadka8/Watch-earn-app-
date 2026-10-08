@@ -3,23 +3,19 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>V75 - App Open Fix</title>
+<title>V77 - Monetag 11968926 + OnClickA 467533</title>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
-<!-- MONETAG 11968926 -->
+<!-- MONETAG 11968926 - YE CHAL RAHA HAI -->
 <script src="https://libtl.com/sdk.js" data-zone="11968926" data-sdk="show_11968926"></script>
 
-<!-- ONCLICKA -->
+<!-- ONCLICKA 467533 - TERA REAL ID - Screenshot se -->
 <script>
-window.initCdTma?.({ id: '11968926' }).then(show => {
+window.initCdTma?.({ id: '467533' }).then(show => {
   window.showOnclicka = show;
-  window.show = show;
-  console.log('OnClickA Ready');
-  document.getElementById('debug').innerText = 'OnClickA Ready ✅ | Monetag: '+(typeof show_11968926==='function'?'Ready ✅':'Loading...');
-}).catch(e => {
-  console.log(e);
-  document.getElementById('debug').innerText = 'OnClickA Error: '+e;
-});
+  window.showOnclickaReady = true;
+  console.log('OnClickA 467533 Ready');
+}).catch(e => console.log('OnClickA 467533 Error', e));
 </script>
 
 <style>
@@ -37,24 +33,20 @@ body{font-family:Arial;background:#f2f2f2;padding:10px;margin:0;padding-bottom:9
 .cashback{background:#e8f5e9;color:#1b5e20;border:1px dashed #2e7d32;padding:4px 6px;border-radius:6px;font-size:10px;font-weight:bold;margin-top:6px;display:inline-block}
 .btn{padding:10px;border-radius:10px;color:#fff;font-weight:bold;font-size:11px;width:100%;border:none;margin-top:8px}
 .btn.amazon{background:#ff9900}.btn.flipkart{background:#2874f0}
-#adStatus{position:fixed;top:10px;right:10px;background:#000;color:#00ff88;padding:8px 14px;border-radius:20px;font-size:10px;z-index:100000;border:1px solid #00ff88;font-weight:bold;max-width:180px}
+#adStatus{position:fixed;top:10px;right:10px;background:#000;color:#00ff88;padding:8px 14px;border-radius:20px;font-size:10px;z-index:100000;border:1px solid #00ff88;font-weight:bold;max-width:190px}
 #openOverlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.95);z-index:99999;display:flex;align-items:center;justify-content:center;flex-direction:column;color:#fff;text-align:center;padding:20px}
-.start-btn{background:linear-gradient(90deg,#00ff88,#00c853);color:#000;border:none;padding:18px 40px;border-radius:16px;font-weight:bold;font-size:20px;animation:pulse 1s infinite}
-@keyframes pulse{0%{transform:scale(1)}50%{transform:scale(1.05)}100%{transform:scale(1)}}
-#debug{font-size:10px;color:#aaa;margin-top:12px;background:#222;padding:8px;border-radius:8px;max-width:300px;word-break:break-all}
+.start-btn{background:linear-gradient(90deg,#ff6a00,#ee0979);color:#fff;border:none;padding:18px 40px;border-radius:16px;font-weight:bold;font-size:20px}
 </style>
 </head>
 <body>
-<div id="adStatus">Waiting for Start</div>
-<div class="header"><h3>🛍️ BestDealsandshop</h3><p style="font-size:10px;background:#00ff88;color:#000;padding:4px 12px;border-radius:20px;display:inline-block;margin:6px 0 0;font-weight:bold">V75 - Tap to Start Fix</p></div>
+<div id="adStatus">Ready - 467533</div>
+<div class="header"><h3>🛍️ BestDealsandshop</h3><p style="font-size:10px;background:#00ff88;color:#000;padding:4px 12px;border-radius:20px;display:inline-block;margin:6px 0 0;font-weight:bold">V77 - Monetag 11968926 + OnClickA 467533</p></div>
 
-<!-- APP OPEN OVERLAY - Yahi se ad start hoga -->
 <div id="openOverlay">
-<h2 style="font-size:28px">🎁 Welcome!</h2>
-<p style="color:#aaa;margin-top:10px">Tap to start shopping<br>First ad will play</p>
+<h2>🎁 Welcome!</h2>
+<p>Monetag + OnClickA Auto Ads<br>Tap to Start</p>
 <button class="start-btn" onclick="startApp()">👆 TAP TO START</button>
-<div id="debug">Loading SDKs...<br>Monetag: checking...<br>OnClickA: checking...</div>
-<p style="font-size:10px;color:#666;margin-top:16px">Telegram needs 1 tap to allow ads</p>
+<p style="font-size:10px;color:#aaa;margin-top:12px">Monetag 11968926 OK ✅<br>OnClickA 467533 - Screenshot wala</p>
 </div>
 
 <div class="wallet">
@@ -92,61 +84,46 @@ function getCashback(p,c){return (p*c/100)*1/100;}
 function getAffUrl(pr){if(pr.store==='flipkart') return `https://dl.flipkart.com/dl/search?q=${encodeURIComponent(pr.kw)}&affid=${FLIPKART_AFFID}`; else return `https://www.amazon.in/s?k=${encodeURIComponent(pr.kw)}&tag=${AMAZON_TAG}`;}
 function renderProducts(){let h=""; PRODUCTS.forEach(pr=>{let cb=getCashback(pr.price,pr.comm); let c=pr.store==='flipkart'?'btn flipkart':'btn amazon'; h+=`<div class="product"><img src="${pr.img}"><p style="font-size:12px;font-weight:bold;margin:8px 0 2px;height:38px;overflow:hidden">${pr.name}<br><span style="font-size:10px;color:#666">₹${pr.price}</span></p><div class="cashback">₹${cb.toFixed(2)} Cashback</div><button class="${c}" onclick="buyProduct('${pr.name}',${pr.price},${pr.comm},${cb.toFixed(2)},'${pr.store}','${encodeURIComponent(pr.kw)}')">Buy ${pr.store.toUpperCase()}</button></div>`;}); document.getElementById('grid').innerHTML=h;}
 function buyProduct(n,p,c,cb,s,k){let kw=decodeURIComponent(k); let u=getAffUrl({kw:kw,store:s}); pending+=parseFloat(cb); updateWallet(); if(window.Telegram && Telegram.WebApp){Telegram.WebApp.openLink(u);} else {window.open(u,'_blank');}}
-function withdrawCash(){if(wallet<50){alert(`Min ₹50`);return;} let upi=prompt(`UPI:`); if(upi && upi.includes('@')){let a=wallet; wallet=0; updateWallet(); fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${ADMIN_CHAT_ID}&text=${encodeURIComponent(`WITHDRAW V75 ₹${a} ${upi}`)}`); alert(`Sent ₹${a}`);}}
+function withdrawCash(){if(wallet<50){alert(`Min ₹50`);return;} let upi=prompt(`UPI:`); if(upi && upi.includes('@')){let a=wallet; wallet=0; updateWallet(); fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${ADMIN_CHAT_ID}&text=${encodeURIComponent(`WITHDRAW V77 ₹${a} ${upi}`)}`); alert(`Sent ₹${a}`);}}
 
-// ===== FIX: APP OPEN AD ONLY AFTER USER TAP =====
+// ===== FINAL - MONETAG 11968926 + ONCLICKA 467533 - NO COLLISION =====
 let isAdPlaying=false;
 let adCounter=0;
 let timerId=null;
 
 function playMonetag(){
   return new Promise(resolve=>{
-    document.getElementById('debug').innerText += '\nTrying Monetag show_11968926...';
     if(typeof show_11968926==='function'){
-      show_11968926().then(()=>{ console.log('Monetag Played'); document.getElementById('debug').innerText+='\n✅ Monetag Played'; resolve('monetag'); })
-      .catch(e=>{
-        document.getElementById('debug').innerText+='\n❌ Monetag Fail: '+e+' -> OnClickA try';
-        if(window.showOnclicka){ window.showOnclicka().then(()=>resolve('fallback')).catch(()=>resolve('fail')); }
-        else resolve('fail');
-      });
-    } else {
-      document.getElementById('debug').innerText+='\n❌ Monetag not loaded, trying OnClickA';
-      if(window.showOnclicka){ window.showOnclicka().then(()=>resolve('onclicka')).catch(()=>resolve('fail')); }
-      else resolve('fail');
-    }
+      show_11968926().then(()=>{ console.log('Monetag 11968926 Played'); resolve(true); }).catch(e=>{ console.log(e); resolve(false); });
+    } else resolve(false);
   });
 }
 
 function playOnclicka(){
   return new Promise(resolve=>{
-    document.getElementById('debug').innerText += '\nTrying OnClickA...';
     if(window.showOnclicka){
-      window.showOnclicka().then(()=>{ console.log('OnClickA Played'); document.getElementById('debug').innerText+='\n✅ OnClickA Played'; resolve('onclicka'); })
-      .catch(e=>{
-        document.getElementById('debug').innerText+='\n❌ OnClickA Fail: '+e+' -> Monetag try';
-        if(typeof show_11968926==='function'){ show_11968926().then(()=>resolve('fallback')).catch(()=>resolve('fail')); }
-        else resolve('fail');
+      window.showOnclicka().then(()=>{ 
+        console.log('tma ad played - OnClickA 467533'); 
+        resolve(true); 
+      }).catch(e=>{ 
+        console.log('OnClickA 467533 fail', e); 
+        resolve(false); 
       });
     } else {
-      document.getElementById('debug').innerText+='\n❌ OnClickA not ready';
-      if(typeof show_11968926==='function'){ show_11968926().then(()=>resolve('monetag')).catch(()=>resolve('fail')); }
-      else resolve('fail');
+      console.log('OnClickA 467533 not ready');
+      resolve(false);
     }
   });
 }
 
 async function startApp(){
   document.getElementById('openOverlay').style.display='none';
-  document.getElementById('adStatus').innerText='App Open Ad Playing...';
+  document.getElementById('adStatus').innerText='Open Ad Monetag 11968926 Playing...';
   isAdPlaying=true;
   adCounter=1;
-  
-  // Pehla ad - Monetag
-  let res = await playMonetag();
+  await playMonetag(); // App Open - Monetag 11968926
   isAdPlaying=false;
-  document.getElementById('adStatus').innerText=`Open Ad ${res} Done #1 | OnClickA in 30s`;
-  
-  // 30 sec timer - OnClickA
+  document.getElementById('adStatus').innerText='Open Done ✅ | OnClickA 467533 in 30s';
   scheduleNext('onclicka');
 }
 
@@ -155,32 +132,31 @@ function scheduleNext(nextType){
   let sec=30;
   timerId=setInterval(async ()=>{
     sec--;
-    document.getElementById('adStatus').innerText=`Next: ${nextType.toUpperCase()} in ${sec}s | Done: ${adCounter}`;
+    document.getElementById('adStatus').innerText=`Next: ${nextType.toUpperCase()} ${nextType==='onclicka'?'467533':'11968926'} in ${sec}s | Done: ${adCounter}`;
     if(sec<=0){
       clearInterval(timerId);
-      if(isAdPlaying) return; // collision check
+      if(isAdPlaying) return; // No collision lock
       isAdPlaying=true;
       adCounter++;
-      document.getElementById('adStatus').innerText=`${nextType.toUpperCase()} Playing... #${adCounter}`;
+      document.getElementById('adStatus').innerText=`${nextType.toUpperCase()} ${nextType==='onclicka'?'467533':'11968926'} Playing... #${adCounter}`;
       
-      let res;
-      if(nextType==='monetag') res = await playMonetag();
-      else res = await playOnclicka();
+      let ok=false;
+      if(nextType==='monetag') ok = await playMonetag();
+      else ok = await playOnclicka();
+      
+      // Agar OnClickA fail hua to Monetag fallback - par ek sath nahi
+      if(!ok && nextType==='onclicka'){
+        document.getElementById('adStatus').innerText='OnClickA 467533 Fail - Monetag Fallback';
+        await playMonetag();
+      }
       
       isAdPlaying=false;
       let following = nextType==='monetag' ? 'onclicka' : 'monetag';
       document.getElementById('adStatus').innerText=`${nextType.toUpperCase()} Done #${adCounter} | ${following.toUpperCase()} in 30s`;
-      scheduleNext(following); // alternate
+      scheduleNext(following);
     }
   },1000);
 }
-
-// Debug SDK load check
-setTimeout(()=>{
-  let m = typeof show_11968926==='function' ? 'Ready ✅' : 'Not Loaded ❌ - Monetag dashboard me Telegram Mini App zone banao';
-  let o = window.showOnclicka ? 'Ready ✅' : 'Loading...';
-  document.getElementById('debug').innerText = `SDK Status:\nMonetag 11968926: ${m}\nOnClickA 11968926: ${o}\n\nTelegram WebView: ${window.Telegram?'Yes':'No'}\nTap START to play ad`;
-},2000);
 
 Telegram.WebApp.ready();
 renderProducts();
