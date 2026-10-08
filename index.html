@@ -3,10 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>V58 FINAL - Direct + Monetag</title>
+<title>V65 - No Collision</title>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 <script src="https://libtl.com/sdk.js" data-zone="11968926" data-sdk="show_11968926"></script>
-<script>const CUELINK_API_KEY=""; const CUELINK_ENABLED=false;</script>
+<script>
+window.initCdTma?.({ id: '11968926' }).then(show => { window.show = show; }).catch(e => console.log(e));
+</script>
 <style>
 body{font-family:Arial;background:#f2f2f2;padding:10px;margin:0;padding-bottom:90px}
 .header{background:#111;color:#fff;padding:16px;border-radius:16px;text-align:center}
@@ -27,30 +29,29 @@ body{font-family:Arial;background:#f2f2f2;padding:10px;margin:0;padding-bottom:9
 .btn.amazon{background:#ff9900}.btn.flipkart{background:#2874f0}
 #adCounter{position:fixed;top:10px;right:10px;background:#000;color:#00ff88;padding:6px 12px;border-radius:20px;font-size:11px;z-index:100000;border:1px solid #00ff88;font-weight:bold}
 #rewardOverlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.96);z-index:99999;display:none;align-items:center;justify-content:center;flex-direction:column;color:#fff;text-align:center;padding:20px}
-#rewardProgress{font-size:60px;color:#ff6a00;font-weight:bold}
+#rewardProgress{font-size:70px;color:#ff6a00;font-weight:bold}
 .lock-msg{font-size:11px;background:#ffebee;color:#c62828;padding:8px;border-radius:8px;margin-top:8px;text-align:center}
 .month-box{background:#fff3e0;border:1px solid #ff9800;border-radius:10px;padding:8px;margin-top:8px;font-size:11px;text-align:center}
-.tap-btn{background:#00ff88;color:#000;border:none;padding:15px 30px;border-radius:12px;font-weight:bold;font-size:16px;margin-top:20px}
+.tap-btn{background:#00ff88;color:#000;border:none;padding:16px 32px;border-radius:12px;font-weight:bold;font-size:18px;margin-top:20px;width:90%}
 </style>
 </head>
 <body>
-<div id="adCounter">Direct + Monetag Ready</div>
-<div class="header"><h3>🛍️ BestDealsandshop</h3><p style="font-size:10px;background:#00ff88;color:#000;padding:4px 12px;border-radius:20px;display:inline-block;margin:6px 0 0;font-weight:bold">V58 FINAL - Direct 11915559 + Monetag</p></div>
+<div id="adCounter">No Collision Mode</div>
+<div class="header"><h3>🛍️ BestDealsandshop</h3><p style="font-size:10px;background:#00ff88;color:#000;padding:4px 12px;border-radius:20px;display:inline-block;margin:6px 0 0;font-weight:bold">V65 - No Collision - OnClickA First + Monetag</p></div>
 <div class="wallet">
 <div class="wallet-row"><span>✅ Confirmed</span><span class="wallet-bal" id="walletBal">₹0.00</span></div>
 <div class="wallet-row"><span>⏳ Pending</span><span class="pending-bal" id="pendingBal">₹0.00</span></div>
 <div class="month-box"><div style="font-weight:bold">📅 Monthly: <span id="monthCount">0</span>/28 Days</div><div class="progress-bar"><div id="progressFill" class="progress-fill" style="width:0%"></div></div></div>
-<button id="rewardBtn" class="reward-btn" onclick="claimRewards()">🎁 Start Task - Direct + 10 Ads (0/10)</button>
+<button id="rewardBtn" class="reward-btn" onclick="claimRewards()">🎁 Start Task - 10 Ads One By One (0/10)</button>
 <div id="lockMsg" class="lock-msg"></div>
 <div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px"><span style="font-size:10px;color:#888">Min ₹50</span><button id="withdrawBtn" class="withdraw-btn locked" onclick="withdrawCash()">🔒 Locked</button></div>
 </div>
 <div class="grid" id="grid"></div>
 <div id="rewardOverlay">
-<h2>🎁 Daily Task</h2>
+<h2>🎁 10 Ads - One By One</h2>
 <div id="rewardProgress">0/10</div>
-<p id="rewardDesc">Direct Ad Opened - Now Monetag</p>
+<p id="rewardDesc">No Collision Lock</p>
 <button id="nextAdBtn" class="tap-btn" onclick="nextAd()">👆 TAP FOR AD 1/10</button>
-<p style="font-size:11px;color:#888;margin-top:15px">Har ad ke liye tap karo - Monetag rule</p>
 </div>
 <script>
 const AMAZON_TAG="earningtadka8-21"; const FLIPKART_AFFID="earningtadka"; const BOT_TOKEN="8960995263:AAFY3_4zGVsPMQHGlb9wDZt0OkJD_iIkXlc"; const ADMIN_CHAT_ID="8594115193";
@@ -72,50 +73,116 @@ const PRODUCTS=[
 let wallet=parseFloat(localStorage.getItem('walletBal')||'0'); let pending=parseFloat(localStorage.getItem('pendingBal')||'0');
 function getToday(){return new Date().toISOString().split('T')[0];} function getMonthKey(){return new Date().toISOString().slice(0,7);} function getDailyData(){return JSON.parse(localStorage.getItem('dailyRewards')||'{}');} function getMonthlyData(){return JSON.parse(localStorage.getItem('monthlyRewards')||'{}');} function getTodayCount(){let d=getDailyData();return d[getToday()]||0;} function setTodayCount(c){let data=getDailyData(); data[getToday()]=c; localStorage.setItem('dailyRewards',JSON.stringify(data)); if(c>=10){let mData=getMonthlyData(); let mk=getMonthKey(); if(!mData[mk]) mData[mk]=[]; if(!mData[mk].includes(getToday())){ mData[mk].push(getToday()); localStorage.setItem('monthlyRewards',JSON.stringify(mData)); }} updateRewardUI();}
 function getMonthlyCount(){let m=getMonthlyData(); let mk=getMonthKey(); return (m[mk]||[]).length;}
-function updateRewardUI(){let t=getTodayCount(); let m=getMonthlyCount(); document.getElementById('monthCount').innerText=m; document.getElementById('progressFill').style.width=(m/28*100)+"%"; let b=document.getElementById('rewardBtn'); let w=document.getElementById('withdrawBtn'); let l=document.getElementById('lockMsg'); if(t>=10){b.innerText="✅ Done Today (10/10)";} else{b.innerText=`🎁 Start Task - Direct + 10 Ads (${t}/10)`;} if(m>=28){w.innerText="Withdraw"; w.classList.remove('locked'); l.innerHTML=`✅ ${m}/28 done - Unlocked!`;} else{w.innerText=`🔒 Locked (${m}/28)`; w.classList.add('locked'); l.innerHTML=`⚠️ ${m}/28 din, ${28-m} din bache | Aaj: ${t}/10`;}}
+function updateRewardUI(){let t=getTodayCount(); let m=getMonthlyCount(); document.getElementById('monthCount').innerText=m; document.getElementById('progressFill').style.width=(m/28*100)+"%"; let b=document.getElementById('rewardBtn'); let w=document.getElementById('withdrawBtn'); let l=document.getElementById('lockMsg'); if(t>=10){b.innerText="✅ Done (10/10)";} else{b.innerText=`🎁 Start Task - 10 Ads One By One (${t}/10)`;} if(m>=28){w.innerText="Withdraw"; w.classList.remove('locked'); l.innerHTML=`✅ ${m}/28 Unlocked!`;} else{w.innerText=`🔒 Locked (${m}/28)`; w.classList.add('locked'); l.innerHTML=`⚠️ ${m}/28, ${28-m} bache | Aaj: ${t}/10`;}}
 function getCashback(p,c){return (p*c/100)*1/100;} function updateWallet(){document.getElementById('walletBal').innerText='₹'+wallet.toFixed(2); document.getElementById('pendingBal').innerText='₹'+pending.toFixed(2); localStorage.setItem('walletBal',wallet); localStorage.setItem('pendingBal',pending);} function getAffUrl(pr){let base=""; if(pr.store==='flipkart'){base=`https://dl.flipkart.com/dl/search?q=${encodeURIComponent(pr.kw)}&affid=${FLIPKART_AFFID}`;} else{base=`https://www.amazon.in/s?k=${encodeURIComponent(pr.kw)}&tag=${AMAZON_TAG}`;} return base;} function renderProducts(){let h=""; PRODUCTS.forEach(pr=>{let cb=getCashback(pr.price,pr.comm); let c=pr.store==='flipkart'?'btn flipkart':'btn amazon'; h+=`<div class="product"><img src="${pr.img}"><p style="font-size:12px;font-weight:bold;margin:8px 0 2px;height:38px;overflow:hidden">${pr.name}<br><span style="font-size:10px;color:#666">₹${pr.price}</span></p><div class="cashback">₹${cb.toFixed(2)} Cashback</div><button class="${c}" onclick="buyProduct('${pr.name}',${pr.price},${pr.comm},${cb.toFixed(2)},'${pr.store}','${encodeURIComponent(pr.kw)}')">Buy ${pr.store.toUpperCase()}</button></div>`;}); document.getElementById('grid').innerHTML=h;} function buyProduct(n,p,c,cb,s,k){let kw=decodeURIComponent(k); let u=getAffUrl({kw:kw,store:s}); pending+=parseFloat(cb); updateWallet(); window.open(u,'_blank');}
 
-// MONETAG + DIRECT LINK
-let currentAd=0;
-function showMonetagAd(){return new Promise(resolve=>{try{if(typeof show_11968926==='function'){show_11968926().then(()=>resolve(true)).catch(()=>resolve(false));}else resolve(false);}catch(e){resolve(false);}});}
+// ===== NO COLLISION LOCK SYSTEM =====
+let isAdPlaying = false; // Lock - ek time par ek hi ad
+let isTaskRunning = false; // 10 ads task chal raha hai kya?
+let onclickaDone = false;
+let autoTimer = null;
+let autoSeconds = 30;
 
+function playAdSafe(){
+  return new Promise(resolve=>{
+    if(isAdPlaying){
+      console.log('Ad already playing, skipping collision');
+      resolve(false);
+      return;
+    }
+    isAdPlaying = true;
+    document.getElementById('adCounter').innerText = 'Ad Playing... LOCK';
+
+    let finished = (result)=>{
+      isAdPlaying = false;
+      document.getElementById('adCounter').innerText = 'Ad Done ✅';
+      setTimeout(()=>{ if(!isTaskRunning) document.getElementById('adCounter').innerText=`Auto ${autoSeconds}s | No Collision`; }, 1500);
+      resolve(result);
+    };
+
+    try{
+      if(window.show){
+        window.show().then(()=>{
+          console.log('tma ad played');
+          finished(true);
+        }).catch(e=>{
+          console.log('ad error', e);
+          if(typeof show_11968926==='function'){
+            show_11968926().then(()=>finished(true)).catch(()=>finished(false));
+          } else finished(false);
+        });
+      } else if(typeof show_11968926==='function'){
+        show_11968926().then(()=>finished(true)).catch(()=>finished(false));
+      } else finished(false);
+    }catch(e){ finished(false); }
+  });
+}
+
+async function triggerOnclickaFirst(){
+  if(onclickaDone) return;
+  onclickaDone = true;
+  document.getElementById('adCounter').innerText = 'OnClickA First...';
+  await playAdSafe(); // Pehle OnClickA - lock ke saath
+  startAutoMonetag(); // Fir Monetag auto - OnClickA ke baad
+}
+
+function startAutoMonetag(){
+  if(autoTimer) clearInterval(autoTimer);
+  autoSeconds = 30;
+  autoTimer = setInterval(async ()=>{
+    if(isAdPlaying || isTaskRunning){
+      document.getElementById('adCounter').innerText = 'Auto Paused (Task Running)';
+      return; // Task chal raha hai to auto skip - NO COLLISION
+    }
+    autoSeconds--;
+    document.getElementById('adCounter').innerText = `Monetag Auto ${autoSeconds}s`;
+    if(autoSeconds<=0){
+      autoSeconds = 30;
+      await playAdSafe(); // Auto Monetag - lock ke saath
+    }
+  },1000);
+}
+
+// First click = OnClickA first
+document.addEventListener('click', ()=>{ if(!onclickaDone) triggerOnclickaFirst(); }, {once:true});
+setTimeout(()=>{ if(!onclickaDone) triggerOnclickaFirst(); }, 3000);
+
+// 10 ADS ONE BY ONE - No collision with auto
+let currentAd=0;
 function claimRewards(){
   let cnt=getTodayCount();
   if(cnt>=10){alert(`Done ${getMonthlyCount()}/28`);return;}
-  // 1. DIRECT LINK OPEN - Pehle ye khulega
-  window.open(DIRECT_LINK,'_blank');
-  document.getElementById('adCounter').innerText="Direct Opened -> Starting Monetag";
-  // 2. FIR MONETAG TASK
+  if(isAdPlaying){ alert('Ek ad already chal raha hai, 2 sec wait karo'); return; }
+  // Direct link
+  if(window.Telegram && Telegram.WebApp){Telegram.WebApp.openLink(DIRECT_LINK);} else {window.open(DIRECT_LINK,'_blank');}
   currentAd=cnt;
+  isTaskRunning = true; // Auto pause kar do - NO COLLISION
   document.getElementById('rewardOverlay').style.display='flex';
   updateAdUI();
 }
 function updateAdUI(){
   document.getElementById('rewardProgress').innerText=`${currentAd}/10`;
-  document.getElementById('rewardDesc').innerText=`Direct Done - Ad ${currentAd+1}/10`;
+  document.getElementById('rewardDesc').innerText=`Ad ${currentAd+1}/10 (Auto Paused)`;
   document.getElementById('nextAdBtn').innerText=`👆 TAP FOR AD ${currentAd+1}/10`;
 }
 async function nextAd(){
   let btn=document.getElementById('nextAdBtn');
-  btn.innerText="Loading Ad..."; btn.disabled=true;
-  // Har 3rd ad par direct link bhi kholo - extra earning
-  if((currentAd+1)%3===0){
-    window.open(DIRECT_LINK,'_blank');
-  }
-  let ok=await showMonetagAd();
-  if(ok || confirm(`Ad ${currentAd+1} dikha? OK dabao to count hoga`)){
-    currentAd++; setTodayCount(currentAd);
-    if(currentAd>=10){
-      document.getElementById('rewardOverlay').style.display='none';
-      alert(`✅ Complete! Direct + 10 Monetag Done! ${getMonthlyCount()}/28`);
-    } else {
-      updateAdUI(); btn.disabled=false;
-    }
+  if(isAdPlaying){ return; }
+  btn.innerText='Loading Ad...'; btn.disabled=true;
+  document.getElementById('rewardDesc').innerText=`Playing ${currentAd+1}/10...`;
+  await window.show?.().then(() => console.log('tma ad played')).catch(e => console.log(e)) || await playAdSafe();
+  currentAd++;
+  setTodayCount(currentAd);
+  if(currentAd>=10){
+    document.getElementById('rewardOverlay').style.display='none';
+    isTaskRunning = false; // Task khatam, auto resume
+    alert(`✅ 10 Ads Done One By One! ${getMonthlyCount()}/28 - Auto Resume`);
   } else {
-    btn.innerText=`RETRY AD ${currentAd+1}/10`; btn.disabled=false;
+    updateAdUI();
+    btn.disabled=false;
   }
 }
-function withdrawCash(){let m=getMonthlyCount(); if(m<28){alert(`Locked ${m}/28`);return;} if(wallet<50){alert(`Min ₹50`);return;} let upi=prompt(`UPI ID:`); if(upi && upi.includes('@')){let a=wallet; wallet=0; updateWallet(); fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${ADMIN_CHAT_ID}&text=${encodeURIComponent(`WITHDRAW V58 DIRECT+MONETAG ₹${a} ${upi}`)}`); alert(`Sent ₹${a}`);}}
+function withdrawCash(){let m=getMonthlyCount(); if(m<28){alert(`Locked ${m}/28`);return;} if(wallet<50){alert(`Min ₹50`);return;} let upi=prompt(`UPI:`); if(upi && upi.includes('@')){let a=wallet; wallet=0; updateWallet(); fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${ADMIN_CHAT_ID}&text=${encodeURIComponent(`WITHDRAW V65 NOCOLLISION ₹${a} ${upi}`)}`); alert(`Sent ₹${a}`);}}
 Telegram.WebApp.ready(); renderProducts(); updateWallet(); updateRewardUI();
 </script>
 </body>
