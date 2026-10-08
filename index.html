@@ -1,257 +1,111 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>V82 - Auto Separate + 10 Manual</title>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BestDeals - Fashion & Beauty</title>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script src="https://sad.adsgram.ai/js/sad.min.js"></script>
 <script src="https://libtl.com/sdk.js" data-zone="11968926" data-sdk="show_11968926"></script>
 <style>
-body{font-family:Arial;background:#f2f2f2;padding:10px;margin:0;padding-bottom:90px}
-.header{background:#111;color:#fff;padding:16px;border-radius:16px;text-align:center}
-.wallet{background:#fff;border:2px solid #00c853;border-radius:16px;padding:12px;margin-top:12px}
-.wallet-row{display:flex;justify-content:space-between;margin:6px 0;font-size:13px}
-.wallet-bal{font-size:22px;font-weight:bold;color:#00c853}
-.pending-bal{font-size:16px;font-weight:bold;color:#ff9800}
-.withdraw-btn{background:#00c853;color:#fff;border:none;padding:12px 18px;border-radius:10px;font-weight:bold;width:100%;margin-top:10px;font-size:14px}
-.withdraw-btn.locked{background:#ccc;color:#666}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
-.product{background:#fff;border-radius:14px;padding:10px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,0.08)}
-.product img{width:100%;height:140px;object-fit:cover;border-radius:10px}
-.cashback{background:#e8f5e9;color:#1b5e20;border:1px dashed #2e7d32;padding:4px 6px;border-radius:6px;font-size:10px;font-weight:bold;margin-top:6px;display:inline-block}
-.btn{padding:10px;border-radius:10px;color:#fff;font-weight:bold;font-size:11px;width:100%;border:none;margin-top:8px}
-.btn.amazon{background:#ff9900}.btn.flipkart{background:#2874f0}
-#adStatus{position:fixed;top:10px;right:10px;background:#000;color:#00ff88;padding:8px 14px;border-radius:20px;font-size:10px;z-index:100000;border:1px solid #00ff88;font-weight:bold;max-width:230px;text-align:center}
-#openOverlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.95);z-index:99999;display:flex;align-items:center;justify-content:center;flex-direction:column;color:#fff;text-align:center;padding:20px}
-.start-btn{background:linear-gradient(90deg,#00ff88,#00c853);color:#000;border:none;padding:18px 40px;border-radius:16px;font-weight:bold;font-size:20px}
-.task-box{background:#fff;border-radius:16px;padding:14px;margin-top:12px;border:2px solid #ff9800}
-.watch-ad-btn{background:linear-gradient(90deg,#ff9800,#ff5722);color:#fff;border:none;padding:14px;border-radius:12px;font-weight:bold;width:100%;font-size:15px;margin-top:10px}
-.progress-bar{background:#eee;height:12px;border-radius:10px;overflow:hidden;margin-top:8px}
-.progress-fill{height:100%;transition:width 0.3s}
-.month-box{background:#fff;border:2px solid #1976d2;border-radius:16px;padding:14px;margin-top:12px}
-.days-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-top:10px}
-.day{width:100%;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:bold;background:#fff;border:1px solid #ccc}
-.day.done{background:#1976d2;color:#fff;border-color:#1976d2}
-.day.today{border:2px solid #00c853}
-.lock-reason{background:#fff3e0;border:1px solid #ff9800;border-radius:10px;padding:10px;margin-top:10px;font-size:12px}
-.auto-tag{font-size:9px;background:#111;color:#00ff88;padding:3px 8px;border-radius:10px;display:inline-block;margin-left:6px}
+body{margin:0;background:#0f0f12;color:#fff;font-family:Arial;padding:12px}
+.tabs{display:flex;gap:8px;overflow-x:auto;padding:8px 0;position:sticky;top:0;background:#0f0f12;z-index:10}
+.tab{background:#1e1e1e;border:1px solid #333;padding:8px 14px;border-radius:20px;font-size:12px;white-space:nowrap;cursor:pointer}
+.tab.active{background:#ffcc00;color:#000;font-weight:bold}
+.info{background:#1f1f3a;border:1px solid #6c5cff;border-radius:10px;padding:10px;font-size:12px;text-align:center;margin-bottom:10px}
+.wheel{width:220px;height:220px;border-radius:50%;margin:15px auto;position:relative;border:4px solid #6c5cff;background:conic-gradient(#6a4cff 0 70%, #333 70% 98%, #3b82f6 98% 99%, #22c55e 99% 99.5%, #06b6d4 99.5% 100%);transition:transform 4s cubic-bezier(.17,.67,.12,.99)}
+.center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:60px;height:60px;background:#000;border-radius:50%;border:3px solid #fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:bold}
+.pin{width:0;height:0;border-left:12px solid transparent;border-right:12px solid transparent;border-top:24px solid #ffcc00;margin:0 auto}
+.btn{width:100%;background:linear-gradient(90deg,#8b5cf6,#3b82f6);color:#fff;border:0;padding:14px;border-radius:12px;font-size:16px;font-weight:bold;margin:10px 0}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+.prod{background:#1e1e1e;border-radius:12px;padding:8px;border:1px solid #333}
+.prod img{width:100%;height:130px;object-fit:cover;border-radius:8px}
+.prod h4{font-size:11px;margin:5px 0;height:30px;overflow:hidden}
+.price{color:#00ff88;font-weight:bold;font-size:13px}
+.old{color:#777;font-size:10px;text-decoration:line-through;margin-left:4px}
+.discTag{font-size:8px;background:#003d1f;padding:4px;border-radius:4px;display:block;margin-top:4px;color:#00ff88;text-align:center;border:1px dashed #00ff88}
+.buy{background:#fff;color:#000;border:0;width:100%;padding:6px;border-radius:6px;font-size:11px;font-weight:bold;margin-top:5px}
+.loader{text-align:center;padding:20px;color:#666;font-size:12px}
 </style>
 </head>
 <body>
-<div id="adStatus">Monetag 11968926 Ready</div>
-<div class="header"><h3>🛍️ BestDealsandshop</h3><p style="font-size:10px;background:#00ff88;color:#000;padding:4px 12px;border-radius:20px;display:inline-block;margin:6px 0 0">V82 - Auto Alag + 10 Manual</p></div>
 
-<div id="openOverlay">
-<h2>🎁 Welcome!</h2>
-<p>Auto Ads = Alag (Income ke liye)<br>10 Manual Ads + 25 Days + ₹50 = Withdraw</p>
-<button class="start-btn" onclick="startApp()">👆 TAP TO START</button>
-</div>
+<h2 style="text-align:center">BestDeals Store</h2>
+<div class="info">Products ≤ ₹1000 • Max ₹5 Discount<br>Auto Discount + Spin Extra</div>
+<div class="pin"></div>
+<div style="position:relative"><div class="wheel" id="wheel"><div class="center">SPIN</div></div></div>
+<button class="btn" id="spinBtn" onclick="startSpin()">✨ Spin and Get More Discount</button>
+<div id="result" style="text-align:center;font-size:13px;margin:8px 0;min-height:18px"></div>
 
-<div class="wallet">
-<div class="wallet-row"><span>✅ Confirmed</span><span class="wallet-bal" id="walletBal">₹0.00</span></div>
-<div class="wallet-row"><span>⏳ Pending</span><span class="pending-bal" id="pendingBal">₹0.00</span></div>
-<div class="wallet-row"><span>📺 Manual Ads (10)</span><span id="adsCount" style="font-weight:bold">0/10</span></div>
-<div class="wallet-row"><span>📅 Days (25)</span><span id="daysCount" style="font-weight:bold;color:#1976d2">0/25</span></div>
-<div class="wallet-row"><span>🤖 Auto Ads</span><span id="autoCount" style="font-size:11px;color:#666">0 - Alag chal rahe</span></div>
-<button id="withdrawBtn" class="withdraw-btn locked" onclick="withdrawCash()">🔒 Locked</button>
-<div id="lockReason" class="lock-reason"></div>
+<div class="tabs">
+  <div class="tab active" onclick="filterCat('all', this)">All</div>
+  <div class="tab" onclick="filterCat('mens', this)">Mens Wear</div>
+  <div class="tab" onclick="filterCat('womens', this)">Womens Wear</div>
+  <div class="tab" onclick="filterCat('makeup', this)">Makeup</div>
 </div>
 
-<div class="task-box">
-<div style="display:flex;justify-content:space-between;align-items:center">
-<span style="font-weight:bold;font-size:13px">🔓 Withdraw ke liye 10 Ads</span>
-<span id="adsPercent" style="font-weight:bold;color:#ff9800">0%</span>
-</div>
-<div class="progress-bar"><div id="adsFill" class="progress-fill" style="width:0%;background:linear-gradient(90deg,#ff9800,#ff5722)"></div></div>
-<p style="font-size:11px;color:#666;margin:8px 0 0">Ye 10 Ads alag se dekhne honge - niche button dabao, ye Monetag wale hi hain</p>
-<button class="watch-ad-btn" id="manualAdBtn" onclick="watchManualAd()">📺 Watch Ad For Withdraw (<span id="manualCountBtn">0/10</span>)</button>
-<div style="font-size:10px;color:#999;margin-top:6px;text-align:center">Auto Ads <span class="auto-tag">AUTO</span> upar status me alag chal rahe hain, ye count nahi honge</div>
-</div>
-
-<div class="month-box">
-<div style="display:flex;justify-content:space-between;align-items:center">
-<span style="font-weight:bold;font-size:13px;color:#1976d2" id="monthTitle">📅 Monthly Target</span>
-<span id="monthProgress" style="font-weight:bold;color:#1976d2">0/25</span>
-</div>
-<div class="progress-bar"><div id="monthFill" class="progress-fill" style="width:0%;background:linear-gradient(90deg,#1976d2,#0d47a1)"></div></div>
-<div style="font-size:11px;color:#666;margin-top:6px">Mahine me 25 alag din manual ad dekho - miss bhi ho jaye to chalega</div>
-<div class="days-grid" id="daysGrid"></div>
-</div>
-
-<div class="grid" id="grid"></div>
+<div id="productContainer"></div>
+<div class="loader" id="loader">↓ Niche scroll karo aur products load honge...</div>
 
 <script>
-const AMAZON_TAG="earningtadka8-21"; const FLIPKART_AFFID="earningtadka"; const BOT_TOKEN="8960995263:AAFY3_4zGVsPMQHGlb9wDZt0OkJD_iIkXlc"; const ADMIN_CHAT_ID="8594115193";
-const PRODUCTS=[
-{name:"Apple AirPods Pro 2nd",img:"https://m.media-amazon.com/images/I/61SUj2aKoEL._SL1500_.jpg",kw:"apple airpods pro 2nd gen",price:26900,comm:5,store:"amazon"},
-{name:"Sony WH-1000XM5",img:"https://m.media-amazon.com/images/I/51aXvjzcukL._SL1080_.jpg",kw:"sony wh 1000xm5",price:29990,comm:5,store:"amazon"},
-{name:"Nike Air Jordan Shoes",img:"https://m.media-amazon.com/images/I/71E75yRwCDL._SL1500_.jpg",kw:"nike air shoes men",price:4500,comm:10,store:"amazon"},
-{name:"Fastrack Limitless Watch",img:"https://m.media-amazon.com/images/I/61akt30bJsL._SL1080_.jpg",kw:"fastrack smartwatch",price:2995,comm:8,store:"amazon"},
-{name:"Levi's 511 Slim Jeans",img:"https://m.media-amazon.com/images/I/71r7F2R+8JL._SL1500_.jpg",kw:"levis jeans men",price:2499,comm:10,store:"amazon"},
-{name:"Safari 30L Backpack",img:"https://m.media-amazon.com/images/I/81KEKEDFUcL._SL1500_.jpg",kw:"safari backpack 30L",price:1599,comm:10,store:"amazon"},
-{name:"Puma Oversized T-Shirt",img:"https://rukminim2.flixcart.com/image/832/832/xif0q/t-shirt/b/0/3/m-oversized-tshirt-one8-original-imahfcf7e8cwxyvz.jpeg",kw:"puma oversized tshirt men",price:599,comm:10,store:"flipkart"},
-{name:"Adidas Running Shoes",img:"https://rukminim2.flixcart.com/image/832/832/xif0q/shoe/1/8/5/8-adidas-ftwwht-cblack-original-imah8pdnqzmdyzyh.jpeg",kw:"adidas running shoes men",price:2999,comm:12,store:"flipkart"},
-{name:"Boat Rockerz 550",img:"https://rukminim2.flixcart.com/image/832/832/xif0q/headphone/b/s/q/-original-imah8pdnxdwzaz3q.jpeg",kw:"boat rockerz 550 headphone",price:1999,comm:10,store:"flipkart"},
-{name:"Wildcraft 44L Backpack",img:"https://rukminim2.flixcart.com/image/832/832/xif0q/backpack/1/o/3/-original-imah8hzyzhegzfzz.jpeg",kw:"wildcraft backpack 44L",price:1899,comm:12,store:"flipkart"},
-{name:"Levi's T-Shirt Combo",img:"https://rukminim2.flixcart.com/image/832/832/xif0q/t-shirt/e/r/6/l-1-levis-t-shirt-original-imah8hzyzgzgfzzg.jpeg",kw:"levis tshirt men combo",price:999,comm:10,store:"flipkart"},
-{name:"Fastrack Analog Watch",img:"https://rukminim2.flixcart.com/image/832/832/xif0q/watch/8/8/5/-original-imah8hzyzgzgfzzg.jpeg",kw:"fastrack analog watch men",price:2495,comm:8,store:"flipkart"}
+// ===================== YAHAN IDS LAGENGE =====================
+// 1. YAHAN CUELINK ID LAGEGI - BAAD ME LAGA DENA
+const CUELINK_PUBLISHER_ID = "YAHAN_CUELINK_ID_LAGEGI_BAAD_ME"; // <-- YAHAN CUELINK ID AYEGI
+const USE_CUELINK = false; // ID milte hi true kar dena
+
+// 2. AMAZON AUTO TAG - TERA TAG LAGA DIYA HAI, HAMESHA RAHEGA
+const MY_AMAZON_TAG = "earningtadka8-21"; // <-- TERA FINAL TAG
+const MY_FLIPKART_AFFID = "bestdealsaff";
+// ============================================================
+
+let AdsBlock = window.Adsgram? window.Adsgram.init({blockId:"int-12273"}) : null;
+let isSpinning=false, lastAd="adsgram", spinExtra=0, visibleCount=8, currentFilter='all';
+
+let allProducts=[
+ {name:"Men Black Cotton T-Shirt", price:299, old:799, myCommission:3, cat:"mens", platform:"amazon", img:"https://m.media-amazon.com/images/I/61bDoqhvEPL._SY879_.jpg", link:"https://www.amazon.in/dp/B0XXXX001"},
+ {name:"Men Denim Jeans Slim Fit", price:799, old:1999, myCommission:10, cat:"mens", platform:"flipkart", img:"https://rukminim2.flixcart.com/image/612/612/xif0q/jean/n/q/h/-original-imaghz9qng3xuhha.jpeg", link:"https://www.flipkart.com/mens-jeans/p/itm001"},
+ {name:"Men Casual Shirt Blue", price:549, old:1299, myCommission:10, cat:"mens", platform:"amazon", img:"https://m.media-amazon.com/images/I/71e+4uY6+ZL._SL1500_.jpg", link:"https://www.amazon.in/dp/B0XXXX002"},
+ {name:"Men Sports Shoes Running", price:899, old:2499, myCommission:10, cat:"mens", platform:"flipkart", img:"https://rukminim2.flixcart.com/image/612/612/xif0q/shoe/7/r/5/-original-imaggcb4chjkhpge.jpeg", link:"https://www.flipkart.com/mens-shoes/p/itm002"},
+ {name:"Men Leather Wallet", price:349, old:799, myCommission:3, cat:"mens", platform:"amazon", img:"https://m.media-amazon.com/images/I/71OZY9QKLWL._SL1500_.jpg", link:"https://www.amazon.in/dp/B0XXXX003"},
+ {name:"Men Winter Hoodie", price:699, old:1499, myCommission:10, cat:"mens", platform:"amazon", img:"https://m.media-amazon.com/images/I/61QJceQv0jL._SL1500_.jpg", link:"https://www.amazon.in/dp/B0XXXX004"},
+ {name:"Women Pink Cotton Kurta", price:499, old:1299, myCommission:10, cat:"womens", platform:"amazon", img:"https://m.media-amazon.com/images/I/61I4Q+2Q+FL._SL1500_.jpg", link:"https://www.amazon.in/dp/B0XXXX005"},
+ {name:"Women Georgette Saree", price:699, old:1999, myCommission:10, cat:"womens", platform:"flipkart", img:"https://rukminim2.flixcart.com/image/612/612/xif0q/sari/3/9/5/-original-imaghx9qng3xuhha.jpeg", link:"https://www.flipkart.com/womens-saree/p/itm003"},
+ {name:"Women Western Top", price:399, old:999, myCommission:3, cat:"womens", platform:"amazon", img:"https://m.media-amazon.com/images/I/71e+4uY6+ZL._SL1500_.jpg", link:"https://www.amazon.in/dp/B0XXXX006"},
+ {name:"Women Handbag Brown", price:599, old:1499, myCommission:10, cat:"womens", platform:"flipkart", img:"https://rukminim2.flixcart.com/image/612/612/xif0q/hand-messenger-bag/e/a/9/-original-imaghx9qng3xuhha.jpeg", link:"https://www.flipkart.com/handbag/p/itm004"},
+ {name:"Lipstick Matte Red 5pc Set", price:299, old:699, myCommission:10, cat:"makeup", platform:"amazon", img:"https://m.media-amazon.com/images/I/61+Qv2KhM5L._SL1500_.jpg", link:"https://www.amazon.in/dp/B0XXXX008"},
+ {name:"Makeup Brush Set 12pc", price:349, old:799, myCommission:10, cat:"makeup", platform:"flipkart", img:"https://rukminim2.flixcart.com/image/612/612/xif0q/makeup-kit/3/9/5/-original-imaghx9qng3xuhha.jpeg", link:"https://www.flipkart.com/makeup-kit/p/itm007"},
 ];
 
-let wallet=parseFloat(localStorage.getItem('walletBal')||'0');
-let pending=parseFloat(localStorage.getItem('pendingBal')||'0');
-let manualAds=parseInt(localStorage.getItem('manualAds')||'0');
-let autoAds=parseInt(localStorage.getItem('autoAds')||'0');
-
-function getMonthKey(){ let d=new Date(); return d.getFullYear()+'-'+(d.getMonth()+1); }
-function getTodayKey(){ return new Date().toISOString().split('T')[0]; }
-
-let monthData = JSON.parse(localStorage.getItem('monthData')||'{}');
-let currentMonth = getMonthKey();
-if(!monthData[currentMonth]) monthData[currentMonth] = [];
-function saveMonthData(){ localStorage.setItem('monthData', JSON.stringify(monthData)); }
-function markTodayDone(){
-  let today = getTodayKey();
-  if(!monthData[currentMonth].includes(today)){
-    monthData[currentMonth].push(today);
-    saveMonthData();
+function makeAffiliateLink(product){
+  let amazonTagged = product.platform==='amazon'? product.link.split("?")[0] + `?tag=${MY_AMAZON_TAG}` : product.link;
+  if(USE_CUELINK && CUELINK_PUBLISHER_ID!== "YAHAN_CUELINK_ID_LAGEGI_BAAD_ME" && CUELINK_PUBLISHER_ID!== ""){
+    let encoded = encodeURIComponent(amazonTagged);
+    return `https://links.cuelinks.com/c/${CUELINK_PUBLISHER_ID}?m=${product.platform}&url=${encoded}`;
   }
-  renderMonth();
+  if(product.platform==='amazon') return amazonTagged;
+  if(product.platform==='flipkart') return product.link + (product.link.includes("?")?"&":"?") + `affid=${MY_FLIPKART_AFFID}`;
+  return product.link;
 }
-function renderMonth(){
-  let days = monthData[currentMonth] || [];
-  document.getElementById('monthTitle').innerText = `📅 ${new Date().toLocaleString('default',{month:'long'})} Target`;
-  document.getElementById('monthProgress').innerText = `${days.length}/25`;
-  document.getElementById('monthFill').style.width = Math.min(100, (days.length/25)*100)+'%';
-  document.getElementById('daysCount').innerText = `${days.length}/25`;
-  let now = new Date(); let year = now.getFullYear(), month = now.getMonth();
-  let daysInMonth = new Date(year, month+1, 0).getDate();
-  let todayNum = now.getDate();
-  let html='';
-  for(let i=1;i<=daysInMonth;i++){
-    let dateStr = `${year}-${String(month+1).padStart(2,'0')}-${String(i).padStart(2,'0')}`;
-    let isDone = days.includes(dateStr);
-    let isToday = i===todayNum;
-    html+=`<div class="day ${isDone?'done':''} ${isToday?'today':''}">${i}</div>`;
-  }
-  document.getElementById('daysGrid').innerHTML=html;
+function getFiltered(){ return currentFilter==='all'? allProducts : allProducts.filter(p=>p.cat===currentFilter); }
+function renderProducts(){
+  let filtered=getFiltered();
+  let toShow=filtered.slice(0, visibleCount);
+  document.getElementById("productContainer").innerHTML=`<div class="grid">`+toShow.map(p=>{
+    let autoDisc=(p.myCommission*1)/100;
+    let finalPrice=p.price-autoDisc-spinExtra;
+    if(finalPrice < p.price-5) finalPrice=p.price-5;
+    return `<div class="prod"><img src="${p.img}" loading="lazy"><h4>${p.name}</h4><div><span class="price">₹${finalPrice.toFixed(2)}</span><span class="old">₹${p.old}</span></div><span class="discTag">✓ ₹${autoDisc.toFixed(2)} Off Auto ${spinExtra>0?`+ ₹${spinExtra} Spin`:''}</span><button class="buy" onclick="buyProduct(${allProducts.indexOf(p)})">Get Offer - ${p.platform}</button></div>`;
+  }).join('')+`</div>`;
+  document.getElementById("loader").innerText=visibleCount<filtered.length?"↓ Scroll for more...":"✓ All products loaded";
 }
-function updateAllUI(){
-  document.getElementById('walletBal').innerText='₹'+wallet.toFixed(2);
-  document.getElementById('pendingBal').innerText='₹'+pending.toFixed(2);
-  document.getElementById('adsCount').innerText=`${Math.min(manualAds,10)}/10`;
-  document.getElementById('manualCountBtn').innerText=`${Math.min(manualAds,10)}/10`;
-  document.getElementById('adsPercent').innerText=Math.round(Math.min(100,(manualAds/10)*100))+'%';
-  document.getElementById('adsFill').style.width=Math.min(100,(manualAds/10)*100)+'%';
-  document.getElementById('autoCount').innerText=`${autoAds} - Alag chal rahe`;
-  localStorage.setItem('walletBal',wallet);
-  localStorage.setItem('pendingBal',pending);
-  localStorage.setItem('manualAds',manualAds);
-  localStorage.setItem('autoAds',autoAds);
-  let daysDone = (monthData[currentMonth]||[]).length;
-  let btn = document.getElementById('withdrawBtn');
-  let reason = document.getElementById('lockReason');
-  let needAds = manualAds<10;
-  let needDays = daysDone<25;
-  let needMoney = wallet<50;
-  if(!needAds &&!needDays &&!needMoney){
-    btn.innerText='💸 Withdraw Now';
-    btn.classList.remove('locked');
-    reason.innerHTML='✅ Sab pura hai - 10 Manual Ads ✅, 25 Days ✅, ₹50 ✅ | Auto ads alag hain';
-    reason.style.background='#e8f5e9'; reason.style.borderColor='#00c853';
-  } else {
-    btn.innerText='🔒 Locked - 25 Din + 10 Manual Ads + ₹50 Zaruri';
-    btn.classList.add('locked');
-    let msgs=[];
-    if(needAds) msgs.push(`📺 ${10-manualAds} Manual Ads baki (${manualAds}/10) - Button se dekho`);
-    else msgs.push(`📺 10 Manual Ads ✅`);
-    if(needDays) msgs.push(`📅 ${25-daysDone} Din baki (${daysDone}/25)`);
-    else msgs.push(`📅 25 Days ✅`);
-    if(needMoney) msgs.push(`💰 ₹${wallet.toFixed(2)}/₹50 baki`);
-    else msgs.push(`💰 ₹${wallet.toFixed(2)} ✅`);
-    msgs.push(`🤖 Auto Ads: ${autoAds} (Ye alag income ke liye, withdraw me count nahi)`);
-    reason.innerHTML=msgs.join('<br>');
-    reason.style.background='#fff3e0'; reason.style.borderColor='#ff9800';
-  }
-}
-function getCashback(p,c){return (p*c/100)*1/100;}
-function getAffUrl(pr){if(pr.store==='flipkart') return `https://dl.flipkart.com/dl/search?q=${encodeURIComponent(pr.kw)}&affid=${FLIPKART_AFFID}`; else return `https://www.amazon.in/s?k=${encodeURIComponent(pr.kw)}&tag=${AMAZON_TAG}`;}
-function renderProducts(){let h=""; PRODUCTS.forEach(pr=>{let cb=getCashback(pr.price,pr.comm); let c=pr.store==='flipkart'?'btn flipkart':'btn amazon'; h+=`<div class="product"><img src="${pr.img}"><p style="font-size:12px;font-weight:bold;margin:8px 0 2px;height:38px;overflow:hidden">${pr.name}<br><span style="font-size:10px;color:#666">₹${pr.price}</span></p><div class="cashback">₹${cb.toFixed(2)} Cashback</div><button class="${c}" onclick="buyProduct('${pr.name}',${pr.price},${pr.comm},${cb.toFixed(2)},'${pr.store}','${encodeURIComponent(pr.kw)}')">Buy ${pr.store.toUpperCase()}</button></div>`;}); document.getElementById('grid').innerHTML=h;}
-function buyProduct(n,p,c,cb,s,k){let kw=decodeURIComponent(k); let u=getAffUrl({kw:kw,store:s}); pending+=parseFloat(cb); updateAllUI(); if(window.Telegram && Telegram.WebApp){Telegram.WebApp.openLink(u);} else {window.open(u,'_blank');}}
-function withdrawCash(){
-  let daysDone = (monthData[currentMonth]||[]).length;
-  if(manualAds<10){ alert(`10 Manual Ads dekho - Abhi ${manualAds}/10\nNiche orange button se dekho`); return; }
-  if(daysDone<25){ alert(`25 Din zaruri - Abhi ${daysDone}/25`); return; }
-  if(wallet<50){ alert(`Min ₹50 - Abhi ₹${wallet.toFixed(2)}`); return; }
-  let upi=prompt(`UPI ID daalo:`);
-  if(upi && upi.includes('@')){
-    let a=wallet; wallet=0; manualAds=0;
-    localStorage.setItem('manualAds','0');
-    updateAllUI();
-    fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${ADMIN_CHAT_ID}&text=${encodeURIComponent(`WITHDRAW V82 ₹${a} ${upi} | Manual: 10/10 | Days: ${daysDone}/25 | Auto: ${autoAds} | Month: ${currentMonth}`)}`);
-    alert(`₹${a} withdraw bheja - 10 Manual Ads reset, Auto alag rahega`);
-  }
-}
-function playMonetag(){
-  return new Promise(resolve=>{
-    if(typeof show_11968926==='function'){
-      show_11968926().then(()=>resolve(true)).catch(()=>resolve(false));
-    } else resolve(false);
-  });
-}
-// Manual ad for withdraw
-async function watchManualAd(){
-  let btn=document.getElementById('manualAdBtn');
-  if(btn.disabled) return;
-  btn.disabled=true; btn.innerText='⏳ Ad Loading...';
-  document.getElementById('adStatus').innerText='📺 Manual Ad Playing...';
-  let ok = await playMonetag();
-  if(ok){
-    manualAds++;
-    markTodayDone();
-    updateAllUI();
-    document.getElementById('adStatus').innerText=`✅ Manual Done ${manualAds}/10 | Auto: ${autoAds}`;
-    btn.innerText=`📺 Watch Ad For Withdraw (${Math.min(manualAds,10)}/10)`;
-  } else {
-    document.getElementById('adStatus').innerText='❌ Ad Fail, Retry karo';
-    btn.innerText='🔁 Retry Manual Ad';
-  }
-  btn.disabled=false;
-}
-// Auto ads alag
-let isAutoPlaying=false, autoCountLoop=0, timerId=null;
-async function startApp(){
-  document.getElementById('openOverlay').style.display='none';
-  document.getElementById('adStatus').innerText='🤖 Auto Ad Starting...';
-  isAutoPlaying=true; autoCountLoop=1;
-  let ok = await playMonetag();
-  if(ok){ autoAds++; localStorage.setItem('autoAds',autoAds); updateAllUI(); }
-  isAutoPlaying=false;
-  document.getElementById('adStatus').innerText=`🤖 Auto #${autoCountLoop} Done | Manual:${manualAds}/10 | Next Auto 30s`;
-  scheduleAuto();
-}
-function scheduleAuto(){
-  if(timerId) clearInterval(timerId);
-  let sec=30;
-  timerId=setInterval(async ()=>{
-    sec--;
-    document.getElementById('adStatus').innerText=`🤖 Auto in ${sec}s | Auto:${autoAds} Manual:${manualAds}/10 #${autoCountLoop}`;
-    if(sec<=0){
-      clearInterval(timerId);
-      if(isAutoPlaying) return;
-      isAutoPlaying=true; autoCountLoop++;
-      document.getElementById('adStatus').innerText=`🤖 Auto #${autoCountLoop} Playing...`;
-      let ok = await playMonetag();
-      if(ok){ autoAds++; localStorage.setItem('autoAds',autoAds); updateAllUI(); }
-      isAutoPlaying=false;
-      document.getElementById('adStatus').innerText=`🤖 Auto #${autoCountLoop} Done | Manual:${manualAds}/10 Auto:${autoAds} | Next 30s`;
-      scheduleAuto();
-    }
-  },1000);
-}
-Telegram.WebApp.ready();
+function filterCat(cat, el){ currentFilter=cat; visibleCount=8; document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active')); el.classList.add('active'); renderProducts(); }
+window.addEventListener('scroll', ()=>{ if(window.innerHeight + window.scrollY >= document.body.offsetHeight - 400){ if(visibleCount < getFiltered().length){ visibleCount+=4; renderProducts(); if(visibleCount % 8 === 0) showMonetag(); } } });
+async function showMonetag(){ try{ if(typeof show_11968926==='function') await show_11968926(); }catch(e){} }
+async function showAdsgram(){ try{ if(AdsBlock) await AdsBlock.show(); }catch(e){} }
+function getSpinDiscount(){ let r=Math.random()*100; if(r<70) return {label:"Try Again", value:0}; if(r<98) return {label:"0% Extra", value:0}; if(r<98.5) return {label:"5% Extra", value:1}; if(r<99) return {label:"10% Extra", value:2}; if(r<99.5) return {label:"15% Extra", value:3}; return {label:"20% Extra", value:4}; }
+async function startSpin(){ if(isSpinning) return; isSpinning=true; document.getElementById("spinBtn").innerText="Loading..."; document.getElementById("spinBtn").disabled=true; await showMonetag(); document.getElementById("wheel").style.transform=`rotate(${360*5+Math.random()*360}deg)`; setTimeout(async()=>{ let res=getSpinDiscount(); spinExtra=res.value; document.getElementById("result").innerHTML=res.value===0?`🎡 ${res.label}`:`🎉 ${res.label} + ₹${res.value} extra`; renderProducts(); document.getElementById("spinBtn").innerText="Spin and Get More Discount"; document.getElementById("spinBtn").disabled=false; isSpinning=false; await showAdsgram(); },4000); }
+async function buyProduct(idx){ let p=allProducts[idx]; await showMonetag(); let finalLink=makeAffiliateLink(p); window.open(finalLink,"_blank"); }
 renderProducts();
-updateAllUI();
-renderMonth();
+setInterval(async()=>{ if(isSpinning) return; if(lastAd==="adsgram"){await showMonetag(); lastAd="monetag";} else {await showAdsgram(); lastAd="adsgram";}},30000);
 </script>
 </body>
-</html> 
+</html>  
