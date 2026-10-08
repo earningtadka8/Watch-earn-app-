@@ -6,7 +6,7 @@
 <title>Best Deals V43 - Buy Fixed + 25 Days</title>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 <script src="//libtl.com/sdk.js" data-zone="11968926" data-sdk="show_11968926"></script>
-<script src="https://sad.adsgram.ai/js/sad.min.js"></script>
+<script src="https://js.onclckvd.com/in-stream-ad-admanager/tma.js"></script>
 <style>
 body{font-family:Arial;background:#f2f2f2;padding:10px;margin:0;padding-bottom:90px}
 .header{background:#111;color:#fff;padding:16px;border-radius:16px;text-align:center}
@@ -36,7 +36,7 @@ body{font-family:Arial;background:#f2f2f2;padding:10px;margin:0;padding-bottom:9
 <div id="adCounter">Next Ads: 30s</div>
 <div class="header">
 <h3>🛍️ BestDealsandshop</h3>
-<p style="font-size:11px;background:#00ff88;color:#000;padding:4px 12px;border-radius:20px;display:inline-block;margin:6px 0 0;font-weight:bold">V43 - Buy Fixed + 25 Days Lock</p>
+<p style="font-size:11px;background:#00ff88;color:#000;padding:4px 12px;border-radius:20px;display:inline-block;margin:6px 0 0;font-weight:bold">V44 - OnClickA + Monetag</p>
 </div>
 
 <div class="wallet">
@@ -60,7 +60,7 @@ body{font-family:Arial;background:#f2f2f2;padding:10px;margin:0;padding-bottom:9
 <div id="rewardOverlay">
 <h2>🎁 Daily Reward Task</h2>
 <div id="rewardProgress">0/5</div>
-<p id="rewardDesc">Monetag Reward Ad 1/5...</p>
+<p id="rewardDesc">Reward Ad 1/5...</p>
 <p style="font-size:11px;color:#aaa;margin-top:10px">Cashback nahi milega, sirf monthly count badhega</p>
 </div>
 
@@ -128,8 +128,6 @@ function updateWallet(){
   document.getElementById('pendingBal').innerText='₹'+pending.toFixed(2);
   localStorage.setItem('walletBal',wallet); localStorage.setItem('pendingBal',pending);
 }
-
-// --- YAHAN BUY LINK FIX KIYA HAI ---
 function getAffUrl(pr){
   if(pr.store==='flipkart'){
     return `https://www.flipkart.com/search?q=${encodeURIComponent(pr.kw)}&affid=${FLIPKART_AFFID}`;
@@ -137,7 +135,6 @@ function getAffUrl(pr){
     return `https://www.amazon.in/s?k=${encodeURIComponent(pr.kw)}&tag=${AMAZON_TAG}&linkCode=ll1`;
   }
 }
-
 function renderProducts(){
   let h="";
   PRODUCTS.forEach(pr=>{
@@ -151,13 +148,11 @@ function renderProducts(){
   });
   document.getElementById('grid').innerHTML=h;
 }
-
 function buyProduct(name,price,comm,cb,store,kwEnc){
   let kw=decodeURIComponent(kwEnc);
   let finalUrl=getAffUrl({kw:kw,store:store});
   pending+=parseFloat(cb);
   updateWallet();
-  // Telegram me Amazon kholne ka sahi tarika
   try{
     if(window.Telegram && Telegram.WebApp && Telegram.WebApp.openLink){
       Telegram.WebApp.openLink(finalUrl);
@@ -169,37 +164,86 @@ function buyProduct(name,price,comm,cb,store,kwEnc){
   }
 }
 
-// AUTO ADS 30 SEC - Monetag + Adsgram
+// ===== ADS LOGIC - MONETAG + ONCLICKA =====
 let adCountdown=30;
-function showMonetagOne(){try{if(typeof show_11968926==='function'){show_11968926();}}catch(e){}}
-function showAdsgramOne(){try{const AdController=window.Adsgram.init({blockId:"int-52447"});AdController.show().catch(()=>{});}catch(e){}}
-function runAutoAds(){showMonetagOne(); setTimeout(()=>{showAdsgramOne();},4000);}
-setInterval(()=>{adCountdown--; document.getElementById('adCounter').innerText=`Next Ads: ${adCountdown}s`; if(adCountdown<=0){runAutoAds(); adCountdown=30;}},1000);
+function showMonetagOne(){
+  try{
+    if(typeof show_11968926==='function'){
+      show_11968926();
+    }
+  }catch(e){}
+}
+function showOnClickAOne(){
+  try{
+    if(window.showTmaReward){
+      window.showTmaReward().catch(()=>{});
+    }
+  }catch(e){}
+}
+function runAutoAds(){
+  showMonetagOne();
+  setTimeout(()=>{
+    showOnClickAOne();
+  },5000);
+}
+setInterval(()=>{
+  adCountdown--;
+  document.getElementById('adCounter').innerText=`Next Ads: ${adCountdown}s`;
+  if(adCountdown<=0){
+    runAutoAds();
+    adCountdown=30;
+  }
+},1000);
 setTimeout(()=>{runAutoAds();},3000);
 
-// REWARDS - 5x Monetag - No Cashback - Monthly 25 Days
-function showMonetagReward(){return new Promise((res)=>{try{if(typeof show_11968926==='function'){show_11968926().then(()=>{res();}).catch(()=>{res();});}else{res();}}catch(e){res();}});}
+// REWARDS - 5x - Pehle OnClickA fir Monetag fallback
+function showMonetagReward(){
+  return new Promise((res)=>{
+    try{
+      if(typeof show_11968926==='function'){
+        show_11968926().then(()=>{res();}).catch(()=>{res();});
+      }else{res();}
+    }catch(e){res();}
+  });
+}
+function showOnClickAReward(){
+  return new Promise((res)=>{
+    try{
+      if(window.showTmaReward){
+        window.showTmaReward().then(()=>{res();}).catch(()=>{res();});
+      } else {
+        res();
+      }
+    }catch(e){res();}
+  });
+}
+
 async function claimRewards(){
-  let cnt=getTodayCount(); if(cnt>=5){alert(`✅ Aaj ka task ho gaya! Monthly: ${getMonthlyCount()}/25`); return;}
+  let cnt=getTodayCount();
+  if(cnt>=10){alert(`✅ Aaj ka task ho gaya! Monthly: ${getMonthlyCount()}/28`); return;}
   document.getElementById('rewardOverlay').style.display='flex';
-  for(let i=cnt+1;i<=5;i++){
-    document.getElementById('rewardProgress').innerText=`${i}/5`;
-    document.getElementById('rewardDesc').innerText=`Monetag Reward Ad ${i}/5 Running...`;
-    await showMonetagReward();
+  for(let i=cnt+1;i<=10;i++){
+    document.getElementById('rewardProgress').innerText=`${i}/10`;
+    document.getElementById('rewardDesc').innerText=`Reward Ad ${i}/10 Running... (OnClickA + Monetag)`;
+    if(i % 2 === 1){
+      await showOnClickAReward();
+    } else {
+      await showMonetagReward();
+    }
     setTodayCount(i);
     await new Promise(r=>setTimeout(r,800));
   }
   document.getElementById('rewardOverlay').style.display='none';
-  alert(`✅ Aaj ka task complete! Monthly: ${getMonthlyCount()}/25 days`);
+  alert(`✅ Aaj ka task complete! Monthly: ${getMonthlyCount()}/28 days`);
 }
 function withdrawCash(){
   let m=getMonthlyCount();
-  if(m<25){alert(`❌ Withdraw Locked!\nIs mahine ${m}/25 din hue hain.\n25 din compulsory hai.\nAaj ka: ${getTodayCount()}/5`); claimRewards(); return;}
+  if(m<28){alert(`❌ Withdraw Locked!\nIs mahine ${m}/28 din hue hain.\n28 din compulsory hai.\nAaj ka: ${getTodayCount()}/10`); claimRewards(); return;}
   if(wallet<50){alert(`Min ₹50 chahiye. Confirmed: ₹${wallet.toFixed(2)}`); return;}
   let upi=prompt(`✅ Monthly Complete ${m}/25!\nConfirmed: ₹${wallet.toFixed(2)}\nUPI daalo:`);
   if(upi && upi.includes('@')){
     let amt=wallet; wallet=0; updateWallet();
-    fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${ADMIN_CHAT_ID}&text=${encodeURIComponent(`💸 WITHDRAW V43 BUY FIXED\n₹${amt} UPI:${upi} Monthly:${m}/25`)}`);
+    fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${ADMIN_CHAT_ID}&text=${encodeURIComponent(`💸 WITHDRAW V44 OnClickA\n₹${amt} UPI:${upi} Monthly:${m}/25`)}`);
     alert(`✅ Request Sent!`);
   }
 }
