@@ -3,21 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Best Deals V47 - CueLink Ready</title>
+<title>Best Deals V49 - AutoAds Fixed</title>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 <script src="//libtl.com/sdk.js" data-zone="11968926" data-sdk="show_11968926"></script>
 <script src="https://js.onclckvd.com/in-stream-ad-admanager/tma.js"></script>
-
-<!-- ============ CUELINK CODE SPACE - START ============ -->
-<!-- Jab CueLink ka code milega to yaha paste karna -->
-<!-- Example: <script src="https://app.cuelinks.com/js/..."></script> -->
-<script>
-// CUELINK API KEY SPACE
-const CUELINK_API_KEY = ""; // Yaha apni CueLink API key dalna jab mile
-const CUELINK_ENABLED = false; // Jab code milega to isko true kar dena
-</script>
-<!-- ============ CUELINK CODE SPACE - END ============ -->
-
+<!-- CUELINK SPACE - Yaha baad me code dalna -->
+<script>const CUELINK_API_KEY=""; const CUELINK_ENABLED=false;</script>
 <style>
 body{font-family:Arial;background:#f2f2f2;padding:10px;margin:0;padding-bottom:90px}
 .header{background:#111;color:#fff;padding:16px;border-radius:16px;text-align:center}
@@ -28,217 +19,122 @@ body{font-family:Arial;background:#f2f2f2;padding:10px;margin:0;padding-bottom:9
 .withdraw-btn{background:#00c853;color:#fff;border:none;padding:10px 18px;border-radius:10px;font-weight:bold}
 .withdraw-btn.locked{background:#ccc;color:#666}
 .reward-btn{background:linear-gradient(90deg,#ff6a00,#ee0979);color:#fff;border:none;padding:12px;width:100%;border-radius:12px;font-weight:bold;font-size:14px;margin-top:12px}
-.reward-done{background:linear-gradient(90deg,#00c853,#00e676)!important}
 .progress-bar{background:#eee;height:10px;border-radius:10px;margin-top:8px;overflow:hidden}
 .progress-fill{background:linear-gradient(90deg,#ff6a00,#ee0979);height:100%;transition:width 0.5s}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
 .product{background:#fff;border-radius:14px;padding:10px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,0.08)}
-.product img{width:100%;height:140px;object-fit:cover;border-radius:10px;background:#eee}
+.product img{width:100%;height:140px;object-fit:cover;border-radius:10px}
 .cashback{background:#e8f5e9;color:#1b5e20;border:1px dashed #2e7d32;padding:4px 6px;border-radius:6px;font-size:10px;font-weight:bold;margin-top:6px;display:inline-block}
 .btn{padding:10px;border-radius:10px;color:#fff;font-weight:bold;font-size:11px;width:100%;border:none;margin-top:8px}
-.btn.amazon{background:#ff9900}
-.btn.flipkart{background:#2874f0}
-#adCounter{position:fixed;top:10px;right:10px;background:#000;color:#00ff88;padding:6px 12px;border-radius:20px;font-size:11px;z-index:100000;border:1px solid #00ff88}
+.btn.amazon{background:#ff9900}.btn.flipkart{background:#2874f0}
+#adCounter{position:fixed;top:10px;right:10px;background:#000;color:#00ff88;padding:7px 14px;border-radius:20px;font-size:12px;z-index:100000;border:1px solid #00ff88;font-weight:bold}
 #rewardOverlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.95);z-index:99999;display:none;align-items:center;justify-content:center;flex-direction:column;color:#fff;text-align:center;padding:20px}
 #rewardProgress{font-size:50px;color:#ff6a00;font-weight:bold}
-.lock-msg{font-size:11px;background:#ffebee;color:#c62828;padding:8px;border-radius:8px;margin-top:8px;text-align:center;border:1px solid #ffcdd2}
+.lock-msg{font-size:11px;background:#ffebee;color:#c62828;padding:8px;border-radius:8px;margin-top:8px;text-align:center}
 .month-box{background:#fff3e0;border:1px solid #ff9800;border-radius:10px;padding:8px;margin-top:8px;font-size:11px;text-align:center}
-.notice{background:#e3f2fd;border:1px solid #90caf9;color:#0d47a1;padding:6px;border-radius:8px;font-size:10px;margin-top:8px;text-align:center}
 </style>
 </head>
 <body>
-<div id="adCounter">Next: OnClickA 30s</div>
-<div class="header">
-<h3>🛍️ BestDealsandshop</h3>
-<p style="font-size:11px;background:#00ff88;color:#000;padding:4px 12px;border-radius:20px;display:inline-block;margin:6px 0 0;font-weight:bold">V47 FINAL - CueLink Ready</p>
-</div>
-
+<div id="adCounter">Ads Loading... 3s</div>
+<div class="header"><h3>🛍️ BestDealsandshop</h3><p style="font-size:11px;background:#00ff88;color:#000;padding:4px 12px;border-radius:20px;display:inline-block;margin:6px 0 0;font-weight:bold">V49 - AutoAds Monetag->OnClickA</p></div>
 <div class="wallet">
   <div class="wallet-row"><span>✅ Confirmed</span><span class="wallet-bal" id="walletBal">₹0.00</span></div>
   <div class="wallet-row"><span>⏳ Pending</span><span class="pending-bal" id="pendingBal">₹0.00</span></div>
-  <div class="month-box">
-    <div style="font-weight:bold">📅 Monthly Task: <span id="monthCount">0</span>/28 Days Completed</div>
-    <div class="progress-bar"><div id="progressFill" class="progress-fill" style="width:0%"></div></div>
-    <div style="font-size:9px;color:#666;margin-top:4px">Har mahine 28 din 10 Reward Ads dekhna jaruri hai withdraw ke liye</div>
-  </div>
+  <div class="month-box"><div style="font-weight:bold">📅 Monthly: <span id="monthCount">0</span>/28 Days</div><div class="progress-bar"><div id="progressFill" class="progress-fill" style="width:0%"></div></div></div>
   <button id="rewardBtn" class="reward-btn" onclick="claimRewards()">🎁 Today's Task: Watch 10 Ads (0/10)</button>
   <div id="lockMsg" class="lock-msg"></div>
-  <div class="notice">💡 Amazon/Flipkart par jaake 24hr me koi bhi product kharidoge to cashback milega!</div>
-  <div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px">
-    <span style="font-size:10px;color:#888">Min ₹50</span>
-    <button id="withdrawBtn" class="withdraw-btn locked" onclick="withdrawCash()">🔒 Withdraw Locked</button>
-  </div>
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px"><span style="font-size:10px;color:#888">Min ₹50</span><button id="withdrawBtn" class="withdraw-btn locked" onclick="withdrawCash()">🔒 Locked (0/28)</button></div>
 </div>
-
 <div class="grid" id="grid"></div>
-
-<div id="rewardOverlay">
-<h2>🎁 Daily Reward Task</h2>
-<div id="rewardProgress">0/10</div>
-<p id="rewardDesc">Reward Ad 1/10...</p>
-</div>
-
+<div id="rewardOverlay"><h2>🎁 Daily Task</h2><div id="rewardProgress">0/10</div><p id="rewardDesc">Ad Loading...</p></div>
 <script>
-const AMAZON_TAG="earningtadka8-21";
-const FLIPKART_AFFID="earningtadka";
-const BOT_TOKEN="8960995263:AAFY3_4zGVsPMQHGlb9wDZt0OkJD_iIkXlc";
-const ADMIN_CHAT_ID="8594115193";
-
+const AMAZON_TAG="earningtadka8-21"; const FLIPKART_AFFID="earningtadka"; const BOT_TOKEN="8960995263:AAFY3_4zGVsPMQHGlb9wDZt0OkJD_iIkXlc"; const ADMIN_CHAT_ID="8594115193";
 const PRODUCTS=[
   {name:"Apple AirPods Pro 2nd",img:"https://m.media-amazon.com/images/I/61SUj2aKoEL._SL1500_.jpg",kw:"apple airpods pro 2nd gen",price:26900,comm:5,store:"amazon"},
   {name:"Sony WH-1000XM5",img:"https://m.media-amazon.com/images/I/51aXvjzcukL._SL1080_.jpg",kw:"sony wh 1000xm5",price:29990,comm:5,store:"amazon"},
-  {name:"Nike Air Jordan Shoes",img:"https://m.media-amazon.com/images/I/71E75yRwCDL._SL1500_.jpg",kw:"nike air shoes men",price:4500,comm:10,store:"amazon"},
-  {name:"Fastrack Limitless Watch",img:"https://m.media-amazon.com/images/I/61akt30bJsL._SL1080_.jpg",kw:"fastrack smartwatch",price:2995,comm:8,store:"amazon"},
-  {name:"Levi's 511 Slim Jeans",img:"https://m.media-amazon.com/images/I/71r7F2R+8JL._SL1500_.jpg",kw:"levis jeans men",price:2499,comm:10,store:"amazon"},
-  {name:"Safari 30L Backpack",img:"https://m.media-amazon.com/images/I/81KEKEDFUcL._SL1500_.jpg",kw:"safari backpack 30L",price:1599,comm:10,store:"amazon"},
-  {name:"Puma Oversized T-Shirt",img:"https://rukminim2.flixcart.com/image/832/832/xif0q/t-shirt/b/0/3/m-oversized-tshirt-one8-original-imahfcf7e8cwxyvz.jpeg",kw:"puma oversized tshirt men",price:599,comm:10,store:"flipkart"},
-  {name:"Adidas Running Shoes",img:"https://rukminim2.flixcart.com/image/832/832/xif0q/shoe/1/8/5/8-rng-2-8-adidas-ftwwht-cblack-original-imah8pdnqzmdyzyh.jpeg",kw:"adidas running shoes",price:2999,comm:12,store:"flipkart"},
-  {name:"Boat Rockerz 550",img:"https://rukminim2.flixcart.com/image/832/832/xif0q/headphone/b/s/q/-original-imah8pdnxdwzaz3q.jpeg",kw:"boat rockerz 550 headphone",price:1999,comm:10,store:"flipkart"},
-  {name:"Wildcraft 44L Backpack",img:"https://rukminim2.flixcart.com/image/832/832/xif0q/backpack/1/o/3/-original-imah8hzyzhegzfzz.jpeg",kw:"wildcraft backpack 44L",price:1899,comm:12,store:"flipkart"},
-  {name:"Levi's Combo T-Shirts",img:"https://rukminim2.flixcart.com/image/832/832/xif0q/t-shirt/e/r/6/l-1-levis-t-shirt-original-imah8hzyzgzgfzzg.jpeg",kw:"levis tshirt men",price:999,comm:10,store:"flipkart"},
-  {name:"Fastrack Analog Watch",img:"https://rukminim2.flixcart.com/image/832/832/xif0q/watch/8/8/5/-original-imah8hzyzgzgfzzg.jpeg",kw:"fastrack analog watch men",price:2495,comm:8,store:"flipkart"}
+  {name:"Nike Air Jordan",img:"https://m.media-amazon.com/images/I/71E75yRwCDL._SL1500_.jpg",kw:"nike air shoes men",price:4500,comm:10,store:"amazon"},
+  {name:"Fastrack Watch",img:"https://m.media-amazon.com/images/I/61akt30bJsL._SL1080_.jpg",kw:"fastrack smartwatch",price:2995,comm:8,store:"amazon"},
+  {name:"Levi's Jeans",img:"https://m.media-amazon.com/images/I/71r7F2R+8JL._SL1500_.jpg",kw:"levis jeans men",price:2499,comm:10,store:"amazon"},
+  {name:"Safari Backpack",img:"https://m.media-amazon.com/images/I/81KEKEDFUcL._SL1500_.jpg",kw:"safari backpack 30L",price:1599,comm:10,store:"amazon"},
+  {name:"Puma T-Shirt",img:"https://rukminim2.flixcart.com/image/832/832/xif0q/t-shirt/b/0/3/m-oversized-tshirt-one8-original-imahfcf7e8cwxyvz.jpeg",kw:"puma oversized tshirt",price:599,comm:10,store:"flipkart"},
+  {name:"Adidas Shoes",img:"https://rukminim2.flixcart.com/image/832/832/xif0q/shoe/1/8/5/8-rng-2-8-adidas-ftwwht-cblack-original-imah8pdnqzmdyzyh.jpeg",kw:"adidas running shoes",price:2999,comm:12,store:"flipkart"},
+  {name:"Boat Rockerz 550",img:"https://rukminim2.flixcart.com/image/832/832/xif0q/headphone/b/s/q/-original-imah8pdnxdwzaz3q.jpeg",kw:"boat rockerz 550",price:1999,comm:10,store:"flipkart"},
+  {name:"Wildcraft Backpack",img:"https://rukminim2.flixcart.com/image/832/832/xif0q/backpack/1/o/3/-original-imah8hzyzhegzfzz.jpeg",kw:"wildcraft backpack",price:1899,comm:12,store:"flipkart"},
+  {name:"Levi's T-Shirts",img:"https://rukminim2.flixcart.com/image/832/832/xif0q/t-shirt/e/r/6/l-1-levis-t-shirt-original-imah8hzyzgzgfzzg.jpeg",kw:"levis tshirt men",price:999,comm:10,store:"flipkart"},
+  {name:"Fastrack Watch F",img:"https://rukminim2.flixcart.com/image/832/832/xif0q/watch/8/8/5/-original-imah8hzyzgzgfzzg.jpeg",kw:"fastrack analog watch men",price:2495,comm:8,store:"flipkart"}
 ];
-
-let wallet=parseFloat(localStorage.getItem('walletBal')||'0');
-let pending=parseFloat(localStorage.getItem('pendingBal')||'0');
-
-function getToday(){return new Date().toISOString().split('T')[0];}
-function getMonthKey(){return new Date().toISOString().slice(0,7);}
-function getDailyData(){return JSON.parse(localStorage.getItem('dailyRewards')||'{}');}
-function getMonthlyData(){return JSON.parse(localStorage.getItem('monthlyRewards')||'{}');}
-function getTodayCount(){let d=getDailyData();return d[getToday()]||0;}
-function setTodayCount(c){
-  let data=getDailyData(); data[getToday()]=c;
-  localStorage.setItem('dailyRewards',JSON.stringify(data));
-  if(c>=10){
-    let mData=getMonthlyData(); let mk=getMonthKey();
-    if(!mData[mk]) mData[mk]=[];
-    if(!mData[mk].includes(getToday())){ mData[mk].push(getToday()); localStorage.setItem('monthlyRewards',JSON.stringify(mData)); }
-  }
-  updateRewardUI();
-}
+let wallet=parseFloat(localStorage.getItem('walletBal')||'0'); let pending=parseFloat(localStorage.getItem('pendingBal')||'0');
+function getToday(){return new Date().toISOString().split('T')[0];} function getMonthKey(){return new Date().toISOString().slice(0,7);} function getDailyData(){return JSON.parse(localStorage.getItem('dailyRewards')||'{}');} function getMonthlyData(){return JSON.parse(localStorage.getItem('monthlyRewards')||'{}');} function getTodayCount(){let d=getDailyData();return d[getToday()]||0;} function setTodayCount(c){let data=getDailyData(); data[getToday()]=c; localStorage.setItem('dailyRewards',JSON.stringify(data)); if(c>=10){let mData=getMonthlyData(); let mk=getMonthKey(); if(!mData[mk]) mData[mk]=[]; if(!mData[mk].includes(getToday())){ mData[mk].push(getToday()); localStorage.setItem('monthlyRewards',JSON.stringify(mData)); }} updateRewardUI();}
 function getMonthlyCount(){let m=getMonthlyData(); let mk=getMonthKey(); return (m[mk]||[]).length;}
-function updateRewardUI(){
-  let today=getTodayCount(); let month=getMonthlyCount();
-  document.getElementById('monthCount').innerText=month;
-  document.getElementById('progressFill').style.width=(month/28*100)+"%";
-  let btn=document.getElementById('rewardBtn'); let wBtn=document.getElementById('withdrawBtn'); let lock=document.getElementById('lockMsg');
-  if(today>=10){ btn.innerText="✅ Today's Task Completed (10/10)"; btn.classList.add('reward-done'); }
-  else{ btn.innerText=`🎁 Today's Task: Watch 10 Ads (${today}/10)`; btn.classList.remove('reward-done'); }
-  if(month>=28){
-    wBtn.innerText="Withdraw"; wBtn.classList.remove('locked'); wBtn.style.background="#00c853";
-    lock.innerHTML=`✅ Monthly Task Complete! ${month}/28 days done. Withdraw unlocked!`;
-    lock.style.background="#e8f5e9"; lock.style.color="#1b5e20";
-  } else {
-    wBtn.innerText=`🔒 Locked (${month}/28)`;
-    wBtn.classList.add('locked');
-    lock.innerHTML=`⚠️ Withdraw ke liye ${month}/28 din, abhi ${28-month} din aur roz 10 Ads! Aaj ka: ${today}/10`;
-  }
-}
-function getCashback(p,c){return (p*c/100)*1/100;}
-function updateWallet(){
-  document.getElementById('walletBal').innerText='₹'+wallet.toFixed(2);
-  document.getElementById('pendingBal').innerText='₹'+pending.toFixed(2);
-  localStorage.setItem('walletBal',wallet); localStorage.setItem('pendingBal',pending);
-}
+function updateRewardUI(){let t=getTodayCount(); let m=getMonthlyCount(); document.getElementById('monthCount').innerText=m; document.getElementById('progressFill').style.width=(m/28*100)+"%"; let b=document.getElementById('rewardBtn'); let w=document.getElementById('withdrawBtn'); let l=document.getElementById('lockMsg'); if(t>=10){b.innerText="✅ Completed (10/10)";} else{b.innerText=`🎁 Watch 10 Ads (${t}/10)`;} if(m>=28){w.innerText="Withdraw"; w.classList.remove('locked'); l.innerHTML=`✅ ${m}/28 done. Withdraw unlocked!`;} else{w.innerText=`🔒 Locked (${m}/28)`; w.classList.add('locked'); l.innerHTML=`⚠️ ${m}/28 din, abhi ${28-m} din aur roz 10 Ads! Aaj: ${t}/10`;}}
+function getCashback(p,c){return (p*c/100)*1/100;} function updateWallet(){document.getElementById('walletBal').innerText='₹'+wallet.toFixed(2); document.getElementById('pendingBal').innerText='₹'+pending.toFixed(2); localStorage.setItem('walletBal',wallet); localStorage.setItem('pendingBal',pending);} function getAffUrl(pr){if(pr.store==='flipkart'){return `https://dl.flipkart.com/dl/search?q=${encodeURIComponent(pr.kw)}&affid=${FLIPKART_AFFID}`;} else{return `https://www.amazon.in/s?k=${encodeURIComponent(pr.kw)}&tag=${AMAZON_TAG}&linkCode=ll1`;}} function renderProducts(){let h=""; PRODUCTS.forEach(pr=>{let cb=getCashback(pr.price,pr.comm); let c=pr.store==='flipkart'?'btn flipkart':'btn amazon'; h+=`<div class="product"><img src="${pr.img}"><p style="font-size:12px;font-weight:bold;margin:8px 0 2px;height:36px;overflow:hidden">${pr.name}<br><span style="font-size:10px;color:#666">₹${pr.price}</span></p><div class="cashback">₹${cb.toFixed(2)} Cashback</div><button class="${c}" onclick="buyProduct('${pr.name.replace(/'/g,"")}',${pr.price},${pr.comm},${cb.toFixed(2)},'${pr.store}','${encodeURIComponent(pr.kw)}')">Buy on ${pr.store.toUpperCase()}</button></div>`;}); document.getElementById('grid').innerHTML=h;} function buyProduct(n,p,c,cb,s,k){let kw=decodeURIComponent(k); let u=getAffUrl({kw:kw,store:s}); pending+=parseFloat(cb); updateWallet(); window.open(u,'_blank');}
 
-// ============ CUELINK + AFFILIATE LOGIC SPACE ============
-function getAffUrl(pr){
-  let baseUrl = "";
-  if(pr.store==='flipkart'){
-    baseUrl = `https://dl.flipkart.com/dl/search?q=${encodeURIComponent(pr.kw)}&affid=${FLIPKART_AFFID}&affExtParam1=app`;
-  } else {
-    baseUrl = `https://www.amazon.in/s?k=${encodeURIComponent(pr.kw)}&tag=${AMAZON_TAG}&linkCode=ll1`;
-  }
+// =========== FINAL AUTO ADS LOGIC - MONETAG FIRST ===========
+let adCountdown=3;
+let nextAdType='monetag'; // Pehle monetag
 
-  // Yaha CueLink ka conversion hoga jab code milega
-  if(typeof CUELINK_ENABLED!== 'undefined' && CUELINK_ENABLED && typeof convertToCueLink === 'function'){
+function showMonetag(){
+  return new Promise(res=>{
     try{
-      return convertToCueLink(baseUrl);
-    }catch(e){
-      return baseUrl;
-    }
-  }
-  return baseUrl;
-}
-
-// Jab CueLink milega to ye function active hoga
-function convertToCueLink(originalUrl){
-  // Example: CueLink API se convert
-  // return `https://links.cuelinks.com/api?url=${encodeURIComponent(originalUrl)}&key=${CUELINK_API_KEY}`;
-  return originalUrl; // Abhi ke liye original hi return
-}
-// ============ CUELINK SPACE END ============
-
-function renderProducts(){
-  let h="";
-  PRODUCTS.forEach(pr=>{
-    let cb=getCashback(pr.price,pr.comm);
-    let btnClass = pr.store==='flipkart'? 'btn flipkart' : 'btn amazon';
-    h+=`<div class="product">
-      <img src="${pr.img}" onerror="this.src='https://via.placeholder.com/200?text=${pr.name}'">
-      <p style="font-size:12px;font-weight:bold;margin:8px 0 2px;height:36px;overflow:hidden">${pr.name}<br><span style="font-size:10px;color:#666">₹${pr.price}</span></p>
-      <div class="cashback">₹${cb.toFixed(2)} Cashback</div>
-      <button class="${btnClass}" onclick="buyProduct('${pr.name.replace(/'/g,"")}',${pr.price},${pr.comm},${cb.toFixed(2)},'${pr.store}','${encodeURIComponent(pr.kw)}')">Buy on ${pr.store.toUpperCase()}</button>
-    </div>`;
+      if(typeof show_11968926==='function'){
+        console.log(">> Trying Monetag");
+        show_11968926().then(()=>{console.log("Monetag OK"); res(true);}).catch(e=>{console.log("Monetag FAIL",e); res(false);});
+      }else{ console.log("Monetag not loaded yet"); res(false); }
+    }catch(e){ res(false); }
   });
-  document.getElementById('grid').innerHTML=h;
 }
-function buyProduct(name,price,comm,cb,store,kwEnc){
-  let kw=decodeURIComponent(kwEnc);
-  let finalUrl=getAffUrl({kw:kw,store:store});
-  pending+=parseFloat(cb);
-  updateWallet();
-  window.open(finalUrl, '_blank');
+function showOnClickA(){
+  return new Promise(res=>{
+    try{
+      if(typeof window.showTmaReward==='function'){
+        console.log(">> Trying OnClickA");
+        window.showTmaReward().then(()=>{console.log("OnClickA OK"); res(true);}).catch(e=>{console.log("OnClickA FAIL",e); res(false);});
+      }else{ console.log("OnClickA not loaded yet"); res(false); }
+    }catch(e){ res(false); }
+  });
 }
 
-let adCountdown=30;
-let nextAdType = 'onclicka';
-function showMonetagOne(){ try{ if(typeof show_11968926==='function'){ show_11968926(); } }catch(e){} }
-function showOnClickAOne(){ try{ if(window.showTmaReward){ window.showTmaReward().catch(()=>{}); } }catch(e){} }
-function runAutoAds(){
-  if(nextAdType === 'monetag'){ showMonetagOne(); nextAdType = 'onclicka'; }
-  else { showOnClickAOne(); nextAdType = 'monetag'; }
-}
-setTimeout(()=>{ showMonetagOne(); nextAdType = 'onclicka'; adCountdown = 30; },1000);
-setInterval(()=>{
+// Pehla ad - App khulte hi 3 sec me Monetag
+setTimeout(async ()=>{
+  document.getElementById('adCounter').innerText="Showing Monetag...";
+  await showMonetag();
+  nextAdType='onclicka'; // Agla OnClickA
+  adCountdown=30;
+},3000);
+
+// Har 30 sec me alternate
+setInterval(async ()=>{
   adCountdown--;
-  document.getElementById('adCounter').innerText = nextAdType==='monetag'? `Next Monetag: ${adCountdown}s` : `Next OnClickA: ${adCountdown}s`;
-  if(adCountdown<=0){ runAutoAds(); adCountdown=30; }
+  document.getElementById('adCounter').innerText=`Next ${nextAdType} : ${adCountdown}s`;
+  if(adCountdown<=0){
+    document.getElementById('adCounter').innerText=`Showing ${nextAdType}...`;
+    if(nextAdType==='monetag'){
+      await showMonetag();
+      nextAdType='onclicka';
+    }else{
+      await showOnClickA();
+      nextAdType='monetag';
+    }
+    adCountdown=30;
+  }
 },1000);
 
-function showMonetagReward(){ return new Promise((res)=>{ try{ if(typeof show_11968926==='function'){ show_11968926().then(()=>{res();}).catch(()=>{res();}); }else{res();} }catch(e){res();} }); }
-function showOnClickAReward(){ return new Promise((res)=>{ try{ if(window.showTmaReward){ window.showTmaReward().then(()=>{res();}).catch(()=>{res();}); } else { res(); } }catch(e){res();} }); }
-
+// Reward Ads (10 wale)
 async function claimRewards(){
-  let cnt=getTodayCount();
-  if(cnt>=10){alert(`✅ Aaj ka task ho gaya! Monthly: ${getMonthlyCount()}/28`); return;}
+  let cnt=getTodayCount(); if(cnt>=10){alert(`Task done ${getMonthlyCount()}/28`); return;}
   document.getElementById('rewardOverlay').style.display='flex';
   for(let i=cnt+1;i<=10;i++){
     document.getElementById('rewardProgress').innerText=`${i}/10`;
-    document.getElementById('rewardDesc').innerText=`Reward Ad ${i}/10 Running...`;
-    if(i % 2 === 1){ await showOnClickAReward(); } else { await showMonetagReward(); }
+    document.getElementById('rewardDesc').innerText=`${i%2===1?'OnClickA':'Monetag'} Ad ${i}/10...`;
+    if(i%2===1){ await showOnClickA(); } else { await showMonetag(); }
     setTodayCount(i);
-    await new Promise(r=>setTimeout(r,800));
+    await new Promise(r=>setTimeout(r,500));
   }
   document.getElementById('rewardOverlay').style.display='none';
-  alert(`✅ Aaj ka task complete! Monthly: ${getMonthlyCount()}/28 days`);
+  alert(`✅ Complete! ${getMonthlyCount()}/28`);
 }
-function withdrawCash(){
-  let m=getMonthlyCount();
-  if(m<28){alert(`❌ Locked! ${m}/28 din, 28 din compulsory hai. Aaj ka: ${getTodayCount()}/10`); claimRewards(); return;}
-  if(wallet<50){alert(`Min ₹50 chahiye. Confirmed: ₹${wallet.toFixed(2)}`); return;}
-  let upi=prompt(`✅ Monthly Complete ${m}/28!\nConfirmed: ₹${wallet.toFixed(2)}\nUPI daalo:`);
-  if(upi && upi.includes('@')){
-    let amt=wallet; wallet=0; updateWallet();
-    fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${ADMIN_CHAT_ID}&text=${encodeURIComponent(`💸 WITHDRAW V47 CueLink Ready\n₹${amt} UPI:${upi} Monthly:${m}/28`)}`);
-    alert(`✅ Request Sent!`);
-  }
-}
-Telegram.WebApp.ready();
-renderProducts();
-updateWallet();
-updateRewardUI();
+function withdrawCash(){let m=getMonthlyCount(); if(m<28){alert(`Locked ${m}/28`); return;} if(wallet<50){alert(`Min 50`); return;} let upi=prompt(`UPI:`); if(upi && upi.includes('@')){let a=wallet; wallet=0; updateWallet(); fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${ADMIN_CHAT_ID}&text=${encodeURIComponent(`WITHDRAW V49 ₹${a} ${upi}`)}`); alert(`Sent`);}}
+Telegram.WebApp.ready(); renderProducts(); updateWallet(); updateRewardUI();
 </script>
-</body> 
-</html>
+</body>
+                                                                                                                                                                                                                                     </html>
