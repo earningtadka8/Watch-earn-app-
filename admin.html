@@ -87,5 +87,5 @@ function reject(i){requests.splice(i,1); localStorage.setItem('withdrawRequests'
 function saveSettings(){localStorage.setItem('admin_minWithdraw',document.getElementById('minWithdraw').value); localStorage.setItem('admin_adsNeed',document.getElementById('adsNeed').value); localStorage.setItem('admin_daysNeed',document.getElementById('daysNeed').value); alert('Saved');}
 setTimeout(()=>{let tg=window.Telegram?.WebApp; if(tg?.initDataUnsafe?.user){document.getElementById('userInfo').innerText=`ID: ${tg.initDataUnsafe.user.id} | ${tg.initDataUnsafe.user.first_name} - Auto check...`; setTimeout(checkAdmin,500);}},1000);
 </script>
-</body>
+</body> 
                                                 </html>
