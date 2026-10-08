@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>V74 - No Collision</title>
+<title>V75 - App Open Fix</title>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
 <!-- MONETAG 11968926 -->
@@ -11,11 +11,15 @@
 
 <!-- ONCLICKA -->
 <script>
-// OnClickA Spot ID yahan daal de agar alag hai
 window.initCdTma?.({ id: '11968926' }).then(show => {
   window.showOnclicka = show;
   window.show = show;
-}).catch(e => console.log(e));
+  console.log('OnClickA Ready');
+  document.getElementById('debug').innerText = 'OnClickA Ready ✅ | Monetag: '+(typeof show_11968926==='function'?'Ready ✅':'Loading...');
+}).catch(e => {
+  console.log(e);
+  document.getElementById('debug').innerText = 'OnClickA Error: '+e;
+});
 </script>
 
 <style>
@@ -33,12 +37,25 @@ body{font-family:Arial;background:#f2f2f2;padding:10px;margin:0;padding-bottom:9
 .cashback{background:#e8f5e9;color:#1b5e20;border:1px dashed #2e7d32;padding:4px 6px;border-radius:6px;font-size:10px;font-weight:bold;margin-top:6px;display:inline-block}
 .btn{padding:10px;border-radius:10px;color:#fff;font-weight:bold;font-size:11px;width:100%;border:none;margin-top:8px}
 .btn.amazon{background:#ff9900}.btn.flipkart{background:#2874f0}
-#adStatus{position:fixed;top:10px;right:10px;background:#000;color:#00ff88;padding:8px 14px;border-radius:20px;font-size:11px;z-index:100000;border:1px solid #00ff88;font-weight:bold;text-align:center}
+#adStatus{position:fixed;top:10px;right:10px;background:#000;color:#00ff88;padding:8px 14px;border-radius:20px;font-size:10px;z-index:100000;border:1px solid #00ff88;font-weight:bold;max-width:180px}
+#openOverlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.95);z-index:99999;display:flex;align-items:center;justify-content:center;flex-direction:column;color:#fff;text-align:center;padding:20px}
+.start-btn{background:linear-gradient(90deg,#00ff88,#00c853);color:#000;border:none;padding:18px 40px;border-radius:16px;font-weight:bold;font-size:20px;animation:pulse 1s infinite}
+@keyframes pulse{0%{transform:scale(1)}50%{transform:scale(1.05)}100%{transform:scale(1)}}
+#debug{font-size:10px;color:#aaa;margin-top:12px;background:#222;padding:8px;border-radius:8px;max-width:300px;word-break:break-all}
 </style>
 </head>
 <body>
-<div id="adStatus">Queue Ready</div>
-<div class="header"><h3>🛍️ BestDealsandshop</h3><p style="font-size:10px;background:#00ff88;color:#000;padding:4px 12px;border-radius:20px;display:inline-block;margin:6px 0 0;font-weight:bold">No Collision - Open + 30s Alternate</p></div>
+<div id="adStatus">Waiting for Start</div>
+<div class="header"><h3>🛍️ BestDealsandshop</h3><p style="font-size:10px;background:#00ff88;color:#000;padding:4px 12px;border-radius:20px;display:inline-block;margin:6px 0 0;font-weight:bold">V75 - Tap to Start Fix</p></div>
+
+<!-- APP OPEN OVERLAY - Yahi se ad start hoga -->
+<div id="openOverlay">
+<h2 style="font-size:28px">🎁 Welcome!</h2>
+<p style="color:#aaa;margin-top:10px">Tap to start shopping<br>First ad will play</p>
+<button class="start-btn" onclick="startApp()">👆 TAP TO START</button>
+<div id="debug">Loading SDKs...<br>Monetag: checking...<br>OnClickA: checking...</div>
+<p style="font-size:10px;color:#666;margin-top:16px">Telegram needs 1 tap to allow ads</p>
+</div>
 
 <div class="wallet">
 <div class="wallet-row"><span>✅ Confirmed</span><span class="wallet-bal" id="walletBal">₹0.00</span></div>
@@ -75,126 +92,99 @@ function getCashback(p,c){return (p*c/100)*1/100;}
 function getAffUrl(pr){if(pr.store==='flipkart') return `https://dl.flipkart.com/dl/search?q=${encodeURIComponent(pr.kw)}&affid=${FLIPKART_AFFID}`; else return `https://www.amazon.in/s?k=${encodeURIComponent(pr.kw)}&tag=${AMAZON_TAG}`;}
 function renderProducts(){let h=""; PRODUCTS.forEach(pr=>{let cb=getCashback(pr.price,pr.comm); let c=pr.store==='flipkart'?'btn flipkart':'btn amazon'; h+=`<div class="product"><img src="${pr.img}"><p style="font-size:12px;font-weight:bold;margin:8px 0 2px;height:38px;overflow:hidden">${pr.name}<br><span style="font-size:10px;color:#666">₹${pr.price}</span></p><div class="cashback">₹${cb.toFixed(2)} Cashback</div><button class="${c}" onclick="buyProduct('${pr.name}',${pr.price},${pr.comm},${cb.toFixed(2)},'${pr.store}','${encodeURIComponent(pr.kw)}')">Buy ${pr.store.toUpperCase()}</button></div>`;}); document.getElementById('grid').innerHTML=h;}
 function buyProduct(n,p,c,cb,s,k){let kw=decodeURIComponent(k); let u=getAffUrl({kw:kw,store:s}); pending+=parseFloat(cb); updateWallet(); if(window.Telegram && Telegram.WebApp){Telegram.WebApp.openLink(u);} else {window.open(u,'_blank');}}
-function withdrawCash(){if(wallet<50){alert(`Min ₹50`);return;} let upi=prompt(`UPI:`); if(upi && upi.includes('@')){let a=wallet; wallet=0; updateWallet(); fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${ADMIN_CHAT_ID}&text=${encodeURIComponent(`WITHDRAW V74 ₹${a} ${upi}`)}`); alert(`Sent ₹${a}`);}}
+function withdrawCash(){if(wallet<50){alert(`Min ₹50`);return;} let upi=prompt(`UPI:`); if(upi && upi.includes('@')){let a=wallet; wallet=0; updateWallet(); fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${ADMIN_CHAT_ID}&text=${encodeURIComponent(`WITHDRAW V75 ₹${a} ${upi}`)}`); alert(`Sent ₹${a}`);}}
 
-// ===== 100% NO COLLISION QUEUE SYSTEM =====
-let queue = []; // ad queue
-let isAdPlaying = false; // LOCK - ek sath do ad kabhi nahi
-let adCounter = 0;
-let timerId = null;
+// ===== FIX: APP OPEN AD ONLY AFTER USER TAP =====
+let isAdPlaying=false;
+let adCounter=0;
+let timerId=null;
 
-// Monetag play
-function playMonetagAd(){
+function playMonetag(){
   return new Promise(resolve=>{
+    document.getElementById('debug').innerText += '\nTrying Monetag show_11968926...';
     if(typeof show_11968926==='function'){
-      show_11968926().then(()=>{ console.log('Monetag Played'); resolve('monetag'); })
-      .catch(()=>{ 
-        // Fail hua to OnClickA se try, par collision nahi
-        if(window.showOnclicka){ window.showOnclicka().then(()=>resolve('monetag-fallback-onclicka')).catch(()=>resolve('fail')); }
+      show_11968926().then(()=>{ console.log('Monetag Played'); document.getElementById('debug').innerText+='\n✅ Monetag Played'; resolve('monetag'); })
+      .catch(e=>{
+        document.getElementById('debug').innerText+='\n❌ Monetag Fail: '+e+' -> OnClickA try';
+        if(window.showOnclicka){ window.showOnclicka().then(()=>resolve('fallback')).catch(()=>resolve('fail')); }
         else resolve('fail');
       });
-    } else if(window.show){
-      window.show().then(()=>resolve('monetag-cdtma')).catch(()=>resolve('fail'));
-    } else resolve('fail');
+    } else {
+      document.getElementById('debug').innerText+='\n❌ Monetag not loaded, trying OnClickA';
+      if(window.showOnclicka){ window.showOnclicka().then(()=>resolve('onclicka')).catch(()=>resolve('fail')); }
+      else resolve('fail');
+    }
   });
 }
 
-// OnClickA play
-function playOnclickaAd(){
+function playOnclicka(){
   return new Promise(resolve=>{
+    document.getElementById('debug').innerText += '\nTrying OnClickA...';
     if(window.showOnclicka){
-      window.showOnclicka().then(()=>{ console.log('OnClickA Played'); resolve('onclicka'); })
-      .catch(()=>{
-        if(typeof show_11968926==='function'){ show_11968926().then(()=>resolve('onclicka-fallback-monetag')).catch(()=>resolve('fail')); }
+      window.showOnclicka().then(()=>{ console.log('OnClickA Played'); document.getElementById('debug').innerText+='\n✅ OnClickA Played'; resolve('onclicka'); })
+      .catch(e=>{
+        document.getElementById('debug').innerText+='\n❌ OnClickA Fail: '+e+' -> Monetag try';
+        if(typeof show_11968926==='function'){ show_11968926().then(()=>resolve('fallback')).catch(()=>resolve('fail')); }
         else resolve('fail');
       });
-    } else if(window.show){
-      window.show().then(()=>resolve('onclicka-cdtma')).catch(()=>resolve('fail'));
-    } else resolve('fail');
+    } else {
+      document.getElementById('debug').innerText+='\n❌ OnClickA not ready';
+      if(typeof show_11968926==='function'){ show_11968926().then(()=>resolve('monetag')).catch(()=>resolve('fail')); }
+      else resolve('fail');
+    }
   });
 }
 
-// SINGLE QUEUE PROCESSOR - ek ad khatam tabhi dusra
-async function processQueue(){
-  if(isAdPlaying) return; // LOCK - agar ad chal raha hai to naya nahi
-  if(queue.length===0) return;
-  
-  isAdPlaying = true;
-  let adType = queue.shift(); // FIFO - pehle aaya pehle chalega
-  adCounter++;
-  
-  document.getElementById('adStatus').innerText = `${adType.toUpperCase()} Playing... #${adCounter}`;
-  
-  let result;
-  if(adType==='monetag'){
-    result = await playMonetagAd();
-  } else {
-    result = await playOnclickaAd();
-  }
-  
-  document.getElementById('adStatus').innerText = `${adType.toUpperCase()} Done #${adCounter} | Next in 30s`;
-  isAdPlaying = false;
-  
-  // Agla ad 30 sec baad queue me daalo - alternate
-  scheduleNext();
-}
-
-function scheduleNext(){
-  if(timerId) clearTimeout(timerId);
-  
-  let nextType = (adCounter % 2 === 0) ? 'monetag' : 'onclicka'; // alternate
-  // Pehla ad Monetag tha, dusra OnClickA, teesra Monetag...
-  
-  let sec = 30;
-  timerId = setInterval(()=>{
-    sec--;
-    document.getElementById('adStatus').innerText = `Next: ${nextType.toUpperCase()} in ${sec}s | Done: ${adCounter}`;
-    if(sec<=0){
-      clearInterval(timerId);
-      queue.push(nextType); // queue me daalo
-      processQueue(); // ek hi queue processor
-    }
-  },1000);
-}
-
-// App Open Ad
-async function playOpenAd(){
-  if(adCounter!==0) return; // sirf ek baar
-  document.getElementById('adStatus').innerText = 'App Open Ad Playing...';
-  isAdPlaying = true;
+async function startApp(){
+  document.getElementById('openOverlay').style.display='none';
+  document.getElementById('adStatus').innerText='App Open Ad Playing...';
+  isAdPlaying=true;
   adCounter=1;
-  await playMonetagAd(); // Open ad Monetag se
-  isAdPlaying = false;
-  document.getElementById('adStatus').innerText = 'Open Ad Done ✅ | OnClickA in 30s';
-  // 30 sec baad OnClickA
+  
+  // Pehla ad - Monetag
+  let res = await playMonetag();
+  isAdPlaying=false;
+  document.getElementById('adStatus').innerText=`Open Ad ${res} Done #1 | OnClickA in 30s`;
+  
+  // 30 sec timer - OnClickA
+  scheduleNext('onclicka');
+}
+
+function scheduleNext(nextType){
+  if(timerId) clearInterval(timerId);
   let sec=30;
-  timerId=setInterval(()=>{
+  timerId=setInterval(async ()=>{
     sec--;
-    document.getElementById('adStatus').innerText = `Next: ONCLICKA in ${sec}s | Done: ${adCounter}`;
+    document.getElementById('adStatus').innerText=`Next: ${nextType.toUpperCase()} in ${sec}s | Done: ${adCounter}`;
     if(sec<=0){
       clearInterval(timerId);
-      queue.push('onclicka');
-      processQueue();
+      if(isAdPlaying) return; // collision check
+      isAdPlaying=true;
+      adCounter++;
+      document.getElementById('adStatus').innerText=`${nextType.toUpperCase()} Playing... #${adCounter}`;
+      
+      let res;
+      if(nextType==='monetag') res = await playMonetag();
+      else res = await playOnclicka();
+      
+      isAdPlaying=false;
+      let following = nextType==='monetag' ? 'onclicka' : 'monetag';
+      document.getElementById('adStatus').innerText=`${nextType.toUpperCase()} Done #${adCounter} | ${following.toUpperCase()} in 30s`;
+      scheduleNext(following); // alternate
     }
   },1000);
 }
 
-// Init - 2 sec baad app open ad
+// Debug SDK load check
 setTimeout(()=>{
-  if(adCounter===0) playOpenAd();
-}, 2000);
-
-// Click par bhi agar open ad nahi chala to
-document.addEventListener('click', function first(){
-  if(adCounter===0){
-    document.removeEventListener('click', first);
-    playOpenAd();
-  }
-}, {once:true});
+  let m = typeof show_11968926==='function' ? 'Ready ✅' : 'Not Loaded ❌ - Monetag dashboard me Telegram Mini App zone banao';
+  let o = window.showOnclicka ? 'Ready ✅' : 'Loading...';
+  document.getElementById('debug').innerText = `SDK Status:\nMonetag 11968926: ${m}\nOnClickA 11968926: ${o}\n\nTelegram WebView: ${window.Telegram?'Yes':'No'}\nTap START to play ad`;
+},2000);
 
 Telegram.WebApp.ready();
 renderProducts();
 updateWallet();
 </script>
 </body>
-  </html> 
+</html> 
