@@ -3,11 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BestDeals V53 FINAL</title>
+<title>BestDeals V56 FINAL - All In One</title>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
+<!-- MONETAG 3 FORMATS - AUTOMATIC -->
 <script src="https://libtl.com/sdk.js" data-zone="11968926" data-sdk="show_11968926"></script>
-<script src="https://js.onclckvd.com/in-stream-ad-admanager/tma.js"></script>
-<!-- CUELINK SPACE -->
+<script>var show_11968928;</script>
+<script src="https://libtl.com/sdk.js" data-zone="11968928" data-sdk="show_11968928"></script>
+<script>var show_11968930;</script>
+<script src="https://libtl.com/sdk.js" data-zone="11968930" data-sdk="show_11968930"></script>
+<!-- CUELINK SPACE - Key milne par yahan dalna -->
 <script>const CUELINK_API_KEY=""; const CUELINK_ENABLED=false;</script>
 <style>
 body{font-family:Arial;background:#f2f2f2;padding:10px;margin:0;padding-bottom:90px}
@@ -35,18 +39,18 @@ body{font-family:Arial;background:#f2f2f2;padding:10px;margin:0;padding-bottom:9
 </style>
 </head>
 <body>
-<div id="adCounter">Loading Ads 3s...</div>
-<div class="header"><h3>🛍️ BestDealsandshop</h3><p style="font-size:10px;background:#00ff88;color:#000;padding:4px 12px;border-radius:20px;display:inline-block;margin:6px 0 0;font-weight:bold">V53 FINAL 08 OCT - AutoAds OK</p></div>
+<div id="adCounter">Auto 3 Formats Loading 3s...</div>
+<div class="header"><h3>🛍️ BestDealsandshop</h3><p style="font-size:10px;background:#00ff88;color:#000;padding:4px 12px;border-radius:20px;display:inline-block;margin:6px 0 0;font-weight:bold">V56 FINAL - 3 Monetag Auto | 6+6 Products</p></div>
 <div class="wallet">
-<div class="wallet-row"><span>✅ Confirmed</span><span class="wallet-bal" id="walletBal">₹0.00</span></div>
-<div class="wallet-row"><span>⏳ Pending</span><span class="pending-bal" id="pendingBal">₹0.00</span></div>
-<div class="month-box"><div style="font-weight:bold">📅 Monthly: <span id="monthCount">0</span>/28 Days</div><div class="progress-bar"><div id="progressFill" class="progress-fill" style="width:0%"></div></div></div>
-<button id="rewardBtn" class="reward-btn" onclick="claimRewards()">🎁 Today's Task: Watch 10 Ads (0/10)</button>
+<div class="wallet-row"><span>✅ Confirmed Balance</span><span class="wallet-bal" id="walletBal">₹0.00</span></div>
+<div class="wallet-row"><span>⏳ Pending Cashback</span><span class="pending-bal" id="pendingBal">₹0.00</span></div>
+<div class="month-box"><div style="font-weight:bold">📅 Monthly Progress: <span id="monthCount">0</span>/28 Days</div><div class="progress-bar"><div id="progressFill" class="progress-fill" style="width:0%"></div></div></div>
+<button id="rewardBtn" class="reward-btn" onclick="claimRewards()">🎁 Today's Task: Watch 10 Ads Auto (0/10)</button>
 <div id="lockMsg" class="lock-msg"></div>
-<div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px"><span style="font-size:10px;color:#888">Min ₹50</span><button id="withdrawBtn" class="withdraw-btn locked" onclick="withdrawCash()">🔒 Locked</button></div>
+<div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px"><span style="font-size:10px;color:#888">Min Withdraw ₹50</span><button id="withdrawBtn" class="withdraw-btn locked" onclick="withdrawCash()">🔒 Locked</button></div>
 </div>
 <div class="grid" id="grid"></div>
-<div id="rewardOverlay"><h2>🎁 Daily Task</h2><div id="rewardProgress">0/10</div><p id="rewardDesc">Ad 1/10...</p></div>
+<div id="rewardOverlay"><h2>🎁 Auto Task - 3 Formats</h2><div id="rewardProgress">0/10</div><p id="rewardDesc">Starting...</p><p style="font-size:11px;color:#00ff88" id="formatName"></p></div>
 <script>
 const AMAZON_TAG="earningtadka8-21"; const FLIPKART_AFFID="earningtadka"; const BOT_TOKEN="8960995263:AAFY3_4zGVsPMQHGlb9wDZt0OkJD_iIkXlc"; const ADMIN_CHAT_ID="8594115193";
 const PRODUCTS=[
@@ -66,15 +70,72 @@ const PRODUCTS=[
 let wallet=parseFloat(localStorage.getItem('walletBal')||'0'); let pending=parseFloat(localStorage.getItem('pendingBal')||'0');
 function getToday(){return new Date().toISOString().split('T')[0];} function getMonthKey(){return new Date().toISOString().slice(0,7);} function getDailyData(){return JSON.parse(localStorage.getItem('dailyRewards')||'{}');} function getMonthlyData(){return JSON.parse(localStorage.getItem('monthlyRewards')||'{}');} function getTodayCount(){let d=getDailyData();return d[getToday()]||0;} function setTodayCount(c){let data=getDailyData(); data[getToday()]=c; localStorage.setItem('dailyRewards',JSON.stringify(data)); if(c>=10){let mData=getMonthlyData(); let mk=getMonthKey(); if(!mData[mk]) mData[mk]=[]; if(!mData[mk].includes(getToday())){ mData[mk].push(getToday()); localStorage.setItem('monthlyRewards',JSON.stringify(mData)); }} updateRewardUI();}
 function getMonthlyCount(){let m=getMonthlyData(); let mk=getMonthKey(); return (m[mk]||[]).length;}
-function updateRewardUI(){let t=getTodayCount(); let m=getMonthlyCount(); document.getElementById('monthCount').innerText=m; document.getElementById('progressFill').style.width=(m/28*100)+"%"; let b=document.getElementById('rewardBtn'); let w=document.getElementById('withdrawBtn'); let l=document.getElementById('lockMsg'); if(t>=10){b.innerText="✅ Done (10/10)";} else{b.innerText=`🎁 Watch 10 Ads (${t}/10)`;} if(m>=28){w.innerText="Withdraw"; w.classList.remove('locked'); l.innerHTML=`✅ ${m}/28 done. Unlocked!`;} else{w.innerText=`🔒 Locked (${m}/28)`; w.classList.add('locked'); l.innerHTML=`⚠️ ${m}/28 din, ${28-m} din aur roz 10 ads! Aaj: ${t}/10`;}}
-function getCashback(p,c){return (p*c/100)*1/100;} function updateWallet(){document.getElementById('walletBal').innerText='₹'+wallet.toFixed(2); document.getElementById('pendingBal').innerText='₹'+pending.toFixed(2); localStorage.setItem('walletBal',wallet); localStorage.setItem('pendingBal',pending);} function getAffUrl(pr){let base=""; if(pr.store==='flipkart'){base=`https://dl.flipkart.com/dl/search?q=${encodeURIComponent(pr.kw)}&affid=${FLIPKART_AFFID}`;} else{base=`https://www.amazon.in/s?k=${encodeURIComponent(pr.kw)}&tag=${AMAZON_TAG}`;} if(CUELINK_ENABLED && typeof convertToCueLink==='function'){try{return convertToCueLink(base);}catch(e){return base;}} return base;} function renderProducts(){let h=""; PRODUCTS.forEach(pr=>{let cb=getCashback(pr.price,pr.comm); let c=pr.store==='flipkart'?'btn flipkart':'btn amazon'; h+=`<div class="product"><img src="${pr.img}"><p style="font-size:12px;font-weight:bold;margin:8px 0 2px;height:38px;overflow:hidden">${pr.name}<br><span style="font-size:10px;color:#666">₹${pr.price}</span></p><div class="cashback">₹${cb.toFixed(2)} Cashback</div><button class="${c}" onclick="buyProduct('${pr.name}',${pr.price},${pr.comm},${cb.toFixed(2)},'${pr.store}','${encodeURIComponent(pr.kw)}')">Buy ${pr.store.toUpperCase()}</button></div>`;}); document.getElementById('grid').innerHTML=h;} function buyProduct(n,p,c,cb,s,k){let kw=decodeURIComponent(k); let u=getAffUrl({kw:kw,store:s}); pending+=parseFloat(cb); updateWallet(); window.open(u,'_blank');}
-let adCountdown=3; let nextAdType='monetag';
-function showMonetag(){return new Promise(res=>{try{if(typeof show_11968926==='function'){show_11968926().then(()=>res(true)).catch(()=>res(false));}else res(false);}catch(e){res(false);}});}
-function showOnClickA(){return new Promise(res=>{try{if(window.showTmaReward){window.showTmaReward().then(()=>res(true)).catch(()=>res(false));}else res(false);}catch(e){res(false);}});}
-setTimeout(async ()=>{document.getElementById('adCounter').innerText="Monetag Ad..."; await showMonetag(); nextAdType='onclicka'; adCountdown=30; setInterval(async ()=>{adCountdown--; document.getElementById('adCounter').innerText=`Next ${nextAdType} ${adCountdown}s`; if(adCountdown<=0){if(nextAdType==='monetag'){document.getElementById('adCounter').innerText="Monetag..."; await showMonetag(); nextAdType='onclicka';}else{document.getElementById('adCounter').innerText="OnClickA..."; await showOnClickA(); nextAdType='monetag';} adCountdown=30;}},1000);},3000);
-async function claimRewards(){let cnt=getTodayCount(); if(cnt>=10){alert(`Done ${getMonthlyCount()}/28`);return;} document.getElementById('rewardOverlay').style.display='flex'; for(let i=cnt+1;i<=10;i++){document.getElementById('rewardProgress').innerText=`${i}/10`; document.getElementById('rewardDesc').innerText=`Ad ${i}/10 ${i%2===1?'OnClickA':'Monetag'}...`; if(i%2===1) await showOnClickA(); else await showMonetag(); setTodayCount(i); await new Promise(r=>setTimeout(r,600));} document.getElementById('rewardOverlay').style.display='none'; alert(`✅ Complete! ${getMonthlyCount()}/28`);}
-function withdrawCash(){let m=getMonthlyCount(); if(m<28){alert(`Locked ${m}/28`);return;} if(wallet<50){alert(`Min 50`);return;} let upi=prompt(`UPI:`); if(upi && upi.includes('@')){let a=wallet; wallet=0; updateWallet(); fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${ADMIN_CHAT_ID}&text=${encodeURIComponent(`WITHDRAW V53 FINAL ₹${a} ${upi}`)}`); alert(`Sent`);}}
+function updateRewardUI(){let t=getTodayCount(); let m=getMonthlyCount(); document.getElementById('monthCount').innerText=m; document.getElementById('progressFill').style.width=(m/28*100)+"%"; let b=document.getElementById('rewardBtn'); let w=document.getElementById('withdrawBtn'); let l=document.getElementById('lockMsg'); if(t>=10){b.innerText="✅ Done Today (10/10)";} else{b.innerText=`🎁 Watch 10 Ads Auto (${t}/10) - 3 Formats`;} if(m>=28){w.innerText="Withdraw"; w.classList.remove('locked'); l.innerHTML=`✅ ${m}/28 completed - Withdraw Unlocked!`;} else{w.innerText=`🔒 Locked (${m}/28)`; w.classList.add('locked'); l.innerHTML=`⚠️ Withdraw ke liye 28 din roz 10 ads dekhna hai. Bache: ${28-m} din | Aaj: ${t}/10`;}}
+function getCashback(p,c){return (p*c/100)*1/100;} function updateWallet(){document.getElementById('walletBal').innerText='₹'+wallet.toFixed(2); document.getElementById('pendingBal').innerText='₹'+pending.toFixed(2); localStorage.setItem('walletBal',wallet); localStorage.setItem('pendingBal',pending);}
+function getAffUrl(pr){let base=""; if(pr.store==='flipkart'){base=`https://dl.flipkart.com/dl/search?q=${encodeURIComponent(pr.kw)}&affid=${FLIPKART_AFFID}`;} else{base=`https://www.amazon.in/s?k=${encodeURIComponent(pr.kw)}&tag=${AMAZON_TAG}`;} if(CUELINK_ENABLED && typeof convertToCueLink==='function'){try{return convertToCueLink(base);}catch(e){return base;}} return base;}
+function renderProducts(){let h=""; PRODUCTS.forEach(pr=>{let cb=getCashback(pr.price,pr.comm); let c=pr.store==='flipkart'?'btn flipkart':'btn amazon'; h+=`<div class="product"><img src="${pr.img}"><p style="font-size:12px;font-weight:bold;margin:8px 0 2px;height:38px;overflow:hidden">${pr.name}<br><span style="font-size:10px;color:#666">₹${pr.price}</span></p><div class="cashback">₹${cb.toFixed(2)} Cashback</div><button class="${c}" onclick="buyProduct('${pr.name}',${pr.price},${pr.comm},${cb.toFixed(2)},'${pr.store}','${encodeURIComponent(pr.kw)}')">Buy ${pr.store.toUpperCase()}</button></div>`;}); document.getElementById('grid').innerHTML=h;}
+function buyProduct(n,p,c,cb,s,k){let kw=decodeURIComponent(k); let u=getAffUrl({kw:kw,store:s}); pending+=parseFloat(cb); updateWallet(); window.open(u,'_blank');}
+
+// ===== FINAL - 3 MONETAG FORMATS AUTOMATIC =====
+let adCountdown=3; let formatIdx=0;
+function showFormat1(){return new Promise(r=>{try{if(typeof show_11968926==='function'){show_11968926().then(()=>r(true)).catch(()=>r(false));}else r(false);}catch(e){r(false);}});}
+function showFormat2(){return new Promise(r=>{try{if(typeof show_11968928==='function'){show_11968928().then(()=>r(true)).catch(()=>{showFormat1().then(()=>r(true));});}else{showFormat1().then(()=>r(true));}}catch(e){showFormat1().then(()=>r(true));}});}
+function showFormat3(){return new Promise(r=>{try{if(typeof show_11968930==='function'){show_11968930().then(()=>r(true)).catch(()=>{showFormat1().then(()=>r(true));});}else{showFormat1().then(()=>r(true));}}catch(e){showFormat1().then(()=>r(true));}});}
+
+const monetagFormats=[
+  {id:"11968926", name:"Interstitial", fn:showFormat1},
+  {id:"11968928", name:"Rewarded Popup", fn:showFormat2},
+  {id:"11968930", name:"Vignette Banner", fn:showFormat3}
+];
+
+// BACKGROUND AUTO - Har 30 sec me alag format automatic
+setTimeout(async ()=>{
+  document.getElementById('adCounter').innerText=`Auto: ${monetagFormats[0].name}...`;
+  await monetagFormats[0].fn();
+  formatIdx=1; adCountdown=30;
+  setInterval(async ()=>{
+    adCountdown--;
+    document.getElementById('adCounter').innerText=`Next Auto: ${monetagFormats[formatIdx].name} ${adCountdown}s`;
+    if(adCountdown<=0){
+      document.getElementById('adCounter').innerText=`Playing ${monetagFormats[formatIdx].name}...`;
+      await monetagFormats[formatIdx].fn();
+      formatIdx=(formatIdx+1)%3;
+      adCountdown=30;
+    }
+  },1000);
+},3000);
+
+// 10 ADS TASK - 1 Click me 10 Ads 3 Formats Automatic
+async function claimRewards(){
+  let cnt=getTodayCount();
+  if(cnt>=10){alert(`Aaj ka task complete hai! Monthly: ${getMonthlyCount()}/28`);return;}
+  document.getElementById('rewardOverlay').style.display='flex';
+  for(let i=cnt+1;i<=10;i++){
+    let idx=(i-1)%3;
+    let fmt=monetagFormats[idx];
+    document.getElementById('rewardProgress').innerText=`${i}/10`;
+    document.getElementById('rewardDesc').innerText=`Ad ${i}/10 Automatic`;
+    document.getElementById('formatName').innerText=`${fmt.name} - ${fmt.id}`;
+    await fmt.fn();
+    setTodayCount(i);
+    await new Promise(r=>setTimeout(r,800));
+  }
+  document.getElementById('rewardOverlay').style.display='none';
+  alert(`✅ 10 Ads Done - 3 Formats Auto! Monthly: ${getMonthlyCount()}/28 Days`);
+}
+
+function withdrawCash(){
+  let m=getMonthlyCount();
+  if(m<28){alert(`Locked! ${m}/28 Days complete kiye. ${28-m} din aur bache hai.`);return;}
+  if(wallet<50){alert(`Min ₹50 chahiye. Abhi ₹${wallet.toFixed(2)} hai.`);return;}
+  let upi=prompt(`UPI ID dalo (jaise name@upi):`);
+  if(upi && upi.includes('@')){
+    let amt=wallet; wallet=0; updateWallet();
+    fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${ADMIN_CHAT_ID}&text=${encodeURIComponent(`WITHDRAW V56 FINAL 3F AUTO ₹${amt} UPI:${upi} Monthly:${m}/28`)}`);
+    alert(`Withdraw Request Sent ₹${amt} to ${upi}`);
+  }
+}
 Telegram.WebApp.ready(); renderProducts(); updateWallet(); updateRewardUI();
 </script>
 </body>
-</html>  
+</html> 
