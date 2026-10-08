@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin - BestDeals</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<style>
+body{font-family:Arial;background:#0f172a;color:#fff;padding:12px;margin:0}
+.header{background:#1e293b;padding:16px;border-radius:14px;text-align:center;border:1px solid #334155}
+.card{background:#1e293b;border:1px solid #334155;border-radius:14px;padding:14px;margin-top:12px}
+.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.stat{background:#0f172a;border:1px solid #334155;border-radius:12px;padding:12px;text-align:center}
+.stat h2{margin:0;color:#00ff88}
+.btn{padding:10px 16px;border-radius:10px;border:none;font-weight:bold;margin:4px}
+.btn-green{background:#00c853;color:#fff}.btn-red{background:#ff1744;color:#fff}.btn-blue{background:#1976d2;color:#fff}
+.req{background:#0f172a;border:1px solid #334155;border-radius:12px;padding:12px;margin-top:10px}
+input{width:100%;padding:10px;border-radius:8px;border:1px solid #334155;background:#0f172a;color:#fff;margin-top:6px;box-sizing:border-box}
+#loginBox{position:fixed;top:0;left:0;width:100%;height:100%;background:#0f172a;z-index:9999;display:flex;align-items:center;justify-content:center;flex-direction:column;padding:20px;box-sizing:border-box}
+</style>
+</head>
+<body>
+<div id="loginBox">
+<h2>🔐 Admin Login</h2>
+<p style="font-size:12px;color:#aaa;text-align:center">Sirf Admin ID 8594115193 open kar sakta hai</p>
+<p id="userInfo" style="font-size:11px;color:#00ff88;margin-top:10px"></p>
+<button class="btn btn-blue" onclick="checkAdmin()">Check Admin Access</button>
+</div>
+<div class="header">
+<h3>🛡️ Admin Panel</h3>
+<p style="font-size:11px;color:#00ff88">V81 - 25 Days Must + 10 Ads + ₹50</p>
+</div>
+<div class="stat-grid">
+<div class="stat"><p style="font-size:11px;color:#aaa">Withdraw Req</p><h2 id="totalReq">0</h2></div>
+<div class="stat"><p style="font-size:11px;color:#aaa">Month Days</p><h2 id="totalUsers">0/25</h2></div>
+<div class="stat"><p style="font-size:11px;color:#aaa">Ads Today</p><h2 id="adsToday">0/10</h2></div>
+<div class="stat"><p style="font-size:11px;color:#aaa">Locked</p><h2 id="lockedUsers">0</h2></div>
+</div>
+<div class="card">
+<h4>💸 Withdraw Requests</h4>
+<button class="btn btn-blue" onclick="loadRequests()">🔄 Refresh</button>
+<div id="reqList"><p style="font-size:11px;color:#aaa">No requests yet - User withdraw karega to yaha ayega</p></div>
+</div>
+<div class="card">
+<h4>⚙️ Settings</h4>
+<label style="font-size:12px">Min Withdraw ₹</label><input id="minWithdraw" value="50" type="number">
+<label style="font-size:12px">Ads Need</label><input id="adsNeed" value="10" type="number">
+<label style="font-size:12px">Days Need</label><input id="daysNeed" value="25" type="number">
+<button class="btn btn-green" style="width:100%;margin-top:10px" onclick="saveSettings()">Save</button>
+</div>
+<script>
+const BOT_TOKEN="8960995263:AAFY3_4zGVsPMQHGlb9wDZt0OkJD_iIkXlc";
+const ADMIN_CHAT_ID="8594115193";
+function checkAdmin(){
+  let tg=window.Telegram?.WebApp; let user=tg?.initDataUnsafe?.user;
+  document.getElementById('userInfo').innerText=user?`ID: ${user.id} | ${user.first_name}`:'Browser - Testing Mode';
+  if(user && String(user.id)===String(ADMIN_CHAT_ID)){
+    document.getElementById('loginBox').style.display='none'; loadRequests(); loadStats(); Telegram.WebApp.ready();
+  }else if(!user){
+    if(confirm('Browser me ho - Admin kholu testing ke liye?')){document.getElementById('loginBox').style.display='none'; loadRequests(); loadStats();}
+  }else{alert('Access Denied - ID: '+user.id+' | Admin: '+ADMIN_CHAT_ID);}
+}
+function loadStats(){
+  let monthData=JSON.parse(localStorage.getItem('monthData')||'{}');
+  let currentMonth=new Date().getFullYear()+'-'+(new Date().getMonth()+1);
+  let days=monthData[currentMonth]||[];
+  document.getElementById('totalUsers').innerText=days.length+'/25';
+  document.getElementById('adsToday').innerText=localStorage.getItem('adsWatched')||'0';
+  document.getElementById('totalReq').innerText=JSON.parse(localStorage.getItem('withdrawRequests')||'[]').length;
+  document.getElementById('lockedUsers').innerText=days.length<25?'1':'0';
+}
+let requests=JSON.parse(localStorage.getItem('withdrawRequests')||'[]');
+function loadRequests(){
+  let list=document.getElementById('reqList');
+  if(requests.length===0){list.innerHTML='<p style="font-size:11px;color:#aaa">No withdraw yet</p>'; return;}
+  let h=''; requests.forEach((r,i)=>{h+=`<div class="req"><b>₹${r.amount}</b> - ${r.upi}<br><span style="font-size:10px;color:#aaa">${r.date} | Days: ${r.days}/25 | Ads: ${r.ads}/10</span><br><div style="margin-top:8px"><button class="btn btn-green" onclick="approve(${i})">Approve</button><button class="btn btn-red" onclick="reject(${i})">Reject</button></div></div>`;});
+  list.innerHTML=h;
+}
+function approve(i){
+  let r=requests[i];
+  if(confirm(`₹${r.amount} approve ${r.upi}?`)){
+    fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${ADMIN_CHAT_ID}&text=${encodeURIComponent(`APPROVED V81 ₹${r.amount} to ${r.upi}`)}`);
+    requests.splice(i,1); localStorage.setItem('withdrawRequests',JSON.stringify(requests)); loadRequests();
+  }
+}
+function reject(i){requests.splice(i,1); localStorage.setItem('withdrawRequests',JSON.stringify(requests)); loadRequests();}
+function saveSettings(){localStorage.setItem('admin_minWithdraw',document.getElementById('minWithdraw').value); localStorage.setItem('admin_adsNeed',document.getElementById('adsNeed').value); localStorage.setItem('admin_daysNeed',document.getElementById('daysNeed').value); alert('Saved');}
+setTimeout(()=>{let tg=window.Telegram?.WebApp; if(tg?.initDataUnsafe?.user){document.getElementById('userInfo').innerText=`ID: ${tg.initDataUnsafe.user.id} | ${tg.initDataUnsafe.user.first_name} - Auto check...`; setTimeout(checkAdmin,500);}},1000);
+</script>
+</body>
+                                                </html>
