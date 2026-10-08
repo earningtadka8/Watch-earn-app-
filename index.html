@@ -3,21 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>V77 - Monetag 11968926 + OnClickA 467533</title>
+<title>V81 - 25 Days Must for Withdraw</title>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
-
-<!-- MONETAG 11968926 - YE CHAL RAHA HAI -->
 <script src="https://libtl.com/sdk.js" data-zone="11968926" data-sdk="show_11968926"></script>
-
-<!-- ONCLICKA 467533 - TERA REAL ID - Screenshot se -->
-<script>
-window.initCdTma?.({ id: '467533' }).then(show => {
-  window.showOnclicka = show;
-  window.showOnclickaReady = true;
-  console.log('OnClickA 467533 Ready');
-}).catch(e => console.log('OnClickA 467533 Error', e));
-</script>
-
 <style>
 body{font-family:Arial;background:#f2f2f2;padding:10px;margin:0;padding-bottom:90px}
 .header{background:#111;color:#fff;padding:16px;border-radius:16px;text-align:center}
@@ -25,7 +13,7 @@ body{font-family:Arial;background:#f2f2f2;padding:10px;margin:0;padding-bottom:9
 .wallet-row{display:flex;justify-content:space-between;margin:6px 0;font-size:13px}
 .wallet-bal{font-size:22px;font-weight:bold;color:#00c853}
 .pending-bal{font-size:16px;font-weight:bold;color:#ff9800}
-.withdraw-btn{background:#00c853;color:#fff;border:none;padding:10px 18px;border-radius:10px;font-weight:bold}
+.withdraw-btn{background:#00c853;color:#fff;border:none;padding:12px 18px;border-radius:10px;font-weight:bold;width:100%;margin-top:10px;font-size:14px}
 .withdraw-btn.locked{background:#ccc;color:#666}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
 .product{background:#fff;border-radius:14px;padding:10px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,0.08)}
@@ -33,36 +21,58 @@ body{font-family:Arial;background:#f2f2f2;padding:10px;margin:0;padding-bottom:9
 .cashback{background:#e8f5e9;color:#1b5e20;border:1px dashed #2e7d32;padding:4px 6px;border-radius:6px;font-size:10px;font-weight:bold;margin-top:6px;display:inline-block}
 .btn{padding:10px;border-radius:10px;color:#fff;font-weight:bold;font-size:11px;width:100%;border:none;margin-top:8px}
 .btn.amazon{background:#ff9900}.btn.flipkart{background:#2874f0}
-#adStatus{position:fixed;top:10px;right:10px;background:#000;color:#00ff88;padding:8px 14px;border-radius:20px;font-size:10px;z-index:100000;border:1px solid #00ff88;font-weight:bold;max-width:190px}
+#adStatus{position:fixed;top:10px;right:10px;background:#000;color:#00ff88;padding:8px 14px;border-radius:20px;font-size:10px;z-index:100000;border:1px solid #00ff88;font-weight:bold;max-width:200px;text-align:center}
 #openOverlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.95);z-index:99999;display:flex;align-items:center;justify-content:center;flex-direction:column;color:#fff;text-align:center;padding:20px}
-.start-btn{background:linear-gradient(90deg,#ff6a00,#ee0979);color:#fff;border:none;padding:18px 40px;border-radius:16px;font-weight:bold;font-size:20px}
+.start-btn{background:linear-gradient(90deg,#00ff88,#00c853);color:#000;border:none;padding:18px 40px;border-radius:16px;font-weight:bold;font-size:20px}
+.task-box{background:#fff;border-radius:16px;padding:14px;margin-top:12px}
+.progress-bar{background:#eee;height:12px;border-radius:10px;overflow:hidden;margin-top:8px}
+.progress-fill{height:100%;transition:width 0.3s}
+.month-box{background:#fff;border:2px solid #1976d2;border-radius:16px;padding:14px;margin-top:12px}
+.days-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-top:10px}
+.day{width:100%;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:bold;background:#fff;border:1px solid #ccc}
+.day.done{background:#1976d2;color:#fff;border-color:#1976d2}
+.day.today{border:2px solid #00c853}
+.lock-reason{background:#fff3e0;border:1px solid #ff9800;border-radius:10px;padding:10px;margin-top:10px;font-size:12px}
 </style>
 </head>
 <body>
-<div id="adStatus">Ready - 467533</div>
-<div class="header"><h3>🛍️ BestDealsandshop</h3><p style="font-size:10px;background:#00ff88;color:#000;padding:4px 12px;border-radius:20px;display:inline-block;margin:6px 0 0;font-weight:bold">V77 - Monetag 11968926 + OnClickA 467533</p></div>
+<div id="adStatus">Monetag 11968926</div>
+<div class="header"><h3>🛍️ BestDealsandshop</h3><p style="font-size:10px;background:#00ff88;color:#000;padding:4px 12px;border-radius:20px;display:inline-block;margin:6px 0 0">V81 - 25 Days Must for Withdraw</p></div>
 
 <div id="openOverlay">
 <h2>🎁 Welcome!</h2>
-<p>Monetag + OnClickA Auto Ads<br>Tap to Start</p>
+<p>10 Ads + 25 Days + ₹50 = Withdraw<br>Miss bhi hua to chalega, 25 din ginti hogi</p>
 <button class="start-btn" onclick="startApp()">👆 TAP TO START</button>
-<p style="font-size:10px;color:#aaa;margin-top:12px">Monetag 11968926 OK ✅<br>OnClickA 467533 - Screenshot wala</p>
 </div>
 
 <div class="wallet">
 <div class="wallet-row"><span>✅ Confirmed</span><span class="wallet-bal" id="walletBal">₹0.00</span></div>
 <div class="wallet-row"><span>⏳ Pending</span><span class="pending-bal" id="pendingBal">₹0.00</span></div>
-<div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px">
-<span style="font-size:10px;color:#888">Min ₹50</span>
+<div class="wallet-row"><span>📺 Ads (10)</span><span id="adsCount" style="font-weight:bold">0/10</span></div>
+<div class="wallet-row"><span>📅 Days (25)</span><span id="daysCount" style="font-weight:bold;color:#1976d2">0/25</span></div>
 <button id="withdrawBtn" class="withdraw-btn locked" onclick="withdrawCash()">🔒 Locked</button>
+<div id="lockReason" class="lock-reason"></div>
 </div>
+
+<div class="task-box">
+<div style="display:flex;justify-content:space-between"><span style="font-weight:bold;font-size:13px">🔓 10 Ads Unlock</span><span id="adsPercent" style="font-weight:bold;color:#ff9800">0%</span></div>
+<div class="progress-bar"><div id="adsFill" class="progress-fill" style="width:0%;background:linear-gradient(90deg,#ff9800,#ff5722)"></div></div>
+</div>
+
+<div class="month-box">
+<div style="display:flex;justify-content:space-between;align-items:center">
+<span style="font-weight:bold;font-size:13px;color:#1976d2" id="monthTitle">📅 Monthly Target</span>
+<span id="monthProgress" style="font-weight:bold;color:#1976d2">0/25</span>
+</div>
+<div class="progress-bar"><div id="monthFill" class="progress-fill" style="width:0%;background:linear-gradient(90deg,#1976d2,#0d47a1)"></div></div>
+<div style="font-size:11px;color:#666;margin-top:6px">Mahine me 25 alag-alag din ad dekho - withdraw tabhi unlock hoga, miss ho gaya to bhi chalega</div>
+<div class="days-grid" id="daysGrid"></div>
 </div>
 
 <div class="grid" id="grid"></div>
 
 <script>
 const AMAZON_TAG="earningtadka8-21"; const FLIPKART_AFFID="earningtadka"; const BOT_TOKEN="8960995263:AAFY3_4zGVsPMQHGlb9wDZt0OkJD_iIkXlc"; const ADMIN_CHAT_ID="8594115193";
-
 const PRODUCTS=[
 {name:"Apple AirPods Pro 2nd",img:"https://m.media-amazon.com/images/I/61SUj2aKoEL._SL1500_.jpg",kw:"apple airpods pro 2nd gen",price:26900,comm:5,store:"amazon"},
 {name:"Sony WH-1000XM5",img:"https://m.media-amazon.com/images/I/51aXvjzcukL._SL1080_.jpg",kw:"sony wh 1000xm5",price:29990,comm:5,store:"amazon"},
@@ -78,89 +88,151 @@ const PRODUCTS=[
 {name:"Fastrack Analog Watch",img:"https://rukminim2.flixcart.com/image/832/832/xif0q/watch/8/8/5/-original-imah8hzyzgzgfzzg.jpeg",kw:"fastrack analog watch men",price:2495,comm:8,store:"flipkart"}
 ];
 
-let wallet=parseFloat(localStorage.getItem('walletBal')||'0'); let pending=parseFloat(localStorage.getItem('pendingBal')||'0');
-function updateWallet(){document.getElementById('walletBal').innerText='₹'+wallet.toFixed(2); document.getElementById('pendingBal').innerText='₹'+pending.toFixed(2); localStorage.setItem('walletBal',wallet); localStorage.setItem('pendingBal',pending); let w=document.getElementById('withdrawBtn'); if(wallet>=50){w.innerText="Withdraw"; w.classList.remove('locked');} else {w.innerText=`🔒 Locked (₹${wallet.toFixed(2)}/₹50)`; w.classList.add('locked');}}
+let wallet=parseFloat(localStorage.getItem('walletBal')||'0');
+let pending=parseFloat(localStorage.getItem('pendingBal')||'0');
+let adsWatched=parseInt(localStorage.getItem('adsWatched')||'0');
+
+function getMonthKey(){ let d=new Date(); return d.getFullYear()+'-'+(d.getMonth()+1); }
+function getTodayKey(){ return new Date().toISOString().split('T')[0]; }
+
+let monthData = JSON.parse(localStorage.getItem('monthData')||'{}');
+let currentMonth = getMonthKey();
+if(!monthData[currentMonth]) monthData[currentMonth] = [];
+
+function saveMonthData(){ localStorage.setItem('monthData', JSON.stringify(monthData)); }
+
+function markTodayDone(){
+  let today = getTodayKey();
+  if(!monthData[currentMonth].includes(today)){
+    monthData[currentMonth].push(today);
+    saveMonthData();
+  }
+  renderMonth();
+}
+
+function renderMonth(){
+  let days = monthData[currentMonth] || [];
+  document.getElementById('monthTitle').innerText = `📅 ${new Date().toLocaleString('default',{month:'long'})} Target`;
+  document.getElementById('monthProgress').innerText = `${days.length}/25`;
+  document.getElementById('monthFill').style.width = Math.min(100, (days.length/25)*100)+'%';
+  document.getElementById('daysCount').innerText = `${days.length}/25`;
+
+  let now = new Date(); let year = now.getFullYear(), month = now.getMonth();
+  let daysInMonth = new Date(year, month+1, 0).getDate();
+  let todayNum = now.getDate();
+  let html='';
+  for(let i=1;i<=daysInMonth;i++){
+    let dateStr = `${year}-${String(month+1).padStart(2,'0')}-${String(i).padStart(2,'0')}`;
+    let isDone = days.includes(dateStr);
+    let isToday = i===todayNum;
+    html+=`<div class="day ${isDone?'done':''} ${isToday?'today':''}">${i}</div>`;
+  }
+  document.getElementById('daysGrid').innerHTML=html;
+}
+
+function updateAllUI(){
+  document.getElementById('walletBal').innerText='₹'+wallet.toFixed(2);
+  document.getElementById('pendingBal').innerText='₹'+pending.toFixed(2);
+  document.getElementById('adsCount').innerText=`${Math.min(adsWatched,10)}/10`;
+  document.getElementById('adsPercent').innerText=Math.round(Math.min(100,(adsWatched/10)*100))+'%';
+  document.getElementById('adsFill').style.width=Math.min(100,(adsWatched/10)*100)+'%';
+  localStorage.setItem('walletBal',wallet);
+  localStorage.setItem('pendingBal',pending);
+  localStorage.setItem('adsWatched',adsWatched);
+
+  let daysDone = (monthData[currentMonth]||[]).length;
+  let btn = document.getElementById('withdrawBtn');
+  let reason = document.getElementById('lockReason');
+
+  let needAds = adsWatched<10;
+  let needDays = daysDone<25;
+  let needMoney = wallet<50;
+
+  if(!needAds &&!needDays &&!needMoney){
+    btn.innerText='💸 Withdraw Now';
+    btn.classList.remove('locked');
+    reason.innerHTML='✅ Sab pura hai - 10 Ads ✅, 25 Days ✅, ₹50 ✅';
+    reason.style.background='#e8f5e9'; reason.style.borderColor='#00c853';
+  } else {
+    btn.innerText='🔒 Locked - 25 Din + 10 Ads + ₹50 Zaruri';
+    btn.classList.add('locked');
+    let msgs=[];
+    if(needAds) msgs.push(`📺 ${10-adsWatched} Ads baki (${adsWatched}/10)`);
+    else msgs.push(`📺 10 Ads ✅`);
+    if(needDays) msgs.push(`📅 ${25-daysDone} Din baki (${daysDone}/25) - Mahine me 25 din dekhna zaruri`);
+    else msgs.push(`📅 25 Days ✅`);
+    if(needMoney) msgs.push(`💰 ₹${wallet.toFixed(2)}/₹50 baki`);
+    else msgs.push(`💰 ₹${wallet.toFixed(2)} ✅`);
+    reason.innerHTML=msgs.join('<br>');
+    reason.style.background='#fff3e0'; reason.style.borderColor='#ff9800';
+  }
+}
+
 function getCashback(p,c){return (p*c/100)*1/100;}
 function getAffUrl(pr){if(pr.store==='flipkart') return `https://dl.flipkart.com/dl/search?q=${encodeURIComponent(pr.kw)}&affid=${FLIPKART_AFFID}`; else return `https://www.amazon.in/s?k=${encodeURIComponent(pr.kw)}&tag=${AMAZON_TAG}`;}
 function renderProducts(){let h=""; PRODUCTS.forEach(pr=>{let cb=getCashback(pr.price,pr.comm); let c=pr.store==='flipkart'?'btn flipkart':'btn amazon'; h+=`<div class="product"><img src="${pr.img}"><p style="font-size:12px;font-weight:bold;margin:8px 0 2px;height:38px;overflow:hidden">${pr.name}<br><span style="font-size:10px;color:#666">₹${pr.price}</span></p><div class="cashback">₹${cb.toFixed(2)} Cashback</div><button class="${c}" onclick="buyProduct('${pr.name}',${pr.price},${pr.comm},${cb.toFixed(2)},'${pr.store}','${encodeURIComponent(pr.kw)}')">Buy ${pr.store.toUpperCase()}</button></div>`;}); document.getElementById('grid').innerHTML=h;}
-function buyProduct(n,p,c,cb,s,k){let kw=decodeURIComponent(k); let u=getAffUrl({kw:kw,store:s}); pending+=parseFloat(cb); updateWallet(); if(window.Telegram && Telegram.WebApp){Telegram.WebApp.openLink(u);} else {window.open(u,'_blank');}}
-function withdrawCash(){if(wallet<50){alert(`Min ₹50`);return;} let upi=prompt(`UPI:`); if(upi && upi.includes('@')){let a=wallet; wallet=0; updateWallet(); fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${ADMIN_CHAT_ID}&text=${encodeURIComponent(`WITHDRAW V77 ₹${a} ${upi}`)}`); alert(`Sent ₹${a}`);}}
+function buyProduct(n,p,c,cb,s,k){let kw=decodeURIComponent(k); let u=getAffUrl({kw:kw,store:s}); pending+=parseFloat(cb); updateAllUI(); if(window.Telegram && Telegram.WebApp){Telegram.WebApp.openLink(u);} else {window.open(u,'_blank');}}
 
-// ===== FINAL - MONETAG 11968926 + ONCLICKA 467533 - NO COLLISION =====
-let isAdPlaying=false;
-let adCounter=0;
-let timerId=null;
+function withdrawCash(){
+  let daysDone = (monthData[currentMonth]||[]).length;
+  if(adsWatched<10){ alert(`10 Ads dekho - Abhi ${adsWatched}/10`); return; }
+  if(daysDone<25){ alert(`25 Din dekhna zaruri hai - Abhi ${daysDone}/25 din hue hain\nMiss ho gaya to koi dikkat nahi, bas ${25-daysDone} din aur dekho is mahine`); return; }
+  if(wallet<50){ alert(`Min ₹50 - Abhi ₹${wallet.toFixed(2)}`); return; }
+  let upi=prompt(`UPI ID daalo:`);
+  if(upi && upi.includes('@')){
+    let a=wallet; wallet=0; adsWatched=0;
+    localStorage.setItem('adsWatched','0');
+    updateAllUI();
+    fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${ADMIN_CHAT_ID}&text=${encodeURIComponent(`WITHDRAW V81 ₹${a} ${upi} | Days: ${daysDone}/25 | Ads: 10/10 | Month: ${currentMonth}`)}`);
+    alert(`₹${a} withdraw bheja - 10 Ads reset, 25 din ka count rahega`);
+  }
+}
 
+let isAdPlaying=false, adCount=0, timerId=null;
 function playMonetag(){
   return new Promise(resolve=>{
     if(typeof show_11968926==='function'){
-      show_11968926().then(()=>{ console.log('Monetag 11968926 Played'); resolve(true); }).catch(e=>{ console.log(e); resolve(false); });
+      show_11968926().then(()=>{
+        adsWatched++; markTodayDone(); updateAllUI(); resolve(true);
+      }).catch(()=>resolve(false));
     } else resolve(false);
   });
 }
-
-function playOnclicka(){
-  return new Promise(resolve=>{
-    if(window.showOnclicka){
-      window.showOnclicka().then(()=>{ 
-        console.log('tma ad played - OnClickA 467533'); 
-        resolve(true); 
-      }).catch(e=>{ 
-        console.log('OnClickA 467533 fail', e); 
-        resolve(false); 
-      });
-    } else {
-      console.log('OnClickA 467533 not ready');
-      resolve(false);
-    }
-  });
-}
-
 async function startApp(){
   document.getElementById('openOverlay').style.display='none';
-  document.getElementById('adStatus').innerText='Open Ad Monetag 11968926 Playing...';
-  isAdPlaying=true;
-  adCounter=1;
-  await playMonetag(); // App Open - Monetag 11968926
+  document.getElementById('adStatus').innerText='App Open Ad...';
+  isAdPlaying=true; adCount=1;
+  await playMonetag();
   isAdPlaying=false;
-  document.getElementById('adStatus').innerText='Open Done ✅ | OnClickA 467533 in 30s';
-  scheduleNext('onclicka');
+  let d=(monthData[currentMonth]||[]).length;
+  document.getElementById('adStatus').innerText=`Done #1 | Ads:${adsWatched}/10 Days:${d}/25 | Next 30s`;
+  scheduleNext();
 }
-
-function scheduleNext(nextType){
+function scheduleNext(){
   if(timerId) clearInterval(timerId);
   let sec=30;
   timerId=setInterval(async ()=>{
     sec--;
-    document.getElementById('adStatus').innerText=`Next: ${nextType.toUpperCase()} ${nextType==='onclicka'?'467533':'11968926'} in ${sec}s | Done: ${adCounter}`;
+    let d=(monthData[currentMonth]||[]).length;
+    document.getElementById('adStatus').innerText=`Monetag in ${sec}s | Ads:${adsWatched}/10 Days:${d}/25 #${adCount}`;
     if(sec<=0){
       clearInterval(timerId);
-      if(isAdPlaying) return; // No collision lock
-      isAdPlaying=true;
-      adCounter++;
-      document.getElementById('adStatus').innerText=`${nextType.toUpperCase()} ${nextType==='onclicka'?'467533':'11968926'} Playing... #${adCounter}`;
-      
-      let ok=false;
-      if(nextType==='monetag') ok = await playMonetag();
-      else ok = await playOnclicka();
-      
-      // Agar OnClickA fail hua to Monetag fallback - par ek sath nahi
-      if(!ok && nextType==='onclicka'){
-        document.getElementById('adStatus').innerText='OnClickA 467533 Fail - Monetag Fallback';
-        await playMonetag();
-      }
-      
+      if(isAdPlaying) return;
+      isAdPlaying=true; adCount++;
+      document.getElementById('adStatus').innerText=`Monetag Playing #${adCount}...`;
+      await playMonetag();
       isAdPlaying=false;
-      let following = nextType==='monetag' ? 'onclicka' : 'monetag';
-      document.getElementById('adStatus').innerText=`${nextType.toUpperCase()} Done #${adCounter} | ${following.toUpperCase()} in 30s`;
-      scheduleNext(following);
+      let d2=(monthData[currentMonth]||[]).length;
+      document.getElementById('adStatus').innerText=`Done #${adCount} | Ads:${adsWatched}/10 Days:${d2}/25 | Next 30s`;
+      scheduleNext();
     }
   },1000);
 }
 
 Telegram.WebApp.ready();
 renderProducts();
-updateWallet();
+updateAllUI();
+renderMonth();
 </script>
 </body>
-</html> 
+  </html> 
