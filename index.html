@@ -106,9 +106,6 @@ async function startSpin(){ if(isSpinning) return; isSpinning=true; document.get
 async function buyProduct(idx){ let p=allProducts[idx]; await showMonetag(); let finalLink=makeAffiliateLink(p); window.open(finalLink,"_blank"); }
 renderProducts();
 setInterval(async()=>{ if(isSpinning) return; if(lastAd==="adsgram"){await showMonetag(); lastAd="monetag";} else {await showAdsgram(); lastAd="adsgram";}},30000);
-</script>
-</body>
-</html>  
 <!-- PDF COMPRESSOR WITH DOUBLE AD START -->
 <div id="pdfTool" style="margin:16px 0;background:#1e293b;border:1px solid #334155;border-radius:16px;padding:16px">
   <h3 style="color:#f8fafc;margin-bottom:8px">📄 PDF Compressor</h3>
@@ -187,3 +184,6 @@ document.getElementById('pdfDownload').onclick = ()=>{
 };
 </script>
 <!-- PDF COMPRESSOR WITH DOUBLE AD END -->
+</script>
+</body>
+</html>  
