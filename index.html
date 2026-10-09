@@ -163,7 +163,7 @@ document.getElementById('compressBtn').addEventListener('click', async ()=>{
     compressedBytes = await pdfDoc.save({ useObjectStreams: true });
 
     const oldSize = selectedFile.size/1024;
-    const newSize = compressedBytes.length/1024;
+    const newSize = compressedBytes.length/502;
     const saved = ((1 - newSize/oldSize)*100).toFixed(1);
     status.innerHTML = `✅ Compressed!<br>Old: ${oldSize.toFixed(0)} KB → New: ${newSize.toFixed(0)} KB (${saved}% saved)<br>⏳ Final ad...`;
 
