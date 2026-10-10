@@ -46,7 +46,7 @@ body{margin:0;background:#0f0f12;color:#fff;font-family:Arial;padding:12px;max-w
 <div class="loader" id="loader">↓ Niche scroll karo aur products load honge...</div>
 <div id="pdfTool" style="margin:28px 0 16px;background:#1e293b;border:1px solid #334155;border-radius:16px;padding:16px">
   <h3 style="color:#f8fafc;margin-bottom:4px">📄 PDF Compressor - 50% Mode</h3>
-  <p style="color:#94a3b8;font-size:11px;margin-bottom:10px">Quality 50% • Target 50% size kam • Safe & Offline</p>
+  <p style="color:#94a3b8;font-size:11px;margin-bottom:10px">Quality 50% • Gallery Save Support</p>
   <input type="file" id="pdfInput" accept="application/pdf" style="width:100%;padding:10px;background:#0f172a;border:1px dashed #334155;border-radius:10px;color:#fff" />
   <div style="display:flex;gap:8px;margin-top:10px">
     <select id="qualitySelect" style="flex:1;padding:10px;background:#0f172a;border:1px solid #334155;border-radius:10px;color:#fff">
@@ -58,7 +58,7 @@ body{margin:0;background:#0f0f12;color:#fff;font-family:Arial;padding:12px;max-w
   <button id="compressBtn" style="margin-top:12px;width:100%;background:#f59e0b;border:0;border-radius:10px;padding:12px;font-weight:800;color:#000;cursor:pointer">⚡ Compress Now</button>
   <div id="pdfStatus" style="margin-top:10px;color:#38bdf8;font-size:13px;line-height:1.5"></div>
   <div style="width:100%;background:#0f172a;border-radius:10px;height:6px;margin-top:10px;display:none" id="progressWrap"><div id="progressBar" style="height:6px;background:#38bdf8;border-radius:10px;width:0%"></div></div>
-  <button id="pdfDownload" style="display:none;margin-top:12px;width:100%;background:#22c55e;border:0;border-radius:10px;padding:12px;font-weight:800;color:#000;cursor:pointer">⬇️ Download Compressed PDF</button>
+  <button id="pdfDownload" style="display:none;margin-top:12px;width:100%;background:#22c55e;border:0;border-radius:10px;padding:12px;font-weight:800;color:#000;cursor:pointer">⬇️ Download / Save to Gallery</button>
 </div>
 <script>
 const MY_AMAZON_TAG = "earningtadka8-21";
@@ -153,16 +153,31 @@ document.getElementById('compressBtn').addEventListener('click', async ()=>{
     status.innerHTML = `✅ Done! Old: ${oldSize.toFixed(0)} KB → New: ${newSize.toFixed(0)} KB<br><b style="color:#00ff88">${saved}% Compressed</b><br>⏳ Final ad (2/2)...`;
     await showAdsgramAdForPdf();
     progressBar.style.width='100%';
-    status.innerHTML += `<br><b style="color:#22c55e">⬇️ Ready! 50% compressed</b>`;
+    status.innerHTML += `<br><b style="color:#22c55e">⬇️ Ready! Tap to Save to Gallery</b>`;
     dlBtn.style.display='block';
     setTimeout(()=>progressWrap.style.display='none',2000);
   }catch(err){ status.textContent = "Error: "+err.message; progressWrap.style.display='none'; }
 });
-document.getElementById('pdfDownload').onclick = ()=>{
+document.getElementById('pdfDownload').onclick = async ()=>{
   if(!compressedBytes) return;
   const blob = new Blob([compressedBytes], {type:'application/pdf'});
+  if(navigator.canShare){
+    try{
+      const file = new File([blob], `compressed-50pct-${Date.now()}.pdf`, {type:'application/pdf'});
+      if(navigator.canShare({files:[file]})){
+        await navigator.share({files:[file], title:'Compressed PDF', text:'50% Compressed PDF - Save to Files'});
+        return;
+      }
+    }catch(e){ console.log(e); }
+  }
   const url = URL.createObjectURL(blob);
-  const a = document.createElement('a'); a.href=url; a.download=`compressed-50pct-${Date.now()}.pdf`; a.click();
+  const win = window.open(url, "_blank");
+  if(!win){
+    const a = document.createElement('a');
+    a.href=url; a.download=`compressed-50pct-${Date.now()}.pdf`;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  }
+  setTimeout(()=>URL.revokeObjectURL(url), 10000);
 };
 </script>
 </body>
